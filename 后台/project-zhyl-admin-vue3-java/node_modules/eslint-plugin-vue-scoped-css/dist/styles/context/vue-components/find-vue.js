@@ -1,0 +1,82 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const vue_eslint_parser_1 = require("vue-eslint-parser");
+const nodes_1 = require("../../utils/nodes");
+const traverseNodes = vue_eslint_parser_1.AST.traverseNodes;
+function getVueComponentObject(node) {
+    if (node.type !== "ExportDefaultDeclaration") {
+        return null;
+    }
+    const declaration = (0, nodes_1.unwrapTypesExpression)(node.declaration);
+    if (declaration.type === "ObjectExpression") {
+        return declaration;
+    }
+    if (declaration.type === "CallExpression" &&
+        declaration.arguments.length >= 1) {
+        const callee = declaration.callee;
+        if (callee.type === "MemberExpression") {
+            const calleeObject = (0, nodes_1.unwrapTypesExpression)(callee.object);
+            if (calleeObject.type === "Identifier" &&
+                calleeObject.name === "Vue" &&
+                callee.property.type === "Identifier" &&
+                callee.property.name === "extend") {
+                const object = (0, nodes_1.unwrapTypesExpression)(declaration.arguments[0]);
+                if (object.type === "ObjectExpression") {
+                    return object;
+                }
+            }
+        }
+        if (callee.type === "Identifier") {
+            if (callee.name === "defineComponent") {
+                const object = (0, nodes_1.unwrapTypesExpression)(declaration.arguments[0]);
+                if (object.type === "ObjectExpression") {
+                    return object;
+                }
+            }
+        }
+    }
+    return null;
+}
+function findVueComponent(context) {
+    const sourceCode = context.getSourceCode();
+    const componentComments = sourceCode
+        .getAllComments()
+        .filter((comment) => comment.value.includes("@vue/component"));
+    const foundNodes = [];
+    function isDuplicateNode(node) {
+        if (foundNodes.some((el) => el.loc.start.line === node.loc.start.line)) {
+            return true;
+        }
+        foundNodes.push(node);
+        return false;
+    }
+    let result = null;
+    let breakNode = false;
+    traverseNodes(sourceCode.ast, {
+        visitorKeys: sourceCode.visitorKeys,
+        enterNode(node) {
+            if (breakNode) {
+                return;
+            }
+            if (node.type === "ObjectExpression") {
+                if (!componentComments.some((el) => el.loc.end.line === node.loc.start.line - 1) ||
+                    isDuplicateNode(node)) {
+                    return;
+                }
+                result = node;
+            }
+            else if (node.type === "ExportDefaultDeclaration") {
+                const vueNode = getVueComponentObject(node);
+                if (!vueNode || isDuplicateNode(vueNode)) {
+                    return;
+                }
+                result = vueNode;
+                breakNode = Boolean(node);
+            }
+        },
+        leaveNode() {
+        },
+    });
+    return result;
+}
+exports.default = findVueComponent;
