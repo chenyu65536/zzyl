@@ -1,4 +1,6 @@
-# 
+![](docs/images/logo.png)
+
+后台管理：https://zhyl-admin.itheima.net/#/dashboard/base
 
 ## 一、项目介绍
 
@@ -785,7 +787,7 @@ public class BaseEntity implements Serializable {
   所以，最终的查询条件为：
 
   | 参数名称 | 参数说明                 | 数据类型 |
-    | -------- | ------------------------ | -------- |
+  | -------- | ------------------------ | -------- |
   | name     | 护理项目名称             | string   |
   | pageNum  | 当前页码                 | int      |
   | pageSize | 每页显示条数             | int      |
