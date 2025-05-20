@@ -1,8 +1,36 @@
-![](docs/images/logo.png)
+<div align="center">
+  <img src="docs/images/logo.png" alt="Logo" width="150"/>
 
-后台管理：https://zhyl-admin.itheima.net/#/dashboard/base
 
-前端工程代码：https://gitee.com/itxinfei/zzyl-web
+<h1 >中州养老院管理系统</h1>
+<h5>**中州养老院** 是一个基于 Spring Boot 的智慧养老综合管理系统，涵盖入住管理、服务记录、财务管理、家属端交互等多个核心业务模块。</h5>
+  <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html"><img src="https://img.shields.io/badge/Java-11-orange"/></a>
+  <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring%20Boot-2.7.4-brightgreen"/></a>
+  <a href="https://projectlombok.org/"><img src="https://img.shields.io/badge/Lombok-1.18.22-yellow"/></a>
+  <a href="https://mybatis.plus/"><img src="https://img.shields.io/badge/MyBatis_Plus-2.2.0-green"/></a>
+  <a href="https://github.com/alibaba/druid"><img src="https://img.shields.io/badge/Druid-1.2.1-blueviolet"/></a>
+  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red"/></a>
+  <a href="https://jwt.io/"><img src="https://img.shields.io/badge/JWT-3.8.1-lightgrey"/></a>
+  <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-3.0.0-brightgreen"/></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-4.1.3-blue"/></a>
+  <a href="https://tdesign.tencent.com/starter/vue/"><img src="https://img.shields.io/badge/TDesign-0.1.0-lightgrey"/></a>
+  <a href="https://github.com/redisson/redisson"><img src="https://img.shields.io/badge/Redisson-3.11.2-critical"/></a>
+  <a href="http://www.xuxueli.com/xxl-job/"><img src="https://img.shields.io/badge/XXL--JOB-2.3.0-yellowgreen"/></a>
+  <a href="https://orika-mapper.github.io/orika-docs/"><img src="https://img.shields.io/badge/Orika-1.5.4-lightgrey"/></a>
+</div>
+
+---
+
+### 📌 **项目入口**
+
+| 类型 | 地址 |
+|------|------|
+| 前端工程代码 | [zzyl-web](https://gitee.com/itxinfei/zzyl-web) |
+| 后台管理系统 | [中州养老院后台管理](https://zhyl-admin.itheima.net/#/dashboard/base) |
+| 项目原型地址 | [原型系统](https://rp-java.itheima.net/zhyl/) |
+
+---
+
 
 ## 一、项目介绍
 
