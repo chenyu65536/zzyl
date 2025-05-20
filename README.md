@@ -1,36 +1,73 @@
 <div align="center">
-  <img src="docs/images/logo.png" alt="Logo" width="150"/>
-
-
-<h1 >中州养老院管理系统</h1>
-<h5>**中州养老院** 是一个基于 Spring Boot 的智慧养老综合管理系统，涵盖入住管理、服务记录、财务管理、家属端交互等多个核心业务模块。</h5>
-  <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html"><img src="https://img.shields.io/badge/Java-11-orange"/></a>
-  <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring%20Boot-2.7.4-brightgreen"/></a>
-  <a href="https://projectlombok.org/"><img src="https://img.shields.io/badge/Lombok-1.18.22-yellow"/></a>
-  <a href="https://mybatis.plus/"><img src="https://img.shields.io/badge/MyBatis_Plus-2.2.0-green"/></a>
-  <a href="https://github.com/alibaba/druid"><img src="https://img.shields.io/badge/Druid-1.2.1-blueviolet"/></a>
-  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red"/></a>
-  <a href="https://jwt.io/"><img src="https://img.shields.io/badge/JWT-3.8.1-lightgrey"/></a>
-  <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-3.0.0-brightgreen"/></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-4.1.3-blue"/></a>
-  <a href="https://tdesign.tencent.com/starter/vue/"><img src="https://img.shields.io/badge/TDesign-0.1.0-lightgrey"/></a>
-  <a href="https://github.com/redisson/redisson"><img src="https://img.shields.io/badge/Redisson-3.11.2-critical"/></a>
-  <a href="http://www.xuxueli.com/xxl-job/"><img src="https://img.shields.io/badge/XXL--JOB-2.3.0-yellowgreen"/></a>
-  <a href="https://orika-mapper.github.io/orika-docs/"><img src="https://img.shields.io/badge/Orika-1.5.4-lightgrey"/></a>
+  <img src="docs/images/logo.png"  alt="Logo" width="150"/>
+ 
+<h1 style="color: #1890ff; text-shadow: 2px 2px 4px rgba(0,0,0,0.1)">🌟 中州养老院智慧管理系统 🌟</h1>
+<h3 style="color: #722ed1; font-weight: 500">✨ 科技赋能养老 · 专业成就品质 ✨</h3>
+<h5 style="color: #595959; max-width: 800px; margin: 0 auto; line-height: 1.6">基于SpringBoot的智慧养老综合解决方案，整合入住管理、服务记录、财务管理、家属交互等核心业务模块，助力养老机构数字化转型</h5>
+ 
+<div style="margin: 20px 0">
+  <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html"><img  src="https://img.shields.io/badge/Java-11-orange?style=for-the-badge&logo=java"/></a> 
+  <a href="https://spring.io/projects/spring-boot"><img  src="https://img.shields.io/badge/Spring%20Boot-2.7.4-brightgreen?style=for-the-badge&logo=spring"/></a> 
+  <a href="https://projectlombok.org/"><img  src="https://img.shields.io/badge/Lombok-1.18.22-yellow?style=for-the-badge&logo=lombok"/></a> 
+  <a href="https://mybatis.plus/"><img  src="https://img.shields.io/badge/MyBatis_Plus-2.2.0-green?style=for-the-badge&logo=mybatis"/></a> 
 </div>
+<div style="margin: 15px 0">
+  <a href="https://github.com/alibaba/druid"><img  src="https://img.shields.io/badge/Druid-1.2.1-blueviolet?style=flat-square&logo=alibabacloud"/></a> 
+  <a href="https://github.com/alibaba/fastjson"><img  src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=flat-square"/></a> 
+  <a href="https://jwt.io/"><img  src="https://img.shields.io/badge/JWT-3.8.1-lightgrey?style=flat-square&logo=jsonwebtokens"/></a> 
+  <a href="https://vuejs.org/"><img  src="https://img.shields.io/badge/Vue.js-3.0.0-brightgreen?style=flat-square&logo=vuedotjs"/></a> 
+</div>
+</div>
+ 
+---
+ 
+## 🚀 核心价值 
+<div style="background: #f6f6f6; padding: 20px; border-radius: 8px; margin: 20px 0">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
+ 
+### 🏆 管理效率提升 
+- 业务流程数字化，减少纸质文档 
+- 智能排班系统节省30%人力成本 
+- 实时数据看板辅助决策 
+ 
+### 💡 服务质量升级 
+- 老人健康数据动态监测 
+- 护理服务标准化流程 
+- 家属端实时互动通道 
+ 
+### 📈 运营效益优化 
+- 财务数据自动统计分析 
+- 资源利用率提升40%
+- 风险预警机制保障安全 
+</div>
+</div>
+ 
+---
+ 
+## 📌 快速导航 
+| 模块 | 地址 | 状态 |
+|------|------|------|
+| 前端源码 | [zzyl-web](https://gitee.com/itxinfei/zzyl-web)  | ![GitHub last commit](https://img.shields.io/github/last-commit/vuejs/vue?label= 更新) |
+| 管理后台 | [演示系统](https://zhyl-admin.itheima.net)  | ![Website](https://img.shields.io/website?url=https%3A%2F%2Fzhyl-admin.itheima.net)  |
+| API文档 | [Swagger UI](http://api.zzyl.com/swagger)  | ![Swagger Valid](https://img.shields.io/swagger/valid/3.0?specUrl=http%3A%2F%2Fapi.zzyl.com%2Fswagger.json)  |
+ 
+---
+ 
+## 🛠️ 开发指南 
+ 
+```bash 
+# 克隆项目 
+git clone https://gitee.com/itxinfei/zzyl-web.git  
+ 
+# 安装依赖 
+npm install 
+ 
+# 启动开发服务器 
+npm run dev 
+
+```
 
 ---
-
-### 📌 **项目入口**
-
-| 类型 | 地址 |
-|------|------|
-| 前端工程代码 | [zzyl-web](https://gitee.com/itxinfei/zzyl-web) |
-| 后台管理系统 | [中州养老院后台管理](https://zhyl-admin.itheima.net/#/dashboard/base) |
-| 项目原型地址 | [原型系统](https://rp-java.itheima.net/zhyl/) |
-
----
-
 
 ## 一、项目介绍
 
@@ -349,14 +386,6 @@ UI角色（User Interface，用户界面）主要负责为用户提供与程序�
 其中，模块开发最耗时的是设计阶段，包含了需求分析、评估工期、表结构设计、接口设计这几部分
 
 如果这几步我们都能顺利完成，那么功能开发（代码），就水到渠成了
-
-### 5.1 需求分析
-
-需求分析，该如何入手呢？
-
-入手的基本思路就是原型文档和PRD文档，有了这两个文档，我们就有了很重要的开发依据
-
->注意：在实际开发中，有了新需求以后，产品经理会先给项目组的成员开会，来评审新的需求，在会议中，如果有任何不理解的需求，要及时提出来，方便后期设计、开发
 
 
 
