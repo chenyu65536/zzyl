@@ -45,11 +45,11 @@
 ---
  
 ## 📌 快速导航 
-| 模块 | 地址 | 状态 |
-|------|------|------|
-| 前端源码 | [zzyl-web](https://gitee.com/itxinfei/zzyl-web)  | ![GitHub last commit](https://img.shields.io/github/last-commit/vuejs/vue?label= 更新) |
-| 管理后台 | [演示系统](https://zhyl-admin.itheima.net)  | ![Website](https://img.shields.io/website?url=https%3A%2F%2Fzhyl-admin.itheima.net)  |
-| API文档 | [Swagger UI](http://api.zzyl.com/swagger)  | ![Swagger Valid](https://img.shields.io/swagger/valid/3.0?specUrl=http%3A%2F%2Fapi.zzyl.com%2Fswagger.json)  |
+| 模块 | 地址 |
+|------|------|
+| 前端源码 | [zzyl-web](https://gitee.com/itxinfei/zzyl-web)  | 
+| 管理后台 | [演示系统](https://zhyl-admin.itheima.net)  | 
+| API文档 | [Swagger UI](http://api.zzyl.com/swagger)  | 
  
 ---
  
