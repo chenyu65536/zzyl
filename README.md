@@ -1,403 +1,272 @@
 <div align="center">
-  <img src="docs/images/logo.png"  alt="Logo" width="150"/>
- 
-<h1 style="color: #1890ff; text-shadow: 2px 2px 4px rgba(0,0,0,0.1)">🌟 中州养老院智慧管理系统 🌟</h1>
-<h3 style="color: #722ed1; font-weight: 500">✨ 科技赋能养老 · 专业成就品质 ✨</h3>
-<h5 style="color: #595959; max-width: 800px; margin: 0 auto; line-height: 1.6">基于SpringBoot的智慧养老综合解决方案，整合入住管理、服务记录、财务管理、家属交互等核心业务模块，助力养老机构数字化转型</h5>
- 
+
+<img src="docs/images/logo.png" alt="Logo" width="150"/>
+
+# 🌟 中州养老院智慧管理系统 🌟
+
+<h3 style="color: #722ed1; font-weight: normal; margin-top: 10px">✨ 科技赋能养老 · 专业成就品质 ✨</h3>
+
+<p style="color: #595959; max-width: 700px; line-height: 1.8">
+  基于 SpringBoot + Vue 3 的智慧养老综合解决方案<br/>
+  整合入住管理、服务记录、财务管理、家属交互等核心模块<br/>
+  助力养老机构数字化转型
+</p>
+
 <div style="margin: 20px 0">
-  <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html"><img  src="https://img.shields.io/badge/Java-11-orange?style=for-the-badge&logo=java"/></a> 
-  <a href="https://spring.io/projects/spring-boot"><img  src="https://img.shields.io/badge/Spring%20Boot-2.7.4-brightgreen?style=for-the-badge&logo=spring"/></a> 
-  <a href="https://projectlombok.org/"><img  src="https://img.shields.io/badge/Lombok-1.18.22-yellow?style=for-the-badge&logo=lombok"/></a> 
-  <a href="https://mybatis.plus/"><img  src="https://img.shields.io/badge/MyBatis_Plus-2.2.0-green?style=for-the-badge&logo=mybatis"/></a> 
+  <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html"><img src="https://img.shields.io/badge/Java-11-orange?style=for-the-badge&logo=java"/></a>
+  <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring%20Boot-2.7.4-brightgreen?style=for-the-badge&logo=spring"/></a>
+  <a href="https://projectlombok.org/"><img src="https://img.shields.io/badge/Lombok-1.18.22-yellow?style=for-the-badge&logo=lombok"/></a>
+  <a href="https://mybatis.plus/"><img src="https://img.shields.io/badge/MyBatis_Plus-2.2.0-green?style=for-the-badge&logo=mybatis"/></a>
 </div>
-<div style="margin: 15px 0">
-  <a href="https://github.com/alibaba/druid"><img  src="https://img.shields.io/badge/Druid-1.2.1-blueviolet?style=flat-square&logo=alibabacloud"/></a> 
-  <a href="https://github.com/alibaba/fastjson"><img  src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=flat-square"/></a> 
-  <a href="https://jwt.io/"><img  src="https://img.shields.io/badge/JWT-3.8.1-lightgrey?style=flat-square&logo=jsonwebtokens"/></a> 
-  <a href="https://vuejs.org/"><img  src="https://img.shields.io/badge/Vue.js-3.0.0-brightgreen?style=flat-square&logo=vuedotjs"/></a> 
+<div style="margin: 10px 0">
+  <a href="https://github.com/alibaba/druid"><img src="https://img.shields.io/badge/Druid-1.2.1-blueviolet?style=flat-square&logo=alibabacloud"/></a>
+  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=flat-square"/></a>
+  <a href="https://jwt.io/"><img src="https://img.shields.io/badge/JWT-3.8.1-lightgrey?style=flat-square&logo=jsonwebtokens"/></a>
+  <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-3-brightgreen?style=flat-square&logo=vuedotjs"/></a>
+  <a href="https://tdesign.tencent.com/"><img src="https://img.shields.io/badge/TDesign-UI-blue?style=flat-square&logo=tencent"/></a>
 </div>
+
 </div>
- 
+
 ---
- 
-## 🚀 核心价值 
-<div style="background: #f6f6f6; padding: 20px; border-radius: 8px; margin: 20px 0">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
- 
-### 🏆 管理效率提升 
-- 业务流程数字化，减少纸质文档 
-- 智能排班系统节省30%人力成本 
-- 实时数据看板辅助决策 
- 
-### 💡 服务质量升级 
-- 老人健康数据动态监测 
-- 护理服务标准化流程 
-- 家属端实时互动通道 
- 
-### 📈 运营效益优化 
-- 财务数据自动统计分析 
-- 资源利用率提升40%
-- 风险预警机制保障安全 
-</div>
-</div>
- 
+
+## 🚀 核心价值
+
+| 维度 | 亮点 |
+|------|------|
+| 🏆 管理效率 | 业务流程数字化，智能排班节省约 30% 人力成本，实时数据看板辅助决策 |
+| 💡 服务质量 | 健康数据动态监测，护理服务标准化，家属端实时互动 |
+| 📈 运营效益 | 财务自动统计，资源利用率提升约 40%，风险预警保障安全 |
+
 ---
- 
-## 📌 快速导航 
+
+## 📌 快速导航
+
 | 模块 | 地址 |
 |------|------|
-| 前端源码 | [zzyl-web](https://gitee.com/itxinfei/zzyl-web)  | 
-| 管理后台 | [演示系统](https://zhyl-admin.itheima.net)  | 
-| API文档 | [Swagger UI](http://api.zzyl.com/swagger)  | 
- 
----
- 
-## 🛠️ 开发指南 
- 
-```bash 
-# 克隆项目 
-git clone https://gitee.com/itxinfei/zzyl-web.git  
- 
-# 安装依赖 
-npm install 
- 
-# 启动开发服务器 
-npm run dev 
+| 前端源码 | [zzyl-web](https://gitee.com/itxinfei/zzyl-web) |
+| 管理后台 | [演示系统](https://zhyl-admin.itheima.net) |
+| API 文档 | [Swagger UI](http://api.zzyl.com/swagger) |
 
+---
+
+## 🛠️ 快速开始
+
+```bash
+# 克隆后端项目
+git clone https://gitee.com/itxinfei/zzyl.git
+
+# 克隆前端项目
+git clone https://gitee.com/itxinfei/zzyl-web.git
+
+# 安装依赖并启动
+npm install && npm run dev
 ```
 
 ---
 
-## 一、项目介绍
+## 🏠 一、项目介绍
 
-中州养老院是一家致力于为老年人提供高质量养老服务的专业机构。拥有着多年的行业经验和深厚的服务实力，一直秉持着“以人为本、关爱生命”的核心理念，始终致力于为老年人提供最优质的养老服务，为晚年生活注入更多的快乐与温暖。
+中州养老院是一家专业养老服务机构，秉持"以人为本、关爱生命"的理念，为长者提供高品质养老服务。院区占地面积超 30,000 平方米，总建筑面积 40,000 平方米，现有床位 800 余张，员工 200 余人，先后荣获"全国优秀养老院"等多项荣誉。
 
-中州养老院坐落在一片幽静的绿树成荫的区域，占地面积超过30,000平方米，总建筑面积为40,000平方米。经过多年的发展，中州养老院成长为一家床位数量众多、服务项目丰富的养老机构，现有床位超过800张，员工人数达到200余人。该养老院为老年人提供舒适的住宿环境，房间宽敞明亮，家具精美，充满温馨和舒适感。床铺舒适柔软，提供优质的床垫和床上用品，确保老年人的良好睡眠。同时中州养老院注重细节，为老年人提供贴心、周到的服务。中州养老院员工经过专业培训，拥有高素质的服务意识和服务技能。他们时刻以老年人的需求和舒适为重，热情友好，愿意倾听老年人的心声，为老年人提供贴心、专业的服务和关怀。
+### 1.1 行业背景
 
-中州养老院不断地推进创新，为老人提供更加优质的服务。还还获得了多项荣誉，包括“全国优秀养老院”、“山区老年人关爱先进集体”等。这些荣誉的获得证明了中州在养老服务领域中的领先地位，同时也是中州养老院不断努力的动力。
+中国老龄化程度持续加深，智慧养老成为行业必然趋势。2022 年中国养老产业市场规模达 **10.3 万亿元**，预计 2027 年将突破 **21.1 万亿元**。
 
-### 1 行业背景
+<p align="center">
+  <img src="docs/images/image-20230808134224075.png" alt="市场规模" width="600"/>
+</p>
 
-中国老龄化程度加深，我国老龄事业和养老服务体系的发展得到了国家的高度重视，在国家政策的支持下，我国智慧养老产业主体持续增多，产业链不断整合，发展前景较好。我国正在形成一个多元化“互联网+养老”的智慧老年护理服务系统，智慧养老是我国的必然趋势
+### 1.2 整体业务流程
 
-**市场规模及预测**
+覆盖从来访参观到退住办理的全生命周期，包括来访管理、入退管理、在住管理、服务管理、财务管理等核心模块。
 
-![image-20230808134224075](docs/images/image-20230808134224075.png)
+<p align="center">
+  <img src="docs/images/image-20230722161536290.png" alt="业务流程" width="600"/>
+</p>
 
-- 2022年中国养老产业市场规模达到10.3万亿元，同比增长16.7%。
+### 1.3 系统架构
 
-- 预计2023-2027年中国养老产业迎来较快速增长。预计2027年中国养老产业市场规模达21.1万亿元
+> 原型地址：https://rp-java.itheima.net/zhyl/
 
-### 2 整体业务流程
+项目分为两大终端：
 
-中州养老系统为养老院量身定制开发专业的养老管理软件产品；涵盖来访管理、入退管理、在住管理、服务管理、财务管理等功能模块，涉及从来访参观到退住办理的完整流程。
+- **管理后台**：面向员工，提供入住/退住、服务记录、财务管理等功能
+- **家属端**：面向家属，支持查看老人信息、在线缴费、服务下单
 
-![image-20230722161536290](docs/images/image-20230722161536290.png)
+<p align="center">
+  <img src="docs/images/中州-架构图@2x.png" alt="系统架构" width="600"/>
+</p>
 
-### 3 系统架构
+### 1.4 技术架构
 
-项目原型地址：https://rp-java.itheima.net/zhyl/
+<p align="center">
+  <img src="docs/images/中州-技术架构图.png" alt="技术架构" width="600"/>
+</p>
 
-中州养老项目分为两端，一个是管理后台，另外一个是家属端
+---
 
-- 管理后台：养老院员工使用，入住、退住，给老人服务记录等等
-- 家属端：养老院的老人家属使用，查看老人信息，缴费，下订单等等
+## 📋 二、项目管理
 
-![](docs/images/中州-架构图@2x.png)
+### 2.1 项目生命周期
 
-### 4 技术架构
+需求分析 → 设计 → 编码 → 测试 → 部署 → 运维
 
-下图展现了中州养老项目主要使用的技术：
+<p align="center">
+  <img src="docs/images/image-20230724164928484.png" alt="生命周期" width="600"/>
+</p>
 
-![](docs/images/中州-技术架构图.png)
+### 2.2 项目开发模式
 
-## 二、项目管理
+| 模式 | 特点 | 适用场景 |
+|------|------|----------|
+| 瀑布模型 | 顺序式开发，阶段严格递进 | 需求明确、变更少 |
+| 敏捷开发 | 迭代式开发，快速响应变化 | 需求多变、周期短 |
+| DevOps | 开发运维融合，强调自动化持续交付 | 高频部署、快速迭代 |
 
-在讲解项目之前，我们有必要去熟悉一下开发软件的一些基础理论和物料，这样可以使我们更快的熟悉软件的开发的节奏，并熟知我们的核心任务及在团队中的角色分工。主要包含了以下几个部分
+<p align="center">
+  <img src="docs/images/image-20230724164736889.png" alt="瀑布模型" width="500"/>
+  <img src="docs/images/image-20230724164900781.png" alt="敏捷开发" width="500"/>
+</p>
 
-- 项目生命周期
-- 项目开发模式
-- 项目管理
-- 项目中产生的文档
-- 后端人员开发流程
+<p align="center">
+  <img src="docs/images/image-20230725093037210.png" alt="DevOps" width="500"/>
+  <img src="docs/images/image-20230729094020085.png" alt="三者对比" width="500"/>
+</p>
 
-### 1 项目生命周期
+### 2.3 项目管理方法
 
-![image-20230724164928484](docs/images/image-20230724164928484.png)
+**进度管理**：制定计划 → 监控进度 → 风险管控 → 流程优化 → 变更管理
 
-1. 需求分析：在这个阶段，开发团队需要与客户或业务代表沟通，了解软件的功能和性能需求，以及用户的需求和期望。这个阶段的目的是确保开发团队理解软件的需求，并能够为之制定开发计划。
+**缺陷管理**：发现记录 → 筛选分析 → 分配追踪 → 验证关闭 → 统计分析
 
-2. 设计：在这个阶段，开发团队需要根据需求分析结果，设计软件的架构和模块，制定开发计划。设计阶段的目的是确保软件的架构和模块能够满足软件需求，并且能够支持软件的可维护性和可扩展性。
+**代码规范要点**：
+- 命名清晰，遵循驼峰法
+- 缩进统一（4 空格）
+- 注释描述意图，减少行内注释
+- 方法职责单一，参数不超过 3 个
+- 异常处理提供清晰的错误信息
 
-3. 编码：在这个阶段，开发团队需要根据设计文档，编写软件代码。编码阶段的目的是将设计文档转化为可执行的软件代码，并确保代码的质量和可读性。
+---
 
-4. 测试：在这个阶段，开发团队需要对软件进行测试，包括单元测试、集成测试、系统测试、验收测试等。测试阶段的目的是发现并修复软件中存在的缺陷和错误，并确保软件能够满足需求和期望。
+## 📝 三、文档介绍
 
-5. 部署：在这个阶段，开发团队需要将软件部署到生产环境中，确保软件能够正常运行。部署阶段的目的是确保软件能够在实际环境中运行，并能够满足用户的需求和期望。
+### 3.1 原型与 PRD
 
-6. 运维：在这个阶段，开发团队需要对软件进行维护和更新，确保软件一直能够满足用户的需求和期望。运维阶段的目的是确保软件能够持续地运行，并能够满足用户的不断变化的需求和期望。
+- **PRD**（Product Requirements Document）：产品需求文档，描述功能、场景和业务规则，是开发核心依据
+- **原型**：交互原型图，直观展示页面布局和操作流程
 
-### 2 项目开发模式
+### 3.2 UI/UE 设计
 
-#### 2.1 瀑布模型（Waterfall Model）
+- **UI**（用户界面）：负责视觉界面设计，是用户与系统的桥梁
+- **UE**（用户体验）：关注产品易用性和使用感受
 
-瀑布模型是一种顺序型开发模式，各个阶段按照顺序依次进行，每个阶段完成后才能进入下一个阶段。这种模式适用于需求稳定、开发周期长的项目。
+设计师核心职责：界面设计、交互设计、原型制作、视觉规范、可用性测试
 
-![image-20230724164736889](docs/images/image-20230724164736889.png)
+### 3.3 个人开发计划
 
+需求分析 → 编码自测 → 接口联调
 
+---
 
-#### 2.2 敏捷开发（Agile Development）
+## 📦 四、代码结构
 
-敏捷开发是一种迭代型开发模式，强调团队合作、用户参与和快速响应变化。敏捷开发方法包括Scrum、XP、Lean等，适用于需求不稳定、开发周期较短的项目。
+### 4.1 工程结构
 
-![image-20230724164900781](docs/images/image-20230724164900781.png)
+```
+zzyl/
+├── zzyl-common     # 通用模块：统一异常、工具类、常量、基类
+├── zzyl-framework  # 框架核心：配置类、拦截器、第三方集成
+├── zzyl-pay        # 支付组件：微信扫码支付
+├── zzyl-security   # 安全组件：权限认证、JWT
+├── zzyl-service    # 业务层：核心业务逻辑
+└── zzyl-web        # 控制层：RESTful 接口
+```
 
-- DevOps
+> `common`、`framework`、`service`、`web` 是日常开发最常接触的模块。
 
-DevOps是一种将开发和运维流程整合在一起的开发模式，强调自动化和持续交付。DevOps适用于需要频繁部署和更新的项目。
+### 4.2 🗂️ 模块详解
 
-![image-20230725093037210](docs/images/image-20230725093037210.png)
+#### 4.2.1 zzyl-common（通用模块）
 
+```
+com.zzyl/base/
+├── AjaxResult              # 统一接口响应
+├── BaseDto / BaseEntity / BaseVo  # 各层基类
+├── PageResponse            # 分页封装
+├── exception/              # 异常体系
+├── utils/                  # 工具类
+└── vo/                     # 公共视图对象
+```
 
+> **DTO**：层间数据传输；**VO**：向前端返回展示数据
 
-**三者对比**：
+#### 4.2.2 zzyl-framework（框架模块）
 
-![image-20230729094020085](docs/images/image-20230729094020085.png)
+```
+com.zzyl/
+├── config/    # OSS、Swagger、MyBatis、WebMvc 配置
+├── intercept/ # 自动填充字段拦截器
+└── properties/# 配置文件属性读取
+```
 
-### 3.3 项目管理
+#### 4.2.3 zzyl-service（业务模块）
 
-#### 3.1 进度管理
+```
+com.zzyl/
+├── dto/ entity/ enums/ mapper/ service/ vo/
+└── resources/mapper/    # MyBatis XML 映射
+```
 
-1. 制定计划：在软件开发开始之前，制定开发计划和时间表，确定每个阶段的工作内容和时间节点。计划的制定需要考虑到人力、物力、时间等资源的限制，并充分考虑风险和变更管理。
+#### 4.2.4 zzyl-web（控制层）
 
-2. 监控进度：在软件开发过程中，要对项目进度进行监控和控制，及时发现和处理进度偏差和问题。可以通过制定里程碑、进度报告、进度会议等方式来监控项目进度。
+```
+com.zzyl/controller/     # RESTful 接口
+└── zzylApplication       # 启动入口
+```
 
-3. 管理风险：软件开发中存在各种风险，如需求变更、技术难点、人员流失等。需要及时识别和管理这些风险，制定应对措施，以避免对项目进度的负面影响。
+### 4.3 🖥️ 前端环境
 
-4. 优化流程：软件开发是一个复杂的过程，需要不断优化流程，提高效率和质量。可以采用持续集成、自动化测试、代码审查等方式来优化流程，提高开发效率和质量。
+#### 4.3.1 环境要求
 
-5. 管理变更：在软件开发过程中，会出现各种变更，如需求变更、技术方案变更等。需要对变更进行管理，确保变更的合理性和影响范围，并及时更新计划和时间表。
+| 技术项 | 要求 |
+|--------|------|
+| Node.js | v16.20.0 |
+| 框架 | Vue 3 + TypeScript |
+| 开发工具 | VS Code |
+| UI 组件库 | TDesign |
 
-#### 3.2 缺陷管理
+#### 4.3.2 启动项目
 
-1. 发现和记录：在软件测试过程中，测试人员会发现各种缺陷和问题，需要及时记录并分类。记录缺陷时，需要包括缺陷的描述、复现步骤、环境信息等详细信息。
+```bash
+# 安装依赖
+npm install
 
-2. 筛选和分析：对于发现的缺陷，需要根据优先级和严重程度进行筛选和分析，确定哪些缺陷需要优先处理。在分析缺陷时，需要考虑到缺陷的根本原因，并制定相应的修复方案。
+# 启动开发服务器
+npm run dev
 
-3. 分配和跟踪：将已筛选的缺陷分配给相应的开发人员进行修复，并跟踪修复进度和状态。在跟踪缺陷时，需要及时更新缺陷状态、处理进度、修复时间等信息。
+# 构建生产环境包
+npm run build
+```
 
-4. 验证和关闭：在开发人员完成缺陷修复后，需要进行验证测试，确保缺陷已经被修复。如果验证测试通过，则可以将缺陷关闭。如果验证测试失败，则需要重新分配给开发人员进行修复。
+### 4.4 🚀 启动前后端项目
 
-5. 统计和分析：对于已关闭的缺陷，需要进行统计和分析，了解缺陷的类型、数量、分布情况等信息。通过对缺陷统计和分析，可以发现软件开发中的问题和瓶颈，并采取相应的措施进行优化。
+#### 4.4.1 前端启动
 
-#### 3.3 代码规范
+```bash
+npm install && npm run dev
+```
 
-在软件开发中，代码规范是非常重要的，可以提高代码的可读性、可维护性和可扩展性。以下是一些常见的代码规范：
+前端服务启动后，在终端输出的地址访问系统。
 
-1. 命名规范：变量、函数、类等命名要具有清晰明了的含义，使用驼峰式命名法。避免使用缩写或简写，除非是广泛使用的术语。
+#### 4.4.2 后端启动
 
-2. 缩进和空格：代码缩进要保持一致，通常使用四个空格或一个制表符。运算符和关键字周围要留有空格，但是在括号内不需要。
+后端服务启动后，访问前端控制台输出的地址即可使用系统。
 
-3. 注释规范：注释要清晰明了，描述代码的作用、逻辑和实现细节。注释应该写在代码上方，而不是行末。代码中应该尽可能地减少注释，让代码本身尽可能地自解释。
+---
 
-4. 函数规范：函数应该尽可能地短小精悍，每个函数只做一件事情。函数的参数应该尽可能地少，最好不要超过三个。函数应该有明确的返回值类型和返回值。
+## 🔨 五、护理项目功能开发
 
-5. 异常处理规范：在代码中应该尽可能地处理异常情况，避免程序崩溃或出现不可预知的行为。异常处理应该具有清晰明了的逻辑和错误提示信息。
+后端开发标准化流程：需求分析 → 评估工期 → 表结构设计 → 接口设计 → 编码实现 → 接口联调
 
-## 四、文档介绍
-
-### 4.1 原型+PRD
-
-程序员开发重要依据！！！
-
-PRD：Product Requirements Document 产品需求文档
-
-### 4.2 UIUE
-
-UIUE是：用户界面体验
-
-UI角色（User Interface，用户界面）主要负责为用户提供与程序交互的界面。UI是用户与系统之间的桥梁，它涵盖了用户在使用软件时所看到和操作的所有元素。
-
-UE角色（User Experience）：用户体验设计师，就是管产品好不好用，是不是人性化。
-
-
-
-UI角色（User Interface，用户界面）主要负责为用户提供与程序交互的界面。UI是用户与系统之间的桥梁，它涵盖了用户在使用软件时所看到和操作的所有元素
-
-1. **界面设计（Interface Design）**：UI角色负责设计用户界面的外观和布局。这包括选择颜色、字体、图标、按钮样式等元素，以及整体界面的组织和结构。目标是使界面简洁、直观、易于理解和使用。
-2. **用户体验设计（User Experience Design）**：UI角色关注用户在使用软件时的感受和体验。他们致力于确保用户界面是用户友好的，用户能够轻松完成任务，同时尽量减少用户遇到的困难和挑战。
-3. **原型设计和交互设计（Prototyping and Interaction Design）**：在开发软件之前，UI角色通常会创建原型，这是界面的初步模型，用于演示和测试界面的功能和流程。交互设计关注用户如何与界面元素进行交互，例如按钮点击、菜单选择等。
-4. **图形设计（Graphic Design）**：UI角色负责创建和选择界面中使用的图形元素，例如图标、图片、背景等。这些图形元素不仅要美观，还要在视觉上与界面的整体风格和主题相匹配。
-5. **移动设备适配（Mobile Responsiveness）**：对于移动应用程序或响应式网页，UI角色需要确保界面在不同尺寸的移动设备上都能正确地显示和操作，以提供一致的用户体验。
-6. **多平台支持（Cross-Platform Support）**：UI角色还需要考虑在不同操作系统和设备上的界面兼容性，确保软件可以在不同平台上运行并保持一致性。
-7. **可访问性（Accessibility）**：UI角色要关注那些可能有特殊需求的用户，确保他们也能够方便地使用软件。这可能包括为视觉障碍用户提供屏幕阅读器支持，或为身体障碍用户提供键盘导航方式。
-8. **与开发团队的协作**：UI角色通常需要与开发团队密切合作，确保设计的可实现性，并在开发过程中进行必要的调整和优化。
-
-总的来说，UI角色在软件开发过程中发挥着至关重要的作用，他们不仅要关注界面的外观，还要确保用户能够轻松、愉快地与软件进行交互，从而提升用户体验和满意度。
-
-#### 4.3 个人开发计划
-
-- 需求分析设计
-- 编码自测
-- 接口联调
-
-## 五、代码结构
-
-在提供的代码中，已经有了很多的基础类和业务类，我们一起来看一下
-
-1. 工程结构
-
-   ```json
-   ├── zzyl                              
-   │   ├── zzyl-common    //通用的模块，比如，统一的异常、工具类、常量等等
-   │   ├── zzyl-framework   //框架核心类，比如，配置类、公共的拦截器等
-   │   ├── zzyl-pay         //支付组件，目前对接微信扫码支付功能
-   │   ├── zzyl-security    //安全组件，权限所有功能在这里实现
-   │   ├── zzyl-service     //业务层，编写业务层代码
-   │   ├── zzyl-web         //控制层，对外提供接口
-   ```
-
-   我们先来熟悉下common、framework、service、web模块，这些都与我们的业务开发息息相关，后期我们会再详细讲解pay、security模块。
-
-2. zzyl-common模块
-
-   ```json
-   ├── com.zzyl                              
-   │   ├── base
-   │   │   ├── AjaxResult    //通用的接口返回结果类
-   │   │   ├── BaseDto       //基础的DTO，所有自定义的DTO都继承它
-   │   │   ├── BaseEntity    //基础的实体类，所有自定义的实体类都继承它
-   │   │   ├── BaseVo        //基础的VO，所有自定义的VO都继承它
-   │   │   ├── IBasicEnum    //公共的枚举类
-   │   │   ├── PageResponse  //分页列表使用该对象封装       
-   │   ├── constants         //这个包下存储所有的自定义常量类
-   │   ├── enums             
-   │   │   ├── BasicEnum     //基础枚举
-   │   ├── exception         //公用异常包
-   │   │   ├── BaseException  //基础异常类
-   │   │   ├── GlobalExceptionHandler  //全局异常处理器
-   │   ├── utils   //工具类包
-   │   ├── vo      //公共的vo包
-   ```
-
-   > DTO（Data Transfer Object）据传输对象，主要用于外部接口参数传递封装，接口与接口进行传递使用
-   >
-   > VO（Value Object）视图对象，主要用于给前端返回页面参数使用
-
-3. zzyl-framework模块
-
-   ```json
-   ├── com.zzyl                              
-   │   ├── config
-   │   │   ├── OssAliyunAutoConfig    //阿里OSS配置类
-   │   │   ├── OSSAliyunFileStorageService    //OSS上传、删除接口封装
-   │   │   ├── MybatisConfig       //mybatis自定义拦截器
-   │   │   ├── SwaggerConfig    //swagger配置类，在线接口
-   │   │   ├── WebMvcConfig        //mvc配置类，拦截器、映射器等
-   │   ├── intercept             
-   │   │   ├── AutoFillInterceptor     //自动填充字段拦截器
-   │   ├── properties         
-   │   │   ├── AliOssConfigProperties  //阿里OSS配置读取
-   │   │   ├── JwtTokenManagerProperties  //JWT配置读取
-   │   │   ├── SwaggerConfigProperties  //Swagger配置读取
-   ```
-
-4. zzyl-service模块
-
-   ```json
-   java
-   ├── com.lunckon                              
-   │   ├── dto   
-   │   ├── entity             
-   │   ├── enums  
-   │   ├── mapper
-   │   ├── service             
-   │   ├── vo  
-   resouces
-   ├── mapper
-   │   ├── xxxxx.xml
-   ```
-
-5. zzyl-web模块
-
-   ```json
-   java
-   ├── com.lunckon                              
-   │   ├── controller   
-   │   │   ├── XxxController
-   │   ├── zzylApplication  
-   resouces
-   ├── application.yml
-   ├── logback.xml
-   ```
-### 4.3 前端环境搭建及运行
-
-#### 4.3.1 前端环境
-
-- node-v16.20.0  (强制)
-
-  ![image-20230806112709739](docs/images/image-20230806112709739.png)
-
-- Vue 3
-
-- TypeScript
-
-- 开发工具：vscode
-
-- 前端vue组件：TDesign
-
-#### 4.3.2 代码运行
-
-1. 代码导入
-
-   在代码文件夹中找到’前端完整代码’，拷贝到一个没有中文的目录，然后使用vs code打开
-
-   ![image-20230806115348195](docs/images/image-20230806115348195.png)
-
-   ![image-20230806115442528](docs/images/image-20230806115442528.png)
-
-3. 安装运行
-
-   ```bash
-   ## 安装依赖
-   npm install 
-   
-   ## 启动项目 
-   npm run dev
-   
-   ## 构建正式环境 - 打包
-   npm run build
-   ```
-
-### 4.4 启动前后端项目
-
-在浏览器中输入网址，在前端项目启动之后的控制台，会提示访问的地址是什么，效果如下：
-
-![image-20231015165534527](docs/images/image-20231015165534527.png)
-
-## 5 护理项目功能开发
-
-在开发具体的功能之前，我们来回顾一下刚才讲过的后端开发流程
-
-![image-20231015165638957](docs/images/image-20231015165638957.png)
-
-其中，模块开发最耗时的是设计阶段，包含了需求分析、评估工期、表结构设计、接口设计这几部分
-
-如果这几步我们都能顺利完成，那么功能开发（代码），就水到渠成了
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+> 设计阶段最耗时，包含需求分析、工期评估、表结构设计、接口设计。这几步扎实完成后，编码水到渠成。
