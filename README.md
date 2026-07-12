@@ -6,7 +6,7 @@
 
 <h3 style="color: #722ed1; font-weight: normal; margin-top: 10px">✨ 科技赋能养老 · 专业成就品质 ✨</h3>
 
-<p style="color: #595959; max-width: 700px; line-height: 1.8">
+<p align="center" style="color: #595959; max-width: 700px; line-height: 1.8">
   基于 SpringBoot + Vue 3 的智慧养老综合解决方案<br/>
   整合入住管理、服务记录、财务管理、家属交互等核心模块<br/>
   助力养老机构数字化转型
