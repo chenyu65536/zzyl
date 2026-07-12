@@ -14,16 +14,29 @@
 
 <div style="margin: 20px 0">
   <a href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html"><img src="https://img.shields.io/badge/Java-11-orange?style=for-the-badge&logo=java"/></a>
-  <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring%20Boot-2.7.4-brightgreen?style=for-the-badge&logo=spring"/></a>
-  <a href="https://projectlombok.org/"><img src="https://img.shields.io/badge/Lombok-1.18.22-yellow?style=for-the-badge&logo=lombok"/></a>
+  <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring_Boot-2.7.4-brightgreen?style=for-the-badge&logo=springboot"/></a>
+  <a href="https://spring.io/projects/spring-security"><img src="https://img.shields.io/badge/Spring_Security-5.7.3-red?style=for-the-badge&logo=spring"/></a>
+  <a href="https://dev.mysql.com/doc/"><img src="https://img.shields.io/badge/MySQL-8.0.19-blue?style=for-the-badge&logo=mysql"/></a>
   <a href="https://mybatis.plus/"><img src="https://img.shields.io/badge/MyBatis_Plus-2.2.0-green?style=for-the-badge&logo=mybatis"/></a>
+  <a href="https://github.com/pagehelper/Mybatis-PageHelper"><img src="https://img.shields.io/badge/PageHelper-1.3.0-green?style=for-the-badge&logo=mybatis"/></a>
   <a href="https://github.com/alibaba/druid"><img src="https://img.shields.io/badge/Druid-1.2.1-blueviolet?style=for-the-badge&logo=alibabacloud"/></a>
-  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=for-the-badge&logo=fastjson"/></a>
-  <a href="https://jwt.io/"><img src="https://img.shields.io/badge/JWT-3.8.1-lightgrey?style=for-the-badge&logo=jsonwebtokens"/></a>
-  <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-3-brightgreen?style=for-the-badge&logo=vuedotjs"/></a>
-  <a href="https://tdesign.tencent.com/"><img src="https://img.shields.io/badge/TDesign-UI-blue?style=for-the-badge&logo=tencent"/></a>
-  <a href="https://activiti.org/"><img src="https://img.shields.io/badge/Activiti-7.1.0-orange?style=for-the-badge&logo=activiti"/></a>
   <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-6.x-red?style=for-the-badge&logo=redis"/></a>
+  <a href="https://github.com/redisson/redisson"><img src="https://img.shields.io/badge/Redisson-3.11.2-red?style=for-the-badge&logo=redis"/></a>
+  <a href="https://www.activiti.org/"><img src="https://img.shields.io/badge/Activiti-7.1.0-orange?style=for-the-badge&logo=activiti"/></a>
+  <a href="https://jwt.io/"><img src="https://img.shields.io/badge/JWT-3.8.1-lightgrey?style=for-the-badge&logo=jsonwebtokens"/></a>
+  <a href="https://github.com/jjwt/jjwt"><img src="https://img.shields.io/badge/JJWT-0.9.1-lightgrey?style=for-the-badge"/></a>
+  <a href="https://projectlombok.org/"><img src="https://img.shields.io/badge/Lombok-1.18.22-yellow?style=for-the-badge&logo=lombok"/></a>
+  <a href="https://hutool.cn/"><img src="https://img.shields.io/badge/Hutool-5.8.0.M3-green?style=for-the-badge&logo=hutool"/></a>
+  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=for-the-badge&logo=fastjson"/></a>
+  <a href="https://github.com/orika-mapper/orika"><img src="https://img.shields.io/badge/Orika-1.5.4-blue?style=for-the-badge"/></a>
+  <a href="https://github.com/zxing/zxing"><img src="https://img.shields.io/badge/ZXing-3.3.3-blue?style=for-the-badge"/></a>
+  <a href="https://github.com/penggle/kaptcha"><img src="https://img.shields.io/badge/Kaptcha-2.3.2-yellow?style=for-the-badge"/></a>
+  <a href="https://github.com/oshi/oshi"><img src="https://img.shields.io/badge/OSHI-5.6.0-darkgreen?style=for-the-badge"/></a>
+  <a href="https://www.xuxueli.info/xxl-job/"><img src="https://img.shields.io/badge/XXL_Job-2.3.0-green?style=for-the-badge&logo=xxllab"/></a>
+  <a href="https://github.com/xiaoymin/knife4j"><img src="https://img.shields.io/badge/Knife4j-3.0.3-green?style=for-the-badge"/></a>
+  <a href="https://www.alibabacloud.com/product/oss"><img src="https://img.shields.io/badge/Aliyun_OSS-3.10.2-orange?style=for-the-badge&logo=alibabacloud"/></a>
+  <a href="https://www.alibabacloud.com/product/iot"><img src="https://img.shields.io/badge/Aliyun_IoT-AMQP-blue?style=for-the-badge&logo=alibabacloud"/></a>
+  <a href="https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient"><img src="https://img.shields.io/badge/WeChat_Pay-0.4.7-green?style=for-the-badge&logo=wechat"/></a>
 </div>
 
 </div>
