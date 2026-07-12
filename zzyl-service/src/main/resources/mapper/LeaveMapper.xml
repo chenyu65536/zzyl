@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.LeaveMapper">
+    <resultMap id="BaseResultMap" type="com.zzyl.entity.Leave">
+        <id column="id" property="id"/>
+        <result column="leave_code" property="leaveCode"/>
+        <result column="title" property="title"/>
+        <result column="elder_id" property="elderId"/>
+        <result column="name" property="name"/>
+        <result column="id_card_no" property="idCardNo"/>
+        <result column="phone" property="phone"/>
+        <result column="nursing_level_name" property="nursingLevelName"/>
+        <result column="bed_no" property="bedNo"/>
+        <result column="counselor" property="counselor"/>
+        <result column="leave_start_time" property="leaveStartTime"/>
+        <result column="leave_end_time" property="leaveEndTime"/>
+        <result column="leave_reason" property="leaveReason"/>
+        <result column="remark" property="remark"/>
+        <result column="applicat" property="applicat"/>
+        <result column="applicat_id" property="applicatId"/>
+        <result column="dept_no" property="deptNo"/>
+        <result column="create_time" property="createTime"/>
+        <result column="flow_status" property="flowStatus"/>
+        <result column="status" property="status"/>
+        <result column="create_by" property="createBy"/>
+    </resultMap>
+
+    <insert id="createLeave" parameterType="com.zzyl.entity.Leave" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO leave(leave_code, title, elder_id, name, id_card_no, phone, nursing_level_name,
+                            bed_no, counselor, leave_start_time, leave_end_time, leave_reason, remark,
+                            applicat, applicat_id, dept_no, create_time, flow_status, status, create_by)
+        VALUES (#{leaveCode}, #{title}, #{elderId}, #{name}, #{idCardNo}, #{phone}, #{nursingLevelName},
+                #{bedNo}, #{counselor}, #{leaveStartTime}, #{leaveEndTime}, #{leaveReason}, #{remark},
+                #{applicat}, #{applicatId}, #{deptNo}, #{createTime}, #{flowStatus}, #{status}, #{createBy})
+    </insert>
+
+    <sql id="Base_Column_List">
+        leave_code, title, elder_id, name, id_card_no, phone, nursing_level_name,
+        bed_no, counselor, leave_start_time, leave_end_time, leave_reason, remark,
+        applicat, applicat_id, dept_no, create_time, flow_status, status, create_by
+    </sql>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM leave
+        WHERE status = 2
+        <if test="leaveCode != null and leaveCode != ''">
+            AND leave_code = #{leaveCode}
+        </if>
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="idCardNo != null and idCardNo != ''">
+            AND id_card_no = #{idCardNo}
+        </if>
+        <if test="startTime != null and endTime != null">
+            AND leave_start_time BETWEEN #{startTime} AND #{endTime}
+        </if>
+        <if test="params.dataScope != null">
+            AND ${params.dataScope}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>

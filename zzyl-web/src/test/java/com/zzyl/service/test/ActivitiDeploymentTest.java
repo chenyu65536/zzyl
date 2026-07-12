@@ -42,4 +42,18 @@ public class ActivitiDeploymentTest {
         System.out.println(deployment.getId());
         System.out.println(deployment.getName());
     }
+
+    @Test
+    public void testDeploymentByLeave(){
+
+        String fileName = "bpmn/leave.bpmn";
+        //定义流程
+        Deployment deployment = repositoryService.createDeployment()
+                .addClasspathResource(fileName)
+                .name("leave")
+                .deploy();
+        //部署流程
+        System.out.println(deployment.getId());
+        System.out.println(deployment.getName());
+    }
 }

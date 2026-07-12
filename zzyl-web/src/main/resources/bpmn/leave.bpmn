@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:activiti="http://activiti.org/bpmn" id="sample-diagram" targetNamespace="http://activiti.org/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="leave" name="leave" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1">
+      <bpmn2:outgoing>Flow_start</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:userTask id="Activity_apply" name="请假申请" activiti:formKey="0" activiti:assignee="${assignee0}">
+      <bpmn2:incoming>Flow_start</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_apply</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="Activity_approval" name="护理组长审批-处理" activiti:formKey="1" activiti:assignee="${assignee1}">
+      <bpmn2:incoming>Flow_apply</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_approval</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="Flow_start" sourceRef="StartEvent_1" targetRef="Activity_apply" />
+    <bpmn2:sequenceFlow id="Flow_apply" sourceRef="Activity_apply" targetRef="Activity_approval" />
+    <bpmn2:sequenceFlow id="Flow_approval" sourceRef="Activity_approval" targetRef="EndEvent_1" />
+    <bpmn2:endEvent id="EndEvent_1">
+      <bpmn2:incoming>Flow_approval</bpmn2:incoming>
+    </bpmn2:endEvent>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="leave">
+      <bpmndi:BPMNEdge id="Flow_start_di" bpmnElement="Flow_start">
+        <di:waypoint x="342" y="222" />
+        <di:waypoint x="410" y="222" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_apply_di" bpmnElement="Flow_apply">
+        <di:waypoint x="510" y="222" />
+        <di:waypoint x="550" y="222" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_approval_di" bpmnElement="Flow_approval">
+        <di:waypoint x="650" y="222" />
+        <di:waypoint x="710" y="222" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="342" y="204" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_apply_di" bpmnElement="Activity_apply">
+        <dc:Bounds x="410" y="182" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_approval_di" bpmnElement="Activity_approval">
+        <dc:Bounds x="550" y="182" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0gfqjwo_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="710" y="204" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
