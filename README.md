@@ -8,7 +8,7 @@
 
 <p align="center" style="color: #595959; max-width: 700px; line-height: 1.8">
   基于 SpringBoot + Vue 3 的智慧养老综合解决方案<br/>
-  整合入住管理、服务记录、财务管理、家属交互等核心模块<br/>
+  整合入住管理、服务记录、财务管理、请假审批、家属交互等核心模块<br/>
   助力养老机构数字化转型
 </p>
 
@@ -19,11 +19,13 @@
   <a href="https://mybatis.plus/"><img src="https://img.shields.io/badge/MyBatis_Plus-2.2.0-green?style=for-the-badge&logo=mybatis"/></a>
 </div>
 <div style="margin: 10px 0">
-  <a href="https://github.com/alibaba/druid"><img src="https://img.shields.io/badge/Druid-1.2.1-blueviolet?style=flat-square&logo=alibabacloud"/></a>
-  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=flat-square"/></a>
-  <a href="https://jwt.io/"><img src="https://img.shields.io/badge/JWT-3.8.1-lightgrey?style=flat-square&logo=jsonwebtokens"/></a>
-  <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-3-brightgreen?style=flat-square&logo=vuedotjs"/></a>
-  <a href="https://tdesign.tencent.com/"><img src="https://img.shields.io/badge/TDesign-UI-blue?style=flat-square&logo=tencent"/></a>
+  <a href="https://github.com/alibaba/druid"><img src="https://img.shields.io/badge/Druid-1.2.1-blueviolet?style=for-the-badge&logo=alibabacloud"/></a>
+  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=for-the-badge"/></a>
+  <a href="https://jwt.io/"><img src="https://img.shields.io/badge/JWT-3.8.1-lightgrey?style=for-the-badge&logo=jsonwebtokens"/></a>
+  <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-3-brightgreen?style=for-the-badge&logo=vuedotjs"/></a>
+  <a href="https://tdesign.tencent.com/"><img src="https://img.shields.io/badge/TDesign-UI-blue?style=for-the-badge&logo=tencent"/></a>
+  <a href="https://activiti.org/"><img src="https://img.shields.io/badge/Activiti-7.1.0-orange?style=for-the-badge&logo=activiti"/></a>
+  <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-6.x-red?style=for-the-badge&logo=redis"/></a>
 </div>
 
 </div>
