@@ -17,10 +17,8 @@
   <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring%20Boot-2.7.4-brightgreen?style=for-the-badge&logo=spring"/></a>
   <a href="https://projectlombok.org/"><img src="https://img.shields.io/badge/Lombok-1.18.22-yellow?style=for-the-badge&logo=lombok"/></a>
   <a href="https://mybatis.plus/"><img src="https://img.shields.io/badge/MyBatis_Plus-2.2.0-green?style=for-the-badge&logo=mybatis"/></a>
-</div>
-<div style="margin: 10px 0">
   <a href="https://github.com/alibaba/druid"><img src="https://img.shields.io/badge/Druid-1.2.1-blueviolet?style=for-the-badge&logo=alibabacloud"/></a>
-  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=for-the-badge"/></a>
+  <a href="https://github.com/alibaba/fastjson"><img src="https://img.shields.io/badge/FastJSON-1.2.75-red?style=for-the-badge&logo=fastjson"/></a>
   <a href="https://jwt.io/"><img src="https://img.shields.io/badge/JWT-3.8.1-lightgrey?style=for-the-badge&logo=jsonwebtokens"/></a>
   <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-3-brightgreen?style=for-the-badge&logo=vuedotjs"/></a>
   <a href="https://tdesign.tencent.com/"><img src="https://img.shields.io/badge/TDesign-UI-blue?style=for-the-badge&logo=tencent"/></a>
