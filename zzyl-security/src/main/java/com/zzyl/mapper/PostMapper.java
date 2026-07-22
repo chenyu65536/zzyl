@@ -6,6 +6,7 @@ import com.zzyl.entity.Post;
 import com.zzyl.vo.PostVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -45,4 +46,7 @@ public interface PostMapper {
     public int deletePostByIds(@Param("postIds") String[] postIds);
 
     void deletePostByDeptNo(@Param("deptId") String deptId);
+
+    @Select("select * from sys_post where id = #{postId}")
+    Post selectById(Long postId);
 }

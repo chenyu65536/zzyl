@@ -89,5 +89,21 @@ public class DeviceController extends BaseController {
         return ResponseResult.success();
     }
 
+    @PostMapping("/QueryDevicePropertyData")
+    @ApiOperation(value = "查看指定设备的属性历史数据", notes = "查看指定设备的属性历史数据")
+    public ResponseResult queryDevicePropertyData(@RequestBody QueryDevicePropertyDataRequest request) throws Exception {
+        request.setIotInstanceId(iotInstanceId);
+        QueryDevicePropertyDataResponse response = client.queryDevicePropertyData(request);
+        return ResponseResult.success(response.getBody().getData());
+    }
+
+    @PostMapping("/QueryDeviceEventData")
+    @ApiOperation(value = "查看指定设备的事件历史数据", notes = "查看指定设备的事件历史数据")
+    public ResponseResult queryDeviceEventData(@RequestBody QueryDeviceEventDataRequest request) throws Exception {
+        request.setIotInstanceId(iotInstanceId);
+        QueryDeviceEventDataResponse response = client.queryDeviceEventData(request);
+        return ResponseResult.success(response.getBody().getData());
+    }
+
 }
 

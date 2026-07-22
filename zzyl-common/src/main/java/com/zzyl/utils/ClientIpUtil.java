@@ -1,8 +1,9 @@
 package com.zzyl.utils;
 
 import com.google.common.net.InetAddresses;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,8 +11,9 @@ import javax.servlet.http.HttpServletRequest;
  * 请求人的ip
  * @author itheima
  */
-@Slf4j
 public class ClientIpUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(ClientIpUtil.class);
 
     private static final String HN_CND_SRC_IP = "cdn-src-ip";
     private static final String HN_X_REAL_IP = "x-real-ip";

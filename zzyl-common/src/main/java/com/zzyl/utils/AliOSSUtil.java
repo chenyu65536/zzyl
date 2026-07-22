@@ -6,14 +6,16 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Data
 @AllArgsConstructor
-@Slf4j
 public class AliOSSUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(AliOSSUtil.class);
 
     private String endpoint;
     private String accessKeyId;

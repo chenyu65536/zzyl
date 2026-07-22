@@ -60,8 +60,11 @@ public class UserDto extends BaseDto {
     @ApiModelProperty(value = "角色Id【当前】")
     private Long roleId;
 
+    @ApiModelProperty(value = "密码")
+    private String password;
+
     @Builder
-    public UserDto(String username, String dataState, String email, String nickName, String post, String dept, String realName, String mobile, String sex, String remark, String[] checkedIds, Set<String> roleVoIds,  String deptNo, String postNo, Long roleId) {
+    public UserDto(String username, String dataState, String email, String nickName, String post, String dept, String realName, String mobile, String sex, String remark, String[] checkedIds, Set<String> roleVoIds,  String deptNo, String postNo, Long roleId, String password) {
         this.username = username;
         this.dataState = dataState;
         this.email = email;
@@ -77,5 +80,6 @@ public class UserDto extends BaseDto {
         this.deptNo = deptNo;
         this.postNo = postNo;
         this.roleId = roleId;
+        this.password = password;
     }
 }

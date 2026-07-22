@@ -1,14 +1,10 @@
 package com.zzyl.enums;
 
 import com.zzyl.base.IBasicEnum;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  *  基础枚举
  */
-@Getter
-@AllArgsConstructor
 public enum BasicEnum implements IBasicEnum {
 
     SUCCEED(200,"操作成功"),
@@ -19,9 +15,24 @@ public enum BasicEnum implements IBasicEnum {
     /**
      * 编码
      */
-    public int code;
+    private final int code;
     /**
      * 信息
      */
-    public String msg;
+    private final String msg;
+
+    BasicEnum(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    @Override
+    public int getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMsg() {
+        return msg;
+    }
 }

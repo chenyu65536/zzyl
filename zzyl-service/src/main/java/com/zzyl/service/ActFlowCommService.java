@@ -78,6 +78,15 @@ public interface ActFlowCommService {
      */
     public Integer isCurrentUserAndStep(String taskId, Integer status, Retreat retreat) ;
 
+    /**
+     * 是否查看当前审核用户的任务
+     * @param taskId
+     * @param status
+     * @param leave
+     * @return
+     */
+    public Integer isCurrentUserAndStep(String taskId, Integer status, Leave leave) ;
+
 
     /**
      * 驳回任务

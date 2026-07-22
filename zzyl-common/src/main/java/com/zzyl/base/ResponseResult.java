@@ -3,11 +3,8 @@ package com.zzyl.base;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zzyl.utils.HttpStatus;
 import com.zzyl.utils.StringUtils;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,61 +12,69 @@ import java.util.Date;
 /**
  *  返回结果
  */
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@ApiModel(value = "返回结果")
 public class ResponseResult<T> implements Serializable {
 
-    /**
-     * 响应返回编码
-     */
     @ApiModelProperty(value = "状态码")
     private int code;
 
-    /**
-     * 响应返回信息
-     */
     @ApiModelProperty(value = "状态信息")
     private String msg;
 
-    /**
-     * 返回结果
-     */
     @ApiModelProperty(value = "返回结果")
     private T data;
 
-    /**
-     * 创建时间,处理json的时间参数解析
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(value = "操作时间")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     private Date operationTime;
 
-    /**
-     * 初始化一个新创建的 AjaxResult 对象
-     *
-     * @param code 状态码
-     * @param msg  返回内容
-     */
+    public ResponseResult() {
+    }
+
     public ResponseResult(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    /**
-     * 初始化一个新创建的 AjaxResult 对象
-     *
-     * @param code 状态码
-     * @param msg  返回内容
-     * @param data 数据对象
-     */
     public ResponseResult(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
+        this.operationTime = new Date();
         if (StringUtils.isNotNull(data)) {
             this.data = data;
         }
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public Date getOperationTime() {
+        return operationTime;
+    }
+
+    public void setOperationTime(Date operationTime) {
+        this.operationTime = operationTime;
     }
 
     /**

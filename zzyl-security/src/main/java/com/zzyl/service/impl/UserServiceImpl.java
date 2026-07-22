@@ -224,6 +224,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean modifyPasswords(UserDto userDto) {
+        String newPassword = bCryptPasswordEncoder.encode(userDto.getPassword());
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setPassword(newPassword);
+        int flag = userMapper.updateByPrimaryKeySelective(user);
+        return flag > 0;
+    }
+
+    @Override
+    public Boolean cmodifyPasswords(UserDto userDto) {
+        User user = userMapper.selectById(userDto.getId());
+        if (user == null || EmptyUtil.isNullOrEmpty(user.getPassword())) {
+            return false;
+        }
+        return bCryptPasswordEncoder.matches(userDto.getPassword(), user.getPassword());
+    }
+
+    @Override
     public int deleteUserByIds(List<Long> userIds) {
         // 删除用户与角色关联
         userRoleService.deleteUserRoleInUserId(userIds);

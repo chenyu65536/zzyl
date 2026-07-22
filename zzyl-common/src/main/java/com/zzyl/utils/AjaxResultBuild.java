@@ -14,12 +14,11 @@ public class AjaxResultBuild {
     public static <T> ResponseResult<T> build(IBasicEnum basicEnumIntface, T t){
 
          //构建对象
-        return ResponseResult.<T>builder()
-            .code(basicEnumIntface.getCode())
-            .msg(basicEnumIntface.getMsg())
-            .operationTime(new Date())
-            .data(t)
-            .build();
+        return new ResponseResult<>(
+            basicEnumIntface.getCode(),
+            basicEnumIntface.getMsg(),
+            t
+        );
     }
 
     /**

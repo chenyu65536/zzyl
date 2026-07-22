@@ -79,6 +79,20 @@ public interface UserService {
     Boolean resetPasswords(String userId);
 
     /**
+     * 修改密码
+     * @param userDto 用户DTO
+     * @return 是否成功
+     */
+    Boolean modifyPasswords(UserDto userDto);
+
+    /**
+     * 校验密码
+     * @param userDto 用户DTO
+     * @return 是否成功
+     */
+    Boolean cmodifyPasswords(UserDto userDto);
+
+    /**
      * 根据用户id集合删除用户
      * @param userIds
      * @return

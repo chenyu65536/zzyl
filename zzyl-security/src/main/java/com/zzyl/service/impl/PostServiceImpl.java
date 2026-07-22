@@ -184,6 +184,12 @@ public class PostServiceImpl implements PostService {
         return postMapper.deletePostByIds(postIds);
     }
 
+    @Override
+    public PostVo selectPostById(String postId) {
+        Post post = postMapper.selectById(Long.valueOf(postId));
+        return BeanConv.toBean(post, PostVo.class);
+    }
+
     /**
      * 校验岗位是否分配用户
      * @param postIds

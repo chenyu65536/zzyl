@@ -131,6 +131,12 @@ public class Leave extends BaseEntity {
     @ApiModelProperty(value = "状态")
     private Integer status;
 
+    /**
+     * 流程任务id（activiti任务id）
+     */
+    @ApiModelProperty(value = "流程任务id")
+    private String taskId;
+
     // 流程状态枚举
     @Alias("LeaveFlowStatus")
     public enum FlowStatus {

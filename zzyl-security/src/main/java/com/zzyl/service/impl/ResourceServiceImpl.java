@@ -313,6 +313,13 @@ public class ResourceServiceImpl implements ResourceService {
         return list;
     }
 
+    @Override
+    public Boolean enableResource(ResourceDto resourceDto) {
+        Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
+        int flag = resourceMapper.updateByPrimaryKeySelective(resource);
+        return flag > 0;
+    }
+
     /**
      *  递归按钮
      */

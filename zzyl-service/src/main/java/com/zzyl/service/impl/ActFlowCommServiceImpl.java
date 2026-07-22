@@ -382,6 +382,28 @@ public class ActFlowCommServiceImpl implements ActFlowCommService {
         return 3;
     }
 
+    /**
+     * 是否查看当前审核用户的任务
+     * @param taskId
+     * @param status
+     * @param leave
+     * @return
+     */
+    @Override
+    public Integer isCurrentUserAndStep(String taskId, Integer status, Leave leave) {
+        HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
+        if (leave.getFlowStatus().equals(status) && leave.getStatus().equals(CheckIn.Status.APPLICATION.getCode())) {
+            if (historicTaskInstance.getFormKey().equals(leave.getFlowStatus().toString())) {
+                return 1;
+            }
+            return 0;
+        }
+        if (historicTaskInstance.getFormKey().equals((leave.getFlowStatus() - 1) + "") && leave.getStatus().equals(CheckIn.Status.APPLICATION.getCode())) {
+            return 2;
+        }
+        return 3;
+    }
+
 
     /**
      * 驳回任务

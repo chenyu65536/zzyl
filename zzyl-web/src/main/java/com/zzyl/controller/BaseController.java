@@ -70,5 +70,12 @@ public class BaseController {
         return ResponseResult.error(message);
     }
 
+    /**
+     * 返回成功数据
+     */
+    public ResponseResult success(Object data, String message) {
+        return ResponseResult.success(message, data);
+    }
+
 
 }

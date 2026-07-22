@@ -54,4 +54,11 @@ public interface PostService {
      * @return
      */
     int deletePostByIds(String[] postIds);
+
+    /**
+     * 根据岗位编号获取详细信息
+     * @param postId 岗位编号
+     * @return PostVo
+     */
+    PostVo selectPostById(String postId);
 }

@@ -4,12 +4,12 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.CreateBucketRequest;
-import com.aliyun.oss.model.SetBucketLoggingRequest;
 import com.zzyl.properties.AliOssConfigProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 @Slf4j
 @Configuration
@@ -18,28 +18,34 @@ public class OssAliyunAutoConfig {
     @Autowired
     AliOssConfigProperties aliOssConfigProperties;
 
+    /**
+     * 创建阿里云 OSS 客户端。
+     * <p>
+     * 修改点：改为 @Lazy 懒加载，避免应用启动阶段强制访问 OSS；
+     * 同时去掉启动时的 setBucketLogging（需 bucket 所有权，且非必需），
+     * 并对建桶逻辑做异常兜底，OSS 凭证失效时仅告警、不阻断应用启动。
+     *
+     * @return OSS 客户端实例
+     */
     @Bean
-    public OSS ossClient(){
+    @Lazy
+    public OSS ossClient() {
         log.info("-----------------开始创建OSSClient--------------------");
         OSS ossClient = new OSSClientBuilder().build(aliOssConfigProperties.getEndpoint(),
                 aliOssConfigProperties.getAccessKeyId(), aliOssConfigProperties.getAccessKeySecret());
-        //判断容器是否存在,不存在就创建
-        if (!ossClient.doesBucketExist(aliOssConfigProperties.getBucketName())) {
-            ossClient.createBucket(aliOssConfigProperties.getBucketName());
-            CreateBucketRequest createBucketRequest = new CreateBucketRequest(aliOssConfigProperties.getBucketName());
-            //设置问公共可读
-            createBucketRequest.setCannedACL(CannedAccessControlList.PublicRead);
-            ossClient.createBucket(createBucketRequest);
+        try {
+            // 判断容器是否存在,不存在就创建（bucket 建议在控制台预先创建）
+            if (!ossClient.doesBucketExist(aliOssConfigProperties.getBucketName())) {
+                CreateBucketRequest createBucketRequest =
+                        new CreateBucketRequest(aliOssConfigProperties.getBucketName());
+                // 设置为公共可读
+                createBucketRequest.setCannedACL(CannedAccessControlList.PublicRead);
+                ossClient.createBucket(createBucketRequest);
+            }
+        } catch (com.aliyun.oss.OSSException | com.aliyun.oss.ClientException e) {
+            // 修改点：凭证无效或无 bucket 权限时不再让应用崩溃，仅记录告警
+            log.warn("OSS 初始化校验失败（不影响应用启动，上传功能将不可用）: {}", e.getMessage());
         }
-
-        //添加客户端访问日志
-        SetBucketLoggingRequest request = new SetBucketLoggingRequest(aliOssConfigProperties.getBucketName());
-        // 设置存放日志文件的存储空间。
-        request.setTargetBucket(aliOssConfigProperties.getBucketName());
-        // 设置日志文件存放的目录。
-        request.setTargetPrefix(aliOssConfigProperties.getBucketName());
-        ossClient.setBucketLogging(request);
-
         log.info("-----------------结束创建OSSClient--------------------");
         return ossClient;
     }

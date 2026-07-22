@@ -48,5 +48,7 @@ public interface UserMapper {
     @Update("update sys_user set is_leader =  1 where id = #{leaderId} and dept_no = #{deptNo}")
     void updateByUserIdAndLeaderId(@Param("leaderId")Long leaderId,@Param("deptNo")String deptNo);
 
+    @Select("select * from sys_user where id = #{id}")
+    User selectById(Long id);
 
 }

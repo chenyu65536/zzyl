@@ -1,0 +1,12 @@
+{
+  "birthdate": "1955-09-12",
+  "address": "多福多寿",
+  "nationality": "汉族",
+  "phone": "13212346789",
+  "elderDto": "{\"name\":\"李小二\",\"idCardNo\":\"132123195509121234\",\"phone\":\"13212346789\",\"age\":\"68\",\"sex\":\"0\",\"params\":{}}",
+  "idCardNo": "132123195509121234",
+  "sex": 0,
+  "name": "李小二",
+  "checkInOtherDto": "{\"memberElderDtos\":[{\"name\":\"李大\",\"phone\":\"13234561234\",\"refName\":\"子女\",\"refId\":\"0\",\"params\":{}}],\"url1\":\"https://itheim.oss-cn-beijing.aliyuncs.com/753ca993-f6e1-4cfd-8639-5538ad13dcb6.png\",\"url2\":\"https://itheim.oss-cn-beijing.aliyuncs.com/5a8e870e-e699-44a8-a3dc-4e143979cf6f.png\",\"url3\":\"https://itheim.oss-cn-beijing.aliyuncs.com/34212e19-f8bc-453a-aebe-d2aa504ee3fc.png\"}",
+  "age": 68
+}

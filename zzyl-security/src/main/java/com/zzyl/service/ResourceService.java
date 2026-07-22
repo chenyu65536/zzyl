@@ -76,4 +76,11 @@ public interface ResourceService {
      * @return
      */
     List<MenuVo> buttons();
+
+    /**
+     * 启用禁用资源
+     * @param resourceDto 资源DTO
+     * @return 是否成功
+     */
+    Boolean enableResource(ResourceDto resourceDto);
 }

@@ -109,11 +109,31 @@ public class UserController {
     }
 
     @GetMapping("current-user")
-    @ApiOperation(value = "当前用户",notes = "当前用户")
-    ResponseResult<UserVo> findCurrentUser()  {
+    @ApiOperation(value = "当前用户信息",notes = "当前用户信息")
+    public ResponseResult<UserVo> getUserInfo()  {
         String subject = UserThreadLocal.getSubject();
         UserVo userVo = JSONObject.parseObject(subject,UserVo.class);
         return ResponseResult.success(userVo);
+    }
+
+    /**
+     *  修改密码
+     */
+    @PutMapping("modify-passwords")
+    @ApiOperation(value = "修改密码",notes = "修改密码")
+    public ResponseResult<Boolean> modifyPasswords(@RequestBody UserDto userDto) {
+        Boolean flag = userService.modifyPasswords(userDto);
+        return ResponseResult.success(flag);
+    }
+
+    /**
+     *  校验密码
+     */
+    @PutMapping("cmodify-passwords")
+    @ApiOperation(value = "校验密码",notes = "校验密码")
+    public ResponseResult<Boolean> cmodifyPasswords(@RequestBody UserDto userDto) {
+        Boolean flag = userService.cmodifyPasswords(userDto);
+        return ResponseResult.success(flag);
     }
 
 

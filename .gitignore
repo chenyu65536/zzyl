@@ -1,9 +1,55 @@
+# ===================== 构建产物（Java） =====================
+target/
+**/target/
+*.class
+*.jar
+*.war
+*.log
+
+# ===================== 前端构建产物 =====================
+node_modules
+dist/
+unpackage/
+**/dist/
+**/unpackage/
+*.local
+.env.*.local
+
+# ===================== IDE / 编辑器 =====================
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# ===================== OS 生成文件 =====================
+.DS_Store
+Thumbs.db
+
+# ===================== 密钥 / 本地敏感配置（禁止上传 gitee） =====================
+# 真实配置含：阿里云 OSS accessKeyId/Secret、微信 appSecret、JWT 密钥、数据库密码等。
+# 仅保留在本地，仓库只提交 -example 模板；克隆后复制为对应文件并填入自己的密钥。
+zzyl-web/src/main/resources/application.yml
+# 前端环境变量（可能含 API key）
+.env
+.env.*
+
+# ===================== 数据库 / 大文件 =====================
+*.sql
+zhyl-auth.sql
+*.zip
+zhyl-sql.zip
+
+# ===================== 工具 / 个人配置 =====================
+.claude/
+.codebuddy/
+.specify/
+settings-linux.xml
+.mvn/maven.config
+
+# ===================== 已归档的压缩包 =====================
 /后台/project-zhyl-admin-vue3-java.zip
 /小程序/project-zhyl-xcx-uniapp-java.zip
 /小程序/mp-weixin.zip
-node_modules
-/.idea/
-*/target/
-.idea
 /logs
-/*.iml

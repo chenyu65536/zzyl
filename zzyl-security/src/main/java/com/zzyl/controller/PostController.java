@@ -108,5 +108,28 @@ public class PostController {
         return ResponseResult.success(postVoList);
     }
 
+    /**
+     *  获取岗位选择框列表
+     * @return
+     */
+    @GetMapping("optionselect")
+    @ApiOperation(value = "岗位选择框列表",notes = "岗位选择框列表")
+    public ResponseResult<List<PostVo>> optionselect() {
+        List<PostVo> list = postService.findPostList(new PostDto());
+        return ResponseResult.success(list);
+    }
+
+    /**
+     *  根据岗位编号获取详细信息
+     * @param postId 岗位编号
+     * @return PostVo
+     */
+    @GetMapping("system/post/{postId}")
+    @ApiOperation(value = "根据岗位编号获取详细信息",notes = "根据岗位编号获取详细信息")
+    public ResponseResult<PostVo> getPostInfo(@PathVariable("postId") String postId) {
+        PostVo postVo = postService.selectPostById(postId);
+        return ResponseResult.success(postVo);
+    }
+
 
 }

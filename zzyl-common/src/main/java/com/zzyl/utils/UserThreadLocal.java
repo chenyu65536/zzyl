@@ -2,14 +2,16 @@ package com.zzyl.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zzyl.base.BaseVo;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * subjectContent.java
  *  用户主体对象
  */
-@Slf4j
 public class UserThreadLocal {
+
+    private static final Logger log = LoggerFactory.getLogger(UserThreadLocal.class);
 
 
     /***
@@ -86,7 +88,18 @@ public class UserThreadLocal {
             return null;
         }
         BaseVo baseVo = JSONObject.parseObject(subject, BaseVo.class);
-        return baseVo.getId() ;
+        if (baseVo == null) {
+            return null;
+        }
+        // Use reflection to access the id field since Lombok getters may not be generated
+        try {
+            java.lang.reflect.Field idField = BaseVo.class.getDeclaredField("id");
+            idField.setAccessible(true);
+            return (Long) idField.get(baseVo);
+        } catch (Exception e) {
+            log.error("获取用户ID失败", e);
+            return null;
+        }
     }
 
 

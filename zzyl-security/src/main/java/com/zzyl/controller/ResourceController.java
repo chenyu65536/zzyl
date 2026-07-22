@@ -128,4 +128,15 @@ public class ResourceController {
         return ResponseResult.success(menus);
     }
 
+    /**
+     * 启用禁用资源
+     * @param resourceDto 资源DTO
+     * @return
+     */
+    @PostMapping("enable")
+    @ApiOperation(value = "启用禁用资源", notes = "启用禁用资源")
+    public ResponseResult<Boolean> enableResource(@RequestBody ResourceDto resourceDto) {
+        return ResponseResult.success(resourceService.enableResource(resourceDto));
+    }
+
 }
