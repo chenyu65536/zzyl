@@ -9,14 +9,14 @@ import type { UserListResult } from '@/api/model/permissionModel'
 export function addDept(params) {
   return request.put<UserListResult>({
     url: '/dept',
-    params
+    data: params
   })
 }
 // 修改部门
 export function editDept(params) {
   return request.patch<UserListResult>({
     url: '/dept',
-    params
+    data: params
   })
 }
 
@@ -24,7 +24,7 @@ export function editDept(params) {
 export function isEnableDept(params) {
   return request.patch<UserListResult>({
     url: '/dept/is_enable',
-    params
+    data: params
   })
 }
 
@@ -38,7 +38,7 @@ export function delDept(id) {
 export function getDeptList(params) {
   return request.post<UserListResult>({
     url: `/dept/list`,
-    params
+    data: params
   })
 }
 // 获取部门下拉树列表
@@ -55,14 +55,14 @@ export function getDeptTree() {
 export function addPost(params) {
   return request.put<UserListResult>({
     url: '/post',
-    params
+    data: params
   })
 }
 // 修改岗位
 export function editPost(params) {
   return request.patch<UserListResult>({
     url: '/post',
-    params
+    data: params
   })
 }
 // 删除岗位
@@ -71,11 +71,11 @@ export function delPost(id) {
     url: `/post/${id}`
   })
 }
-// 获取岗位列表
+// 岗位分页
 export function getPostPageList(params) {
   return request.post<UserListResult>({
     url: `/post/page/${params.pageNum}/${params.pageSize}`,
-    params
+    data: params
   })
 }
 
@@ -83,7 +83,7 @@ export function getPostPageList(params) {
 export function getPostList(params) {
   return request.post<UserListResult>({
     url: `/post/list`,
-    params
+    data: params
   })
 }
 
@@ -107,14 +107,14 @@ export function getPostDetails(postId) {
 export function addUser(params) {
   return request.put<UserListResult>({
     url: '/user',
-    params
+    data: params
   })
 }
-// 添加用户
+// 修改用户
 export function editUser(params) {
   return request.patch<UserListResult>({
     url: '/user',
-    params
+    data: params
   })
 }
 // 删除用户
@@ -128,21 +128,21 @@ export function delUser(userIds) {
 export function restPassword(userId) {
   return request.post<UserListResult>({
     url: `/user/reset-passwords/${userId}`,
-    params: { userId }
+    data: { userId }
   })
 }
 // 用户分页列表
 export function getUserList(params) {
   return request.post<UserListResult>({
     url: `/user/page/${params.pageNum}/${params.pageSize}`,
-    params
+    data: params
   })
 }
 // 获取用户列表
 export function getAllUserList(params) {
   return request.post<UserListResult>({
     url: `/user/list`,
-    params
+    data: params
   })
 }
 /*
@@ -153,28 +153,27 @@ export function getAllUserList(params) {
 export function addRoles(params) {
   return request.put<UserListResult>({
     url: '/role',
-    params
+    data: params
   })
 }
 // 修改角色
 export function editRoles(params) {
   return request.patch<UserListResult>({
     url: '/role',
-    params
+    data: params
   })
 }
 // 删除角色
 export function delRoles(params) {
   return request.delete<UserListResult>({
-    url: `/role/${params.roleIds}`,
-    params
+    url: `/role/${params.roleIds}`
   })
 }
 // 角色分页列表
 export function getRolesList(params) {
   return request.post<UserListResult>({
     url: `/role/page/${params.pageNum}/${params.pageSize}`,
-    params: {
+    data: {
       roleName: params.roleName
     }
   })
@@ -189,7 +188,7 @@ export function getRolesOptionsList() {
 export function editRolesAll(params) {
   return request.patch<UserListResult>({
     url: `/role`,
-    params
+    data: params
   })
 }
 
@@ -200,28 +199,27 @@ export function editRolesAll(params) {
 export function addMenu(params) {
   return request.put<UserListResult>({
     url: '/resource',
-    params
+    data: params
   })
 }
 // 修改菜单
 export function editMenu(params) {
   return request.patch<UserListResult>({
     url: '/resource',
-    params
+    data: params
   })
 }
 // 删除菜单
 export function delMenu(menuId) {
   return request.delete<UserListResult>({
-    url: `/resource/${menuId}`,
-    params: { menuId }
+    url: `/resource/${menuId}`
   })
 }
 // 禁用菜单
 export function enableMenu(params) {
   return request.post<UserListResult>({
     url: '/resource/enable',
-    params
+    data: params
   })
 }
 // 菜单列表
@@ -231,14 +229,14 @@ export function getMenuList(params?: {
 }) {
   return request.post<UserListResult>({
     url: '/resource/list',
-    params
+    data: params
   })
 }
 // 菜单下拉列表
 export function getMenuOptionsList(params) {
   return request.post<UserListResult>({
     url: '/resource/tree',
-    params
+    data: params
   })
 }
 
@@ -246,6 +244,6 @@ export function getMenuOptionsList(params) {
 export function getMenuTreeList(params) {
   return request.post<UserListResult>({
     url: '/resource/tree',
-    params
+    data: params
   })
 }

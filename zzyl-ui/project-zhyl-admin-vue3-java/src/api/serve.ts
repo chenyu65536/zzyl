@@ -130,9 +130,9 @@ export function planAdd(params: FormLevel) {
   })
 }
 // 护理计划编辑
-export function planUpdate(params: ProjecListModel) {
+export function planUpdate(id: number, params: FormLevel) {
   return request.put<PlanListModel>({
-    url: `/nursing/plan/${params.id}`,
+    url: `/nursing/plan/${id}`,
     data: params
   })
 }
@@ -176,11 +176,12 @@ export function changePlanTime(params) {
 }
 // 查看护理任务详情
 export function getTaskDetail(params) {
-  return request.get<ListArrangeResult>({
+  return request.get<PlanListModel>({
     url: `/nursingTask`,
     params
   })
 }
+
 // 给老人设置护理员
 export function setNurseForOlder(params: any) {
   return request.put<PlanListModel>({

@@ -17,7 +17,7 @@ export function getOrderList(params) {
 export function getRefundList(params) {
   return request.post<RefundList>({
     url: '/trade-common-feign/query-refund-record',
-    params
+    data: params
   })
 }
 // 获取订单详情
@@ -44,6 +44,6 @@ export function orderCancel(params) {
 export function orderRefund(params) {
   return request.post<ListModel>({
     url: `/trade-common-feign/refund`,
-    params
+    data: params
   })
 }
