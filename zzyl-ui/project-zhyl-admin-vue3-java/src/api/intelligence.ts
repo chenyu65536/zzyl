@@ -4,70 +4,70 @@ import { request } from '@/utils/request'
 export function getProductList(params) {
   return request.post({
     url: '/iot/QueryProductList',
-    params
+    data: params
   })
 }
 // 获取设备列表
 export function getDeviceList(params) {
   return request.post({
     url: '/iot/QueryDevice',
-    params
+    data: params
   })
 }
 // 添加设备
 export function addDevice(params) {
   return request.post({
     url: '/iot/RegisterDevice',
-    params
+    data: params
   })
 }
 // 编辑设备
 export function editDevice(params) {
   return request.post({
     url: '/iot/UpdateDevice',
-    params
+    data: params
   })
 }
 // 删除设备
 export function deleteDevice(params) {
   return request.delete({
     url: '/iot/DeleteDevice',
-    params
+    data: params
   })
 }
 // 获取设备详情
 export function getDetail(params) {
   return request.post({
     url: '/iot/QueryDeviceDetail',
-    params
+    data: params
   })
 }
 // 详情运行状态事件管理
 export function getPublishedList(params) {
   return request.post({
     url: '/iot/QueryThingModelPublished',
-    params
+    data: params
   })
 }
 // 详情运行状态状态的卡片
 export function getPropertyStatusList(params) {
   return request.post({
     url: '/iot/QueryDevicePropertyStatus',
-    params
+    data: params
   })
 }
 // 查看运行状态的历史数据
 export function getPropertyDataList(params) {
   return request.post({
     url: '/iot/QueryDevicePropertyData',
-    params
+    data: params
   })
 }
 // 详情事件管理的记录
 export function getEventDataList(params) {
   return request.post({
     url: '/iot/QueryDeviceEventData',
-    params
+    data: params
   })
 }
 // 报警规则
@@ -82,14 +82,14 @@ export function getWarnList(params) {
 export function createRule(params) {
   return request.post({
     url: '/alert-rule/create',
-    params
+    data: params
   })
 }
 // 编辑规则
 export function updateRule(params) {
   return request.put({
     url: `/alert-rule/update/${params.id}`,
-    params
+    data: params
   })
 }
 // 删除规则
@@ -121,6 +121,6 @@ export function getDeviceDataList(params) {
 export function deviceUpdate(params) {
   return request.put({
     url: `/device-data/update/${params.id}`,
-    params
+    data: params
   })
 }

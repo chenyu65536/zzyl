@@ -32,21 +32,21 @@ export function getBalanceList(params) {
 export function billPay(params) {
   return request.post({
     url: `/bill/payRecord`,
-    params
+    data: params
   })
 }
 // 创建账单
 export function createBill(params) {
   return request.post({
     url: `/bill`,
-    params
+    data: params
   })
 }
 // 取消
 export function cancelBill(params, id) {
   return request.put({
     url: `/bill/cancel/${id}`,
-    params
+    data: params
   })
 }
 // 账单详情
@@ -59,6 +59,6 @@ export function billDetail(id) {
 export function creatRecharge(params) {
   return request.post({
     url: `/bill/prepaidRechargeRecord`,
-    params
+    data: params
   })
 }

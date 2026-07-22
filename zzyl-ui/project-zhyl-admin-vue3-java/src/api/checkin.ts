@@ -37,28 +37,28 @@ export function getCheckInfo(params) {
 export function applyCheckIn(params) {
   return request.post<FormApply>({
     url: `/checkIn/create`,
-    params
+    data: params
   })
 }
 // 入住评估
 export function assessmentCheckIn(params) {
   return request.post({
     url: `/checkIn/review`,
-    params
+    data: params
   })
 }
 // 提交配置
 export function configSubmit(params) {
   return request.post<ConfigApply>({
     url: `/checkIn`,
-    params
+    data: params
   })
 }
 // 提交签约办理
 export function signSubmit(params) {
   return request.post<SignTransaction>({
     url: `/checkIn/sign`,
-    params
+    data: params
   })
 }
 // 审批通过提交
