@@ -1,0 +1,125 @@
+#服务配置
+server:
+  #端口
+  port: 9995
+  #服务编码
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  application:
+    name: zzyl
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cache:
+    type: redis
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 6MB
+  #数据源配置
+  datasource:
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      # 修改点：主机/库名可按需调整；密码通过环境变量注入，禁止硬编码
+      url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/zhyl-auth?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      username: ${MYSQL_USERNAME:root}
+      password: ${MYSQL_PASSWORD:}
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+  activiti:
+    #是否让activiti自动创建所有的历史表
+    history-level: full
+    #是否需要使用历史表,默认false不使用,而配置true是使用历史表
+    db-history-used: true
+    #流程自动部署，关闭，需要手动部署流程 服务启动的时候自动检查resources目录下的bpmn文件 如果为true自动部署流程
+    check-process-definitions: false
+    #关闭启动服务自动框架部署
+    deployment-mode: never-fail
+# MyBatis配置
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath*:mapper*/*Mapper.xml
+  type-aliases-package: com.zzyl.entity
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 驼峰下划线转换
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-statement-timeout: 60
+    default-fetch-size: 100
+logging:
+  config: classpath:logback.xml
+  level:
+    org.springframework.web.socket: debug
+knife4j:
+  enable: true
+zzyl:
+  framework:
+    security:
+      ignore-url:
+#        - /**
+        - /resource/menus/**
+        - /resource/myButten/**
+        - /customer/**
+        - /security/login
+        - /security/logout
+        - /doc.html
+        - /*-swagger/**
+        - /swagger-resources
+        - /v2/api-docs
+        - /webjars/**
+        - /common/**
+        - /ws/**
+      # 修改点：默认密码通过环境变量注入
+      defaule-password: ${DEFAULT_PASSWORD:}
+    swagger:
+      swagger-path: com.zzyl.controller
+      title: 智慧养老服务
+      description: 智慧养老
+      contact-name: 黑马研究院
+      contact-url: www.itheima.com
+      contact-email: itheima@itcast.cn
+    jwt:
+      # 修改点：JWT 密钥通过环境变量注入，禁止硬编码
+      base64-encoded-secret-key: ${JWT_SECRET_KEY:}
+      ttl: 3600000
+    oss:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      # 修改点：阿里云 OSS 密钥通过环境变量注入
+      accessKeyId: ${ALIYUN_OSS_AK:}
+      accessKeySecret: ${ALIYUN_OSS_SK:}
+      bucketName: itxinfei-zzyl
+  wechat:
+    appId: ${WECHAT_APP_ID:}
+    # 修改点：微信 appSecret 通过环境变量注入
+    appSecret: ${WECHAT_APP_SECRET:}
+  aliyun:
+    # 修改点：阿里云 IoT 密钥通过环境变量注入
+    accessKeyId: ${ALIYUN_IOT_AK:}
+    accessKeySecret: ${ALIYUN_IOT_SK:}
+    consumerGroupId: DEFAULT_GROUP
+    regionId: cn-shanghai
+    iotInstanceId: ${ALIYUN_IOT_INSTANCE_ID:}
+    host: ${ALIYUN_IOT_HOST:}
+
+management:
+  health:
+    rabbit:
+      enabled: false
+xxl:
+  job:
+    admin:
+      addresses: ${XXL_JOB_ADMIN:http://127.0.0.1:8889/xxl-job-admin}
+    executor:
+      appname: zzyl-dev-executor
+      port: 9999
