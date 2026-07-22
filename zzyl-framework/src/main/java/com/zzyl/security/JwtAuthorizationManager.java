@@ -76,7 +76,11 @@ public class JwtAuthorizationManager implements AuthorizationManager<RequestAuth
         }
 
         //如果校验jwtToken通过，则获得userVo对象
-        UserVo userVo = JSONObject.parseObject(String.valueOf(cla.get("currentUser")),UserVo.class);
+        String currentUserJson = String.valueOf(cla.get("currentUser"));
+        UserVo userVo = JSONObject.parseObject(currentUserJson, UserVo.class);
+        if (ObjectUtil.isEmpty(userVo) || EmptyUtil.isNullOrEmpty(userVo.getUsername())) {
+            return new AuthorizationDecision(false);
+        }
 
         //用户剔除校验:redis中最新的userToken与出入的userToken不符合，则认为当前用户被后续用户剔除
         //key:username  value：uuid
@@ -87,13 +91,12 @@ public class JwtAuthorizationManager implements AuthorizationManager<RequestAuth
 
         //如果当前UserToken存活时间少于10分钟，则进行续期
         Long remainTimeToLive = redisTemplate.opsForValue().getOperations().getExpire(jwtTokenKey);
-        if (remainTimeToLive.longValue()<= 600){
+        if (remainTimeToLive != null && remainTimeToLive.longValue() <= 600 && remainTimeToLive.longValue() >= 0) {
             //jwt生成的token也会过期，所以需要重新生成jwttoken
             Map<String, Object> claims = new HashMap<>();
-            String userVoJsonString = String.valueOf(cla.get("currentUser"));
-            claims.put("currentUser", userVoJsonString);
+            claims.put("currentUser", currentUserJson);
 
-            //jwtToken令牌颁布
+            //jwtToken令牌颁布（ttl 单位：毫秒）
             String newJwtToken = JwtUtil.createJWT(jwtTokenManagerProperties.getBase64EncodedSecretKey(), jwtTokenManagerProperties.getTtl(), claims);
             long ttl = Long.valueOf(jwtTokenManagerProperties.getTtl()) / 1000;
 
@@ -101,16 +104,32 @@ public class JwtAuthorizationManager implements AuthorizationManager<RequestAuth
             redisTemplate.expire(UserCacheConstant.USER_TOKEN + userVo.getUsername(), ttl, TimeUnit.SECONDS);
         }
 
-        //当前用户资源是否包含当前URL
-        /*for (String resourceRequestPath : userVo.getResourceRequestPaths()) {
+        // 将当前用户放入线程上下文，供业务层使用
+        UserThreadLocal.setSubject(currentUserJson);
+
+        // 超级管理员拥有全部权限
+        if ("admin".equals(userVo.getUsername())) {
+            return new AuthorizationDecision(true);
+        }
+
+        // 当前用户资源是否包含当前 URL（requestPath 格式：METHOD+URI，如 GET/user/list）
+        if (EmptyUtil.isNullOrEmpty(userVo.getResourceRequestPaths())) {
+            log.warn("用户:{}无任何资源权限，拒绝访问:{}", userVo.getUsername(), targetUrl);
+            return new AuthorizationDecision(false);
+        }
+        for (String resourceRequestPath : userVo.getResourceRequestPaths()) {
+            if (EmptyUtil.isNullOrEmpty(resourceRequestPath)) {
+                continue;
+            }
             boolean isMatch = antPathMatcher.match(resourceRequestPath, targetUrl);
-            if (isMatch){
-                log.info("用户:{}拥有targetUrl权限:{}==========",userVo.getUsername(),targetUrl);
+            if (isMatch) {
+                log.info("用户:{}拥有targetUrl权限:{}", userVo.getUsername(), targetUrl);
                 return new AuthorizationDecision(true);
             }
-        }*/
+        }
 
-        return new AuthorizationDecision(true);
+        log.warn("用户:{}无权限访问:{}", userVo.getUsername(), targetUrl);
+        return new AuthorizationDecision(false);
     }
 
 }

@@ -40,10 +40,12 @@ public class UserTokenIntercept implements HandlerInterceptor {
             String jwtTokenKey = UserCacheConstant.JWT_TOKEN + userToken;
             String jwtToken = redisTemplate.opsForValue().get(jwtTokenKey);
             if (!EmptyUtil.isNullOrEmpty(jwtToken)) {
-                Object userObj = JwtUtil.parseJWT(jwtTokenManagerProperties.getBase64EncodedSecretKey(), jwtToken).get("currentUser");
-                String currentUser = String.valueOf(userObj);
-                //放入当前线程中：用户当前的web直接获得user使用
-                UserThreadLocal.setSubject(currentUser);
+                io.jsonwebtoken.Claims claims = JwtUtil.parseJWT(jwtTokenManagerProperties.getBase64EncodedSecretKey(), jwtToken);
+                if (claims != null && claims.get("currentUser") != null) {
+                    String currentUser = String.valueOf(claims.get("currentUser"));
+                    //放入当前线程中：用户当前的web直接获得user使用
+                    UserThreadLocal.setSubject(currentUser);
+                }
             }
         }
         return true;

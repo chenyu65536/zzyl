@@ -79,7 +79,7 @@ public class UserThreadLocal {
     }
 
     /**
-     * 从当前线程中获取前端后端id
+     * 从当前线程中获取管理端用户id
      * @return 用户id
      */
     public static Long getMgtUserId() {
@@ -87,15 +87,9 @@ public class UserThreadLocal {
         if (ObjectUtil.isEmpty(subject)) {
             return null;
         }
-        BaseVo baseVo = JSONObject.parseObject(subject, BaseVo.class);
-        if (baseVo == null) {
-            return null;
-        }
-        // Use reflection to access the id field since Lombok getters may not be generated
         try {
-            java.lang.reflect.Field idField = BaseVo.class.getDeclaredField("id");
-            idField.setAccessible(true);
-            return (Long) idField.get(baseVo);
+            BaseVo baseVo = JSONObject.parseObject(subject, BaseVo.class);
+            return baseVo == null ? null : baseVo.getId();
         } catch (Exception e) {
             log.error("获取用户ID失败", e);
             return null;

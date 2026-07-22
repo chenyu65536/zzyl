@@ -236,9 +236,32 @@ public class BillServiceImpl implements BillService {
     @Autowired
     private OrderMapper orderMapper;
 
+    /**
+     * C 端场景下校验当前会员是否绑定了指定老人
+     */
+    private void assertMemberOwnsElder(Long elderId) {
+        Long userId = UserThreadLocal.getUserId();
+        if (ObjectUtil.isEmpty(userId)) {
+            return;
+        }
+        if (ObjectUtil.isEmpty(elderId)) {
+            throw new BaseException("账单数据异常");
+        }
+        List<MemberElderVo> bindings = memberElderService.listByMemberId(userId);
+        boolean owned = CollUtil.isNotEmpty(bindings)
+                && bindings.stream().anyMatch(b -> elderId.equals(b.getElderId()));
+        if (!owned) {
+            throw new BaseException("无权操作该账单");
+        }
+    }
+
     @Override
     public BillVo selectByPrimaryKey(Long id) {
         Bill bill = billMapper.selectByPrimaryKey(id);
+        if (ObjectUtil.isEmpty(bill)) {
+            throw new BaseException("账单不存在");
+        }
+        assertMemberOwnsElder(bill.getElderId());
         BillVo billVo = BeanUtil.toBean(bill, BillVo.class);
         CheckInConfigVo checkInConfigVo = billVo.getCheckInConfigVo();
         BigDecimal add = checkInConfigVo.getBedCost().add(checkInConfigVo.getNursingCost()).add(checkInConfigVo.getOtherCost());
@@ -737,17 +760,29 @@ public class BillServiceImpl implements BillService {
     public PageResponse<BillVo> getBillPage(String billNo, String elderName, String elderIdCard, LocalDateTime startTime, LocalDateTime endTime, Integer transactionStatus, Long elderId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Long> elderIds = null;
-        if (ObjectUtil.isNotEmpty(elderId)) {
-            elderIds = Arrays.asList(elderId);
-        } else {
-            Long userId = UserThreadLocal.getUserId();
-            if (ObjectUtil.isNotEmpty(userId)) {
-                List<MemberElderVo> memberElderVos = memberElderService.listByMemberId(userId);
-                elderIds = memberElderVos.stream().map(MemberElderVo::getElderId).distinct().collect(Collectors.toList());
-                if (CollUtil.isEmpty(elderIds)) {
-                    return PageResponse.getInstance();
-                }
+        Long userId = UserThreadLocal.getUserId();
+        // C 端：只能查询自己绑定老人的账单
+        if (ObjectUtil.isNotEmpty(userId)) {
+            List<MemberElderVo> memberElderVos = memberElderService.listByMemberId(userId);
+            List<Long> ownedElderIds = memberElderVos.stream()
+                    .map(MemberElderVo::getElderId)
+                    .filter(Objects::nonNull)
+                    .distinct()
+                    .collect(Collectors.toList());
+            if (CollUtil.isEmpty(ownedElderIds)) {
+                return PageResponse.getInstance();
             }
+            if (ObjectUtil.isNotEmpty(elderId)) {
+                if (!ownedElderIds.contains(elderId)) {
+                    throw new BaseException("无权查看该老人账单");
+                }
+                elderIds = Collections.singletonList(elderId);
+            } else {
+                elderIds = ownedElderIds;
+            }
+        } else if (ObjectUtil.isNotEmpty(elderId)) {
+            // 管理端可按老人筛选
+            elderIds = Collections.singletonList(elderId);
         }
         Page<BillVo> page = billMapper.page(billNo, elderName, elderIdCard, startTime, endTime, transactionStatus, elderIds);
         return PageResponse.of(page, BillVo.class);
@@ -908,35 +943,60 @@ public class BillServiceImpl implements BillService {
 
     /**
      * 线上支付
-     * @param billDto
+     * 金额与状态一律以数据库账单为准，禁止客户端篡改
+     * @param billDto 仅使用 id
      */
     @Override
     public TradingVo pay(BillDto billDto) {
-        Bill bill = BeanUtil.toBean(billDto, Bill.class);
-        // 交易单
+        if (billDto == null || ObjectUtil.isEmpty(billDto.getId())) {
+            throw new BaseException("账单ID不能为空");
+        }
+        Bill bill = billMapper.selectByPrimaryKey(billDto.getId());
+        if (ObjectUtil.isEmpty(bill)) {
+            throw new BaseException("账单不存在");
+        }
+        assertMemberOwnsElder(bill.getElderId());
+        if (!Objects.equals(bill.getTransactionStatus(), BillStatus.UN_PAY.getOrdinal())
+                && !Objects.equals(bill.getTransactionStatus(), 0)) {
+            // 兼容：未支付状态为 0 或枚举值
+            if (bill.getTransactionStatus() != null && bill.getTransactionStatus() != 0) {
+                throw new BaseException("账单状态不可支付");
+            }
+        }
+        if (bill.getPayableAmount() == null || bill.getPayableAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new BaseException("应付金额异常，无法支付");
+        }
+
+        // 关闭历史未完成交易单
         Trading trading = tradingMapper.selectByProductOrderNo(bill.getId(), "1");
         Long userId = UserThreadLocal.getUserId();
+        if (ObjectUtil.isEmpty(userId)) {
+            throw new BaseException("请先登录");
+        }
         Member byId = memberService.getById(userId);
+        if (ObjectUtil.isEmpty(byId)) {
+            throw new BaseException("用户不存在");
+        }
         if (ObjectUtil.isNotEmpty(trading)) {
-            TradingVo tradingVo = new TradingVo();
-            tradingVo.setTradingOrderNo(trading.getTradingOrderNo());
-            tradingVo.setEnterpriseId(1561414331L);
-            wechatWapPayHandler.closeTrading(tradingVo);
+            TradingVo closeVo = new TradingVo();
+            closeVo.setTradingOrderNo(trading.getTradingOrderNo());
+            closeVo.setEnterpriseId(1561414331L);
+            wechatWapPayHandler.closeTrading(closeVo);
             tradingMapper.deleteByPrimaryKey(trading.getId());
         }
         TradingVo tradingVo = new TradingVo();
-        tradingVo.setMemo("服务下单");
-
-        if (ObjectUtil.isNotEmpty(userId)) {
-            tradingVo.setOpenId(byId.getOpenId());
-        }
+        tradingVo.setMemo("账单支付");
+        tradingVo.setOpenId(byId.getOpenId());
         tradingVo.setTradingType("1");
+        // 金额只取库中应付金额
         tradingVo.setTradingAmount(bill.getPayableAmount());
         tradingVo.setProductOrderNo(bill.getId());
         TradingVo tradingVo1 = wechatWapPayHandler.wapTrading(tradingVo);
 
-        bill.setTradingOrderNo(tradingVo1.getTradingOrderNo());
-        billMapper.updateByPrimaryKey(bill);
+        Bill update = new Bill();
+        update.setId(bill.getId());
+        update.setTradingOrderNo(tradingVo1.getTradingOrderNo());
+        billMapper.updateByIdSelective(update);
         return tradingVo1;
     }
 

@@ -50,12 +50,14 @@ public class UserInterceptor implements HandlerInterceptor {
 
         log.info("开始解析 customer user token {}", token);
         if (ObjectUtil.isEmpty(token)) {
-            //token失效
             throw new BaseException("小程序登录","401",null,"没有权限,请登录");
+        }
+        // 兼容 Bearer 前缀
+        if (token.startsWith(Constants.TOKEN_PREFIX)) {
+            token = token.substring(Constants.TOKEN_PREFIX.length()).trim();
         }
         Map<String, Object> claims = JwtUtil.parseJWT(jwtTokenManagerProperties.getBase64EncodedSecretKey(), token);
         if (ObjectUtil.isEmpty(claims)) {
-            //token失效
             throw new BaseException("小程序登录","401",null,"没有权限,请登录");
         }
 

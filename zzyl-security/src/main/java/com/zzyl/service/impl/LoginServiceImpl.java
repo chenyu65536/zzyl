@@ -68,13 +68,14 @@ public class LoginServiceImpl implements LoginService {
                 .collect(Collectors.toSet());
         userVoResult.setResourceRequestPaths(requestPaths);
 
-        //用户当前角色列表
+        //用户当前角色列表（含 dataScope，供数据权限切面使用）
         List<RoleVo> roleVoList = roleService.findRoleVoListByUserId(userVoResult.getId());
         Set<String> roleLabels = roleVoList
                 .stream()
                 .map(RoleVo::getLabel)
                 .collect(Collectors.toSet());
         userVoResult.setRoleLabels(roleLabels);
+        userVoResult.setRoleList(roleVoList);
 
         //userToken令牌颁布
         String userToken = UUID.randomUUID().toString();
