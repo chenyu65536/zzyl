@@ -25,7 +25,7 @@ public class ResponseResult<T> implements Serializable {
     private T data;
 
     @ApiModelProperty(value = "操作时间")
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date operationTime;
 
     public ResponseResult() {
