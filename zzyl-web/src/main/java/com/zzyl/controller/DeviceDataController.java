@@ -56,7 +56,7 @@ public class DeviceDataController {
             @ApiParam(value = "每页大小", required = true) @RequestParam("pageSize") Integer pageSize,
             @ApiParam(value = "设备名称") @RequestParam(value = "deviceName", required = false) String deviceName,
             @ApiParam(value = "接入位置") @RequestParam(value = "accessLocation", required = false) String accessLocation,
-            @ApiParam(value = "位置类型") @RequestParam(value = "accessLocation", required = false) Integer locationType,
+            @ApiParam(value = "位置类型") @RequestParam(value = "locationType", required = false) Integer locationType,
             @ApiParam(value = "功能ID") @RequestParam(value = "functionId", required = false) String functionId,
             @ApiParam(value = "开始时间")  @RequestParam(required = false) Long startTime,
             @ApiParam(value = "结束时间")  @RequestParam(required = false) Long endTime,
