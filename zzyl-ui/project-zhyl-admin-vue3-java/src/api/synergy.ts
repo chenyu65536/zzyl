@@ -4,21 +4,21 @@ import type { ListResult, ListModel, FormApply } from '@/api/model/synergyModel'
 export function getBacklogList(params) {
   return request.post<ListResult>({
     url: '/pending_tasks/selectByPage',
-    params
+    data: params
   })
 }
 // 获取退住分页查询数据
 export function getSelectByPage(params) {
   return request.post<ListResult>({
     url: '/elder/selectByPage',
-    params
+    data: params
   })
 }
 // 我的申请获取分页查询数据
 export function getApplicationList(params) {
   return request.post<ListResult>({
     url: '/applications/selectByPage',
-    params
+    data: params
   })
 }
 // 获取详情
@@ -32,14 +32,14 @@ export function getRetreatCode(params) {
 export function applyBack(params) {
   return request.post<FormApply>({
     url: `/elder/create`,
-    params
+    data: params
   })
 }
 // 提交
 export function examineSubmit(params) {
   return request.post<FormApply>({
     url: `/elder/submit`,
-    params
+    data: params
   })
 }
 // 拒绝提交
@@ -70,7 +70,7 @@ export function cancelSubmit(params) {
 export function uploadRefundVoucher(params) {
   return request.put<FormApply>({
     url: `/retreat_bills/uploadRefundVoucher`,
-    params
+    data: params
   })
 }
 // 获取上传退款凭证详情
