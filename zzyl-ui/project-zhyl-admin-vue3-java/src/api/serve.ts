@@ -130,9 +130,9 @@ export function planAdd(params: FormLevel) {
   })
 }
 // 护理计划编辑
-export function planUpdate(id: number, params: FormLevel) {
+export function planUpdate(params: FormLevel) {
   return request.put<PlanListModel>({
-    url: `/nursing/plan/${id}`,
+    url: `/nursing/plan/${params.id}`,
     data: params
   })
 }
