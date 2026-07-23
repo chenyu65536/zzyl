@@ -73,12 +73,10 @@
 	onLoad((options) => {
 		// typeVal.value = options.str
 		// store.commit('user/setOrderType', false);
-		// console.log(options)
 		// getNewData()
 	})
 	onUnload(() => {
 		// const val = users.backLink
-		// console.log(val,isback.value,48596)
 		// store.commit('setFootStatus', 0)
 		// if(!isback.value){
 		// 	if (val=== 'home') {
@@ -101,7 +99,6 @@
 	onShow(() => {
 
 		params.status = users.orderStatus === '' ? '' : users.orderStatus
-		console.log(users.orderStatus, 1122)
 		getNewData()
 	})
 	// 获取任务列表
@@ -112,7 +109,6 @@
 			pageNum: pageNum.value,
 			status: params.status
 		};
-		console.log(params, 112233)
 		if (isSendRequest.value) {
 			return;
 		}
@@ -216,7 +212,6 @@
 		// 返回的时候需要把订单列表页的当前状态设置为0
 		store.commit('user/setOrderStatus', '');
 		// 如果是从首页进来的绑定页面，返回到首页，否则返回到绑定列表页
-		console.log(typeVal.value,store.state.footStatus, 22222)
 		isback.value = true //是否触发了左上角返回按钮
 		if (typeVal.value === 'my') {
 			store.commit('setFootStatus', 3)

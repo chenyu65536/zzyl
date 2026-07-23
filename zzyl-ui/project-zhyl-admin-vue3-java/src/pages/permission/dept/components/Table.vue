@@ -83,7 +83,6 @@ const listData = ref([])
 const fetchDeptData = async (deptId: string) => {
   dataLoading.value = true
   const params = { parentDeptNo: deptId, pageNum: 1, pageSize: 10 }
-  console.log(deptId, 'deptId')
   getDeptList(params)
     .then((res) => {
       if (res.code === 200) {
@@ -103,7 +102,6 @@ const rehandleExpandChange = (value) => {
 
 watchEffect(() => {
   if (props.rowData) {
-    console.log(props.rowData, 'props.rowData')
     fetchDeptData(props.rowData.deptNo)
   }
 })
@@ -132,7 +130,6 @@ const handleBulid = () => {
 }
 // 事件传递 - 递归组件的且套
 const fetchData = () => {
-  console.log('table')
   emit('fetchData')
 }
 </script>

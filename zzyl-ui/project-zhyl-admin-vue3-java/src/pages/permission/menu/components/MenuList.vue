@@ -64,7 +64,6 @@ const emit = defineEmits([
 watch(
   () => props.activeIndex,
   (val) => {
-    console.log(val, pageActiveIndex.value, '++++++++++++++')
     // pageActiveIndex.value = val
   }
 )
@@ -81,7 +80,6 @@ watchEffect(() => {
 })
 
 const editHandle = (params) => {
-  // console.log(params, 'sssss')
   emit('editHandle', params)
 }
 const delHandle = (params) => {
@@ -97,12 +95,10 @@ const handleClickAddOrEdit = () => {
 }
 
 const handleClickExpand = (val, index) => {
-  // console.log(val, index, 'val, index')
   defalutOpenKey.value = val.id
   clickIndex.value = index || 0
 }
 const activeHandle = (rowId, childLength, isChild, id) => {
-  // console.log(
   //   rowId,
   //   childLength,
   //   isChild,

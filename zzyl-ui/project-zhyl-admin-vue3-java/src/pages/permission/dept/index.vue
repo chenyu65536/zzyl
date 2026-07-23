@@ -155,7 +155,6 @@ const handleDisable = () => {
 
 // 禁用/启用部门
 const disableDeptData = async () => {
-  console.log(currrentData.value, 'currrentData.value')
   isEnableDept({
     // id: currrentData.value.id,
     deptNo: currrentData.value.deptNo,
@@ -163,7 +162,6 @@ const disableDeptData = async () => {
     dataState: currrentData.value.dataState === '0' ? '1' : '0'
   })
     .then((res) => {
-      console.log(res, 'err')
       if (res.code === 200) {
         MessagePlugin.success(
           `${currrentData.value.dataState === '0' ? '禁用' : '启用'}成功`
@@ -173,7 +171,6 @@ const disableDeptData = async () => {
       }
     })
     .catch((err) => {
-      console.log(err, 'err')
       MessagePlugin.error(err.msg || `请求出错了！ 操作失败`)
     })
 }
@@ -184,7 +181,6 @@ const disableDeptData = async () => {
     dataState: currrentData.value.dataState === '0' ? '1' : '0'
   })
     .then((res) => {
-      console.log(res, 'err')
       if (res.code === 200) {
         MessagePlugin.success(
           `${currrentData.value.dataState === '0' ? '禁用' : '启用'}成功`
@@ -193,7 +189,6 @@ const disableDeptData = async () => {
       }
     })
     .catch((err) => {
-      console.log(err, 'err')
       MessagePlugin.error(err.msg || `请求出错了！ 操作失败`)
     })
 } */

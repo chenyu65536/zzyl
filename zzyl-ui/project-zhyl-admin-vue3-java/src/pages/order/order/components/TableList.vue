@@ -108,7 +108,6 @@ const emit = defineEmits([
 ])
 // 打开操作弹窗
 const handleOpen = (val) => {
-  console.log(val)
   router.push({
     path: `/order/orderDetails`,
     query: { id: val.id }

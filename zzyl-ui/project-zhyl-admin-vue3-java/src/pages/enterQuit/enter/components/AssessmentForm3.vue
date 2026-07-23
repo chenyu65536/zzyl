@@ -144,7 +144,6 @@ const userStore = useUserStore()
 const reviewInfo2 = ref<Object | any>({})
 const isCheck = ref(false) // 是否可以编辑，展示数据无需编辑
 const diagnoseValidator = (value) => {
-  console.log(value)
   if (value === undefined || value === '') {
     return false
   }
@@ -217,7 +216,6 @@ onMounted(() => {
       //   isCheck.value = true
       // }
     }
-    console.log(baseVal.retreat)
     if (baseVal.retreat !== undefined) {
       if (baseVal.retreat.reviewInfo1 !== undefined) {
         const reviewInfo1 = baseVal.retreat.reviewInfo1
@@ -270,7 +268,6 @@ onMounted(() => {
   //     } else {
   //       isCheck.value = true
   //     }
-  //     console.log(reviewInfo2.value)
   //     // formData.value = reviewInfo2.value
   //   }
   // }

@@ -65,10 +65,7 @@
 	// ------定义方法------
 	// 选择日期
 	const bindChange = e => {
-		// console.log(props.allElderData,1)
-		// console.log(props.allElderData[e.detail.value[0]],2)
 		selectItem.value = props.allElderData[e.detail.value[0]];
-		console.log(selectItem.value)
 	};
 	// 确认日期
 	const onSubmit = (e, val) => {

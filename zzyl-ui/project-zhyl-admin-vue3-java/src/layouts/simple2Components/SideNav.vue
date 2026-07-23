@@ -112,7 +112,6 @@ const collapsed = computed(() => useSettingStore().isSidebarCompact)
 // 是否选中
 const active = computed(() => {
   const data = getActive()
-  // console.log(data, permissionStore.routers, '侧边栏导航')
   return data
 })
 // 展开的菜单
@@ -126,7 +125,6 @@ const defaultExpanded = computed(() => {
       }
     })
   })
-  // console.log(defaultExpanded, 'defaultExpanded')
   // return ['/enterQuit/enterManage', '/enterQuit/quitManage']
   return defaultExpanded
 })

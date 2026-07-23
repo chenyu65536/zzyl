@@ -135,12 +135,10 @@
 		// 	url,
 		// 	success: (res) => {
 		// 		if (res.statusCode == 200) {
-		// 			console.log('下载成功', res);
 		// 			let filePath = res.tempFilePath;
 		// 			uni.saveFile({
 		// 				tempFilePath: filePath,
 		// 				success: function(file) {
-		// 					console.log('file-success', file.savedFilePath);
 		// 					// 满足测试条件，取消下载任务。
 		// 					if (file.errMsg === 'saveFile:ok') {
 		// 						// downloadTask.abort();
@@ -149,7 +147,6 @@
 		// 					}
 		// 					uni.getSavedFileList({
 		// 					  success: function (resList) {
-		// 					    console.log(resList,46546545);
 		// 					  }
 		// 					})
 		// 					setTimeout(() => {

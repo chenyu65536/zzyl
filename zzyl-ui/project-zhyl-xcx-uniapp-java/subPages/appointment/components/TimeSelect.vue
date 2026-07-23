@@ -238,9 +238,7 @@ const changeTab = index => {
 // 选择时间段
 const handleAm = (item, index) => {
 	// 可选择的状态添加样式
-	// console.log(!item.disabled,item.count)
 	if (!item.disabled&&item.count!==0) {
-		// console.log(!item.disabled&&item.count!==0)
 		activeTimeIndex.value = item.value;
 		emit('getTime', item.label);
 	}

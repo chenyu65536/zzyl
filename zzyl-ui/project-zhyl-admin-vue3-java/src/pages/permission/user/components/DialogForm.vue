@@ -148,7 +148,6 @@ const props = defineProps({
 const clickHandler = (data) => {
   getPostsList(data)
   formData.value.postNo = ''
-  // console.log(data)
 }
 const router = useRouter()
 const userStore = useUserStore()
@@ -213,7 +212,6 @@ const form = ref()
 // 提交表单
 const onSubmit = (result: ValidateResultContext<FormData>) => {
   if (result.validateResult === true) {
-    // console.log(
     //   userStore.userInfo.id,
     //   id.value,
     //   formData.value.email,
@@ -274,7 +272,6 @@ watch(
   async (val) => {
     // const data = JSON.parse(JSON.stringify(val))
     // formData.value = data
-    // console.log(formData.value, 'formData.value')
     formData.value.deptNo = props.data.deptNo
 
     formData.value.mobile = props.data.mobile
@@ -289,7 +286,6 @@ watch(
     originEmail.value = props.data.email
     originDataState.value = props.data.dataState
     id.value = props.data.id
-    console.log(props.data, 'data')
    
   }
 )
@@ -351,7 +347,6 @@ const rules = {
     {
       validator: (val) => {
         const reg = /^1[3456789]\d{9}$/
-        // console.log(val, val.trim() !== '', !reg.test(val), 'val')
         if (val && val.trim() !== '' && !reg.test(val)) {
           return {
             result: false,

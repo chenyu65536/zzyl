@@ -64,22 +64,17 @@ onMounted(() => {
   timerId.value = setInterval(() => {
     if (userStore.floorId === floorId.value) {
       getList()
-      console.log(userStore.floorId, floorId.value, '触发')
     } else {
       userStore.floorId = floorId.value
-      console.log(userStore.floorId, floorId.value, '不触发')
     }
   }, 60000)
   const clientId = Math.random().toString(36).substr(2)
   // const env = import.meta.env.MODE || 'development'
-  console.log(import.meta.env, 'MODE')
-  console.log(import.meta.env.VITE_APP_SOCKET_URL, 'MODE')
   // socket.value = new WebSocket(`wss://zhyl-admin-t.itheima.net/ws/${clientId}`)
   socket.value = new WebSocket(
     `${import.meta.env.VITE_APP_SOCKET_URL}/ws/${clientId}`
   )
   socket.value.onmessage = (event) => {
-    console.log('收到消息:', event.data)
     userStore.setUnusualFloorId(event.data)
   }
 })

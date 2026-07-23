@@ -126,7 +126,6 @@ const active = computed(() => getActive())
 // 菜单列表
 const list = computed(() => {
   const { navData } = props
-  // console.log(getMenuList(navData), 'getMenuList(navData)')
   return getMenuList(navData)
 })
 // getMenuList是一个递归函数，用于将路由转换为菜单列表
@@ -248,9 +247,7 @@ const getPathLeft = (item) => {
 // const dealDetail = () => {}
 // getPath是一个函数，用于判断当前路由是否为激活状态
 const getPath = (item) => {
-  // console.log(item, 'fffffffffffffffff')
 
-  // console.log(item.meta?.single ? item.icon : item.path, active.value)
   return item.meta?.single ? item.redirect : item.path // item.meta.fullPath
   // return item.meta?.single ? item.path : item.meta.fullPath
   // return '/appointment/subscribe'

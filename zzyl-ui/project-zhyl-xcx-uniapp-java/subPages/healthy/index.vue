@@ -155,7 +155,6 @@ onLoad((options) => {
   roomType.value = options.roomType;
   deviceName.value = options.deviceName;
   productKey.value = options.productKey;
-  console.log(options, 'options');
 });
 onMounted(() => {
   deviceDetail({
@@ -166,7 +165,6 @@ onMounted(() => {
       res.data.list.propertyStatusInfo[0].time
     );
     heartRate.value.dataValue = res.data.list.propertyStatusInfo[0].value;
-    // console.log(new Date(heartRate.value.updateTime).getHours(), '---');
   });
 });
 //程序暂未开发

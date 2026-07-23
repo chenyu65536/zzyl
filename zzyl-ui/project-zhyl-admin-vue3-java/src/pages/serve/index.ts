@@ -138,7 +138,6 @@ export const addProData = (isAddData, data, paramsData, id) => {
       executeTime: '08:00'
     }
     data.push(obj)
-    console.log(data)
     if (id === undefined) {
       paramsData.push(obj)
     }

@@ -358,7 +358,6 @@ export function getCaption(url, parameter) {
 }
 // 下载
 export function download(data, typelike, filename) {
-  console.log(data, typelike, filename)
   // 创建Blob对象
   const blob = new Blob([data], { type: typelike })
   // 创建URL对象

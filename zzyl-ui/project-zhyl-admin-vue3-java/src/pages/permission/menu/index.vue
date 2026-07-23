@@ -127,7 +127,6 @@ onMounted(() => {
 const resourceNoLeft = ref()
 // 处理左侧点击获取右侧菜单数据
 const activeHandle = (val) => {
-  console.log('///')
   resourceNoLeft.value = val
   btnList.value.fetchData(val)
 }
@@ -156,7 +155,6 @@ const fetchData = async (val?: valType | string) => {
     .then(async (res) => {
       if (res.code === 200) {
         listData.value = await treeData(res.data)
-        console.log(res.data, listData.value, 'listData.value')
         btnList.value.fetchData(
           listData.value.length && listData.value[0].children[0].resourceNo
         )
@@ -196,15 +194,12 @@ const treeData = (items) => {
       if (!itemMap[parentResourceNo]) {
         itemMap[parentResourceNo] = { children: [] }
       }
-      // console.log(item, '--------------')
       // 筛选资源类型只包括目录和菜单的数据
       if (['m', 'c', 'M'].includes(item.resourceType)) {
-        // console.log(item, '进来了么')
         itemMap[parentResourceNo].children.push(treeItem)
       }
     }
   }
-  console.log(result, itemMap, 'resultresultresultresult')
   return result
 }
 
@@ -290,7 +285,6 @@ const handleSetupContract = (val) => {
 }
 // 点击禁用/启用
 const handleDisable = (val, type) => {
-  console.log(val, 'val')
   currrentData.value = val
   dialogDisableVisible.value = true
   if (type) isClickBtnDisable.value = true
@@ -309,7 +303,6 @@ const disableDeptData = async () => {
     dataState: currrentData.value.dataState === '0' ? '1' : '0'
   })
     .then(async (res) => {
-      console.log(res, 'err')
       if (res.code === 200) {
         MessagePlugin.success(
           `${currrentData.value.dataState === '0' ? '禁用' : '启用'}成功`
@@ -323,7 +316,6 @@ const disableDeptData = async () => {
       }
     })
     .catch((err) => {
-      console.log(err, 'err')
       MessagePlugin.error(err.msg || `请求出错了！ 操作失败`)
     })
 }

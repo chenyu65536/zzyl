@@ -145,9 +145,7 @@ const bindChange = (e) => {
 		data.push(dataIndex);
 	}
 	if (m > mon) {
-		// console.log(days.value)
 		days.value = data;
-		// console.log(days.value)
 		// selectValue.value[2] = d
 	}else{
 		days.value = data.splice(dayData); //删除当天前的天数

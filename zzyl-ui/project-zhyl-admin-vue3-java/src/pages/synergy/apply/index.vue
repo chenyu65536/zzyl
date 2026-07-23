@@ -146,7 +146,6 @@ const handleOperate = async () => {
       getList()
     }
   } else if (applyObj.value.type === 2) {
-    console.log('请假')
   } else {
     const parent = {
       id: Number(applyObj.value.checkInId),

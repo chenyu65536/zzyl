@@ -95,7 +95,6 @@
  				capsuleBottom.value = uni.getMenuButtonBoundingClientRect().bottom + 10
  			}
  		})
-		console.log(option.name)
 		if(option.name!=='undefined'&&option.name!==''){
 			searchData.value.name = option.name
 			showClearIcon.value = true
@@ -245,12 +244,10 @@
  		if (val === 'cancel') {
  			val = ''
 			searchData.value.name = ''
-			console.log(val,1)
  		}
 		// 手动输入的数据逻辑
 		if(searchData.value.name!==''){
 			val = searchData.value.name
-			console.log(val,2)
 		}
 		
  		uni.redirectTo({

@@ -92,7 +92,6 @@ const fetchData = (val) => {
     .catch(() => {
       dataLoading.value = false
     })
-  console.log('btn获取列表接口')
 }
 const handleSearch = () => {
   return MessagePlugin.info('程序员小哥哥实现中')

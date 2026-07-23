@@ -278,7 +278,6 @@ const rules = {
           // 选择后的护理等级
           valStr = formData.value.fee
         }
-        console.log(val, valStr)
         if (val < valStr * 0.9 || val > valStr * 1.1) {
           return false
         }

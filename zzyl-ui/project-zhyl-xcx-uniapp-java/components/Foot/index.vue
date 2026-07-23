@@ -78,7 +78,6 @@
 		if (item.text !== '') {
 			currentPage.value = index;
 			
-			console.log(item, index,1111)
 			store.commit('setFootStatus', index)
 			const token = uni.getStorageSync('token')
 			store.commit('user/setAppointmentType', null); //清除从首页进入的预约当前状态

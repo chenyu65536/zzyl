@@ -91,7 +91,6 @@ const handleOpen = (val) => {
 }
 // 点击翻页
 const onPageChange = (pageInfo) => {
-  console.log(pageInfo)
   emit('getCurrent', pageInfo)
 }
 </script>

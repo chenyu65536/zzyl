@@ -134,7 +134,6 @@ const handleToRefresh = () => {
 };
 // 上拉更多数据
 const onReachBottom = () => {
-	console.log(pageNum.value,pages.value,123)
   if (pageNum.value >= pages.value) {
     moreStatus.value = 'noMore';
     return false;

@@ -119,14 +119,12 @@ watch(
   () => props.defaultData,
   (val) => {
     checkList.value = val || []
-    // console.log(val, 'defaultData变化了么')
   },
   { deep: true }
 )
 watch(
   () => props.data,
   (val) => {
-    console.log(val, 'data')
   },
   { deep: true }
 )

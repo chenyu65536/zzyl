@@ -87,7 +87,6 @@
 	onShow(() => {
 
 		// params.status = users.orderStatus === '' ? '' : users.orderStatus
-		// console.log(users.orderStatus, 1122)
 		getNewData()
 	})
 	// 获取所有家人
@@ -167,7 +166,6 @@
 	// }
 	// tab触发切换
 	const setTabIndex = index => {
-		console.log(index)
 		const tab = users.orderStatus;
 		if (index >= 2) {
 			store.commit('user/setOrderStatus', index - 1);
@@ -256,7 +254,6 @@
 	}
 	// 打开选择家人弹层
 	const handleFamily = type => {
-		console.log(familyPopup.value)
 		familyPopup.value.popup.open(type);
 		getElderList()
 	};

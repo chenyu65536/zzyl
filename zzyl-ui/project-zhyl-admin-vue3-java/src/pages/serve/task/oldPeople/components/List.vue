@@ -94,7 +94,6 @@ const emit = defineEmits([
 ])
 // ------定义方法------
 const handleSetting = (roomItem, type) => {
-  console.log(roomItem, 'roomItem')
   emit('handleCheck')
   emit('handleSelectOlder', type === 'single' ? [roomItem] : roomItem.bedVoList)
   if (type === 'single') {

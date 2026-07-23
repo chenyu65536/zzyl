@@ -194,7 +194,6 @@ export class VAxios {
         this.options.requestOptions.urlPrefix +
         config.url
       : window.location.origin + config.url
-    // console.log(this.options, config, config.url.indexOf('?'), '----')
     // 组装所需接口数据
     settingStore.addRequestList({
       uuid: uuid(8, 16),
@@ -257,7 +256,6 @@ export class VAxios {
                   },
                   theme: 'warning',
                   onConfirm: () => {
-                    console.log(123135)
                     router.push('/login')
                     // confirmDialog.update({
                     //   confirmBtn: { content: '提交中', loading: true }
@@ -292,7 +290,6 @@ export class VAxios {
           }
           if (axios.isAxiosError(e)) {
             // 在这里重写Axios的错误信息
-            // console.log(e, 'eeee')
           }
           reject(e)
         })

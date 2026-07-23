@@ -129,7 +129,6 @@ const onSubmit = (result: ValidateResultContext<FormData>) => {
 
 // 添加菜单
 const addMenuQuest = async (params) => {
-  // console.log(params, '添加菜单')
   addMenu({ ...params, parentResourceNo: props.resourceNo }).then((res) => {
     if (res.code === 200) {
       MessagePlugin.success('按钮新增成功')
@@ -166,7 +165,6 @@ watch(
   (val) => {
     pageTitle.value = props.title
     formVisible.value = props.visible
-    console.log(val, props, '-------------')
     // fetchData()
     if (val) {
       const { data } = props

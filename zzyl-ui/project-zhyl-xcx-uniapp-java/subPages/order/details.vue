@@ -205,7 +205,6 @@
 	onUnload(() => {
 		// 这块跳转比较特殊，有两个入口进入此页面，一个是购买商品后又支付页面进入，另外一个是从订单页面的支付页进入此页面
 		// 如果触发了左上角的返回按钮， 不执行此跳转
-		// console.log(isback.value, 11258)
 		// if (!isback.value) {
 		// 	if (typeVal.value === 'home') {
 		// 		// store.commit('user/setBackLike', 'detail');
@@ -221,7 +220,6 @@
 		await getOrderDetail(orderId.value).then((res) => {
 			if (res.code === 200) {
 				baseData.value = res.data
-				console.log(baseData.value)
 				runTimeBack(baseData.value.createTime)
 			}
 		})
@@ -289,7 +287,6 @@ phone.value.popup.open('center')
 	}
 	// 列表页返回订单列表
 	const handleToLink = () => {
-		console.log(typeVal.value)
 		isback.value = true //是否触发了左上角返回按钮
 		// if (users.isOrderType) {
 		// 	store.commit('user/setBackLike', 'detail');

@@ -150,7 +150,6 @@ const handleClickDelete = (val) => {
 }
 // 禁用弹窗
 const handleForbidden = (val) => {
-  console.log(val)
   ruleId.value = val.id
   if (val.status === 1) {
     dialogVisible.value = true

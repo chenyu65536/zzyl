@@ -116,7 +116,6 @@ const form = ref()
 const onSubmit = (result: ValidateResultContext<FormData>) => {
   if (result.validateResult === true) {
     if (props.title === '新增职位') {
-      // console.log(formData.value, 'formData.value')
       // 新增职位
       addPostQuest(formData.value)
     } else {
@@ -178,7 +177,6 @@ watch(
   () => props.data,
   (val) => {
     formData.value = JSON.parse(JSON.stringify(val))
-    console.log(formData.value, 'val')
   }
 )
 // 表单校验

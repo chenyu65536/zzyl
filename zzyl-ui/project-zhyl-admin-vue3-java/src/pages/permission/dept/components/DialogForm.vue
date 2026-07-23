@@ -183,7 +183,6 @@ const fetchData = async () => {
     .then((res) => {
       if (res.code === 200) {
         ;(options as any).value = res.data.items
-        console.log(options.value, '-------------')
       }
     })
     .catch((err) => {
@@ -252,7 +251,6 @@ watch(
   (val) => {
     pageTitle.value = props.title
     formVisible.value = props.visible
-    console.log(props, 'props')
     if (val) {
       const { data } = props
       if (props.title === '新增部门') {
@@ -262,7 +260,6 @@ watch(
       }
       ;(formData as any).value.parentDeptNo =
         data.parentDeptNo !== undefined ? String(data.parentDeptNo) : ''
-      console.log(formData.value, 'val')
     }
   }
 )

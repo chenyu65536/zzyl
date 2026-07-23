@@ -112,7 +112,6 @@ const handleRevocation = (val) => {
       }
     })
   } else if (val.type === 2) {
-    console.log(val.type)
   } else {
     router.push({
       path: `/active/checkDetails`,

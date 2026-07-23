@@ -92,7 +92,6 @@ const expandedRowKeys = ref([])
 
 // 展开列表
 const rehandleExpandChange = (value) => {
-  console.log(value, 'value')
   // alert(value)
   expandedRowKeys.value = value
 }
@@ -199,7 +198,6 @@ const handleBulid = () => {
 }
 // 事件传递 - 递归组件的且套
 const fetchData = () => {
-  console.log('tableList')
   emit('fetchData')
 }
 </script>

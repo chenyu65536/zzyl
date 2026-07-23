@@ -58,7 +58,6 @@ const changeId = (id, i) => {
 watch(
   () => props.data,
   (val) => {
-    console.log(val, '============')
   }
 )
 // 传给父级

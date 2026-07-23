@@ -200,7 +200,6 @@ watch(
 // ------生命周期------
 const handleScroll = (e) => {
   const { scrollTop, clientHeight, scrollHeight } = e.e.target
-  // console.log(scrollTop, clientHeight, scrollHeight)
   if (scrollTop + clientHeight === scrollHeight) {
     // 判断是否全部加载完成
     // if (pageNume.value >= props.pages) {

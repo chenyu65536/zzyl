@@ -157,7 +157,6 @@ const handleSubmitTime = async (val) => {
   }
 }
 const handleSubmit = async (val) => {
-  console.log(val, 'val')
   const res: any = await executePlan({
     ...val,
     ...{ taskId: taskId.value },
@@ -176,7 +175,6 @@ const handleSubmit = async (val) => {
 const handleExecute = (row) => {
   dialogVisibleExecute.value = true
   taskId.value = row.id
-  console.log(row, 'row')
 }
 // 打开改期弹窗
 const handleTime = (row) => {

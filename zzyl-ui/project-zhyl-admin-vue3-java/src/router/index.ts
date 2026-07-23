@@ -73,7 +73,6 @@ export const getActive = (maxLevel = 3): string => {
     .map((item: string) => `/${item}`)
     .join('')
 }
-console.log(allRoutes, 'allRoutes')
 const router = createRouter({
   history: createWebHashHistory(),
   routes: allRoutes,

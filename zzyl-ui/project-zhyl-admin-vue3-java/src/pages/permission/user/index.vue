@@ -142,7 +142,6 @@ const userData = ref()
 const deptId = ref()
 // 获取用户列表数据
 const getTableData = async (val?: Array<string>) => {
-  // console.log('getTableData')
   dataLoading.value = true
   if (val && val.length > 0) {
     deptId.value = val[0]
@@ -171,7 +170,6 @@ const getTableData = async (val?: Array<string>) => {
       }
     })
     .catch((err) => {
-      console.log(err, 'err')
     })
 }
 
@@ -179,7 +177,6 @@ const getTableData = async (val?: Array<string>) => {
 const getTreeData = async () => {
   dataLoading.value = true
   const res = await getDeptTree()
-  // console.log(res, 'res')
   if (res && res.code === 200) {
     treeData.value = treeProps(res.data.items)
     dialogData.value = res.data.items
@@ -211,7 +208,6 @@ const addUserDeta = async (params?: any, flag?: Boolean) => {
       dialog.value.onClickCloseBtn()
       if (flag) getTableData()
     }
-    console.log(res, '1111111')
   })
 }
 // 点击禁用/启用
@@ -232,7 +228,6 @@ const disableDeptData = async () => {
     dataState: currrentData.value.dataState === '0' ? '1' : '0'
   })
     .then((res) => {
-      console.log(res, 'err')
       if (res.code === 200) {
         MessagePlugin.success(
           `${currrentData.value.dataState === '0' ? '禁用' : '启用'}成功`
@@ -252,7 +247,6 @@ const disableDeptData = async () => {
       }
     })
     .catch((err) => {
-      console.log(err, 'err')
       MessagePlugin.error(err.msg || `请求出错了！ 操作失败`)
     })
 }
@@ -284,7 +278,6 @@ const handleBulid = () => {
 }
 // 点击编辑
 const handleSetupContract = (val) => {
-  // console.log(val, '编辑用户')
   DialogFormdata.value = JSON.parse(JSON.stringify(val))
   // 显示新建弹窗
   visible.value = true

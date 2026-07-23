@@ -57,7 +57,6 @@ export const validateText5 = (val) => {
 }
 // 验证手机号
 export const validatePhone = (val) => {
-  console.log(val)
   if (val !== undefined && val !== '') {
     const reg =
       /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
@@ -92,7 +91,6 @@ export const isDecimals = (val) => {
 }
 // 身份证校验
 export const validateIdentityCard = (value) => {
-  console.log(value)
   const accountreg = /(^\d{15}$)|(^\d{17}(\d|X|x)$)/g
   if (accountreg.test(value)) {
     return true
@@ -160,7 +158,6 @@ export const getBirthday = (val) => {
     // 年龄
     age
   }
-  console.log(info)
   return info
 }
 
@@ -171,7 +168,6 @@ export const isCardID = (sId) => {
       sId
     )
   ) {
-    console.log('你输入的身份证长度或格式错误')
     return false
   }
   // 身份证城市
@@ -213,7 +209,6 @@ export const isCardID = (sId) => {
     91: '国外'
   }
   if (!aCity[parseInt(sId.substr(0, 2))]) {
-    console.log('你的身份证地区非法')
     return false
   }
 
@@ -223,7 +218,6 @@ export const isCardID = (sId) => {
   )}`.replace(/-/g, '/')
   const d = new Date(sBirthday)
   if (sBirthday !== `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`) {
-    console.log('身份证上的出生日期非法')
     return false
   }
   // 注释信息是严谨
@@ -241,14 +235,12 @@ export const isCardID = (sId) => {
     sId[17] = sId[17].toUpperCase()
   }
   // if (sId[sId.length - 1] !== last) {
-  //   console.log('你输入的身份证号非法')
   //   return false
   // }
 
   return true
 }
 export function validatePasswordL(password) {
-  console.log(password)
   // 检查密码长度
   if (password !== undefined && (password.length < 8 || password.length > 20)) {
     return false

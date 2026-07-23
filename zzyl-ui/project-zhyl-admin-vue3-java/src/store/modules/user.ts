@@ -37,7 +37,6 @@ export const useUserStore = defineStore('user', {
       const arr = []
       arr.push(data)
       this.unusualFloorId = [...arr]
-      // console.log(data, [...data], 'data')
     },
     async login(token: string) {
       this.token = `${token}`
@@ -98,7 +97,6 @@ export const useUserStore = defineStore('user', {
         ? childrenRoutes[0].children
         : []
       this.leftRoutes = currentRoutes
-      console.log(this.leftRoutes, '最新initCurrentRoutes')
     }
   },
   persist: {

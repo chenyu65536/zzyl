@@ -23,7 +23,6 @@ export function request({
 	//     let curRoute = routes[routes.length - 1].route; //获取当前页面路由
 	
 	// if(curRoute==='pages/family/index'){
-	// 	console.log(curRoute,1111111111)
 	// 	uni.navigateTo({
 	// 		url: '/pages/login/index'
 	// 	});

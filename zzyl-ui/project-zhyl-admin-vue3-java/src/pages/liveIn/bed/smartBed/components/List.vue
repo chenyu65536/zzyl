@@ -262,7 +262,6 @@ const getSameRoomData = (array1, array2) => {
       intersection.push(newItem)
     }
   }
-  // console.log(intersection, 'intersection')
   return intersection
 }
 // 根据睡眠状态获取对应的心率或者离床次数物模型
@@ -316,7 +315,6 @@ const getSleepStatusText = (item) => {
 }
 // 获取产品对应的图片
 const getImgSrc = (item) => {
-  // console.log(item, 'itemitemitem')
   const obj = productIconList.filter((item1) => item1.value === item.productKey)
   if (obj.length) {
     return obj[0].src

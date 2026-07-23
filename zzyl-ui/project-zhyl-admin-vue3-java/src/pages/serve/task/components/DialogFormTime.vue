@@ -112,7 +112,6 @@ const onSubmit = (result: ValidateResultContext<FormData>) => {
   }
 }
 const handleChange = (date) => {
-  console.log(date, 'date')
 }
 // 点击取消关闭
 const onClickCloseBtn = () => {

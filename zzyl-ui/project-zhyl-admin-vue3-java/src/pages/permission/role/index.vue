@@ -104,7 +104,6 @@ const getMenuListData = async () => {
       if (res.code === 200) {
         MenulistData.value = treeData(res.data)
         beforeTranslateMenulistData.value = res.data
-        console.log(MenulistData.value, 'MenulistData.value')
       } else {
         MessagePlugin.error(res.msg)
       }
@@ -116,7 +115,6 @@ const getMenuListData = async () => {
 
 const handleChange = (val) => {
 
-  console.log(type.value, val, '---')
   // 如果处于编辑状态切换tab则重置数据
   if (type.value === 'edit') {
     menuPmParams.checkedResourceNos = currentData.value.checkedResourceNos || []
@@ -127,7 +125,6 @@ const handleChange = (val) => {
 }
 const currentData = ref()
 const getRowId = (params) => {
-  // console.log(params, 'params')
   type.value = ''
   menuPmParams.id = params.id
   menuPmParams.checkedResourceNos = params.checkedResourceNos || []
@@ -207,7 +204,6 @@ const menuPmParams = reactive({
 })
 // 保存菜单权限 - 获取数据
 const menuChangeHandle = (val, noSelect) => {
-  console.log(menuPmParams.checkedResourceNos, '-------')
   menuPmParams.checkedResourceNos = [...val, ...menuPmParams.checkedResourceNos]
   if (noSelect?.length) {
     menuPmParams.checkedResourceNos = menuPmParams.checkedResourceNos.filter(
@@ -240,7 +236,6 @@ const handleClose = () => {
 
 // 权限数据的保存 - 点击保存按钮
 const subPermissionData = async () => {
-  // console.log(dataPmParams, menuPmParams)
   // return
   if (!type.value) {
     type.value = 'edit'
@@ -255,7 +250,6 @@ const subPermissionData = async () => {
           type.value = ''
           childRole.value.fetchData()
         }
-        // console.log(res)
       })
       .catch(() => {
         MessagePlugin.error('数据提交出错，请联系管理员')
@@ -268,7 +262,6 @@ const subPermissionData = async () => {
           type.value = ''
           childRole.value.fetchData()
         }
-        // console.log(res)
       })
       .catch(() => {
         MessagePlugin.error('数据提交出错，请联系管理员')

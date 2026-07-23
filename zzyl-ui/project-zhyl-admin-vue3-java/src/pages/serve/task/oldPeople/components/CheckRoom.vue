@@ -107,7 +107,6 @@ watch(
   () => {
     formVisible.value = props.visible
     formData.value.bedNumber = props.singleNurse
-    console.log(props.singleNurse, 'val')
   }
 )
 
@@ -121,7 +120,6 @@ const onSubmit = (result: ValidateResultContext<FormData>) => {
 }
 const handleChange = (val) => {
   formData.value.bedNumber = val
-  console.log(val, '-----------')
 }
 // 清除表单数据
 const handleClear = () => {

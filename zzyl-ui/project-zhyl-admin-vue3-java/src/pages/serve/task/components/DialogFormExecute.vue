@@ -153,12 +153,6 @@ const onSubmit = (result: ValidateResultContext<FormData>) => {
 }
 // 获取时间
 const handleChange = (date) => {
-  console.log(
-    date,
-    formData.value.estimatedServerTime,
-    new Date(date).getTime(),
-    'date1'
-  )
   formData.value.estimatedServerTime = new Date(date).getTime()
 }
 // 清除表单数据
@@ -181,7 +175,6 @@ const remove = () => {
 }
 // 上传图片失败
 const handleFail = (file) => {
-  console.log(file)
   MessagePlugin.error(`文件上传失败`)
 }
 // 上传成功后触发。
@@ -190,7 +183,6 @@ const handleSuccess = (params) => {
   formData.value.taskImage = photo
   photoFile.value[0].response.url = photo
   photoFile.value[0].url = photo
-  console.log(photoFile.value, 'photoFile.value')
 }
 // 限制图片的大小
 const beforeUpload = (file) => {

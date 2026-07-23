@@ -132,7 +132,6 @@ onMounted(() => {
 const getTreeData = async () => {
   dataLoading.value = true
   const res = await getDeptTree()
-  console.log(res, 'res')
   if (res && res.code === 200) {
     diaLogTreeData.value = res.data.items
     treeData.value = treeProps(res.data.items)
@@ -156,7 +155,6 @@ const treeProps = (value) => {
 
 // 搜索功能
 const handleSearch = (val) => {
-  // console.log('1111111')
   pagination.pageNum = 1
   pagination.pageSize = 10
   // 根据搜索框的内容进行搜索
@@ -171,7 +169,6 @@ const handleReset = (val) => {
 }
 //
 const getTableData = (val) => {
-  console.log(val, '---------')
   let deptId = ''
   if (val && val.length > 0) {
     deptId = val[0]
@@ -213,7 +210,6 @@ const disableDeptData = async () => {
     dataState: currrentData.value.dataState === '0' ? '1' : '0'
   })
     .then((res) => {
-      console.log(res, 'err')
       if (res.code === 200) {
         MessagePlugin.success(
           `${currrentData.value.dataState === '0' ? '禁用' : '启用'}成功`
@@ -222,7 +218,6 @@ const disableDeptData = async () => {
       }
     })
     .catch((err) => {
-      console.log(err, 'err')
       MessagePlugin.error(err.msg || `请求出错了！ 操作失败`)
     })
 }

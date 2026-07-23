@@ -140,7 +140,6 @@ const rowKey = 'index'
 // 取消
 const handleCancel = (row) => {
   emit('handleCancel', row)
-  console.log(row)
 }
 // 查看
 const handleCheck = (val) => {
@@ -154,12 +153,10 @@ const handleCheck = (val) => {
 // 执行
 const handleExecute = (row) => {
   emit('handleExecute', row)
-  console.log(row)
 }
 // 改期
 const handleChangeDate = (row) => {
   emit('handleTime', row)
-  console.log(row)
 }
 // 点击翻页
 const onPageChange = (pageInfo) => {

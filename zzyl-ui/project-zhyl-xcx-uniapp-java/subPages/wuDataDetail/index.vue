@@ -252,7 +252,6 @@ const handleClick = (e) => {
       : '--';
   }
 
-  console.log(e, 'eeeeeeeeee');
 };
 //时间选择器改变日期
 const handleChangeDay = (e) => {
@@ -268,7 +267,6 @@ const handleChangeDay = (e) => {
   currentDay.value = e.detail.value;
   handleType(type.value);
   // getHeartData();
-  console.log(e, startOfDay(new Date(e.detail.value)).getTime(), 'eeeeeeeeee');
 };
 //H获取心率数据
 const getHeartData = () => {
@@ -319,7 +317,6 @@ const getHeartData = () => {
       weekLeftTopTime.value = chartData.value.categories[6];
     }
     getUnusualData();
-    console.log(data);
   });
 };
 //获取异常数据
@@ -331,13 +328,11 @@ const getUnusualData = (val) => {
     if (data.length < 10) {
       isCanScroll.value = false;
     }
-    console.log(unusualData.value, 'unusualData.value');
   });
 };
 const nextPage = () => {
   params.value.pageNum = params.value.pageNum + 1;
   getUnusualData({ pageNum: params.value.pageNum });
-  console.log('下一页');
 };
 //获取当前日期的月日格式和时分秒格式
 const getTime = (type, time) => {

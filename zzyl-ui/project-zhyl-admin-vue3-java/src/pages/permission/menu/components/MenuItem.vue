@@ -151,7 +151,6 @@ watch(
   () => props.activeIndex,
   (val) => {
     pageaActiveIndex.value = val
-    console.log(val, 'menuitemmmmmmm')
   }
 )
 watch(
@@ -176,14 +175,11 @@ const listData = ref({} as any)
 
 const handleClickExpand = (params) => {
   // 子元素直接走isExpand展开收起逻辑
-  console.log(66666666666)
   if (props.isChildren) {
-    console.log(props.isChildren, isExpand.value, 'props.isChildren')
     isExpand.value = !isExpand.value
 
     // 最外层要实现互斥显示走pageDefalutOpenKey逻辑
   } else {
-    // console.log(
     //   params.id,
     //   props.defalutOpenKey,
     //   pageDefalutOpenKey.value,
@@ -202,10 +198,8 @@ const handleClickExpand = (params) => {
 const activeHandle = (rowId, childLength, isChild, id) => {
   // emit('activeHandle', rowId)
   // if (!childLength && isChild) {
-  // console.log(rowId, childLength, isChild, id, '点击每行出右侧数据')
   emit('activeHandle', rowId, childLength, isChild, id)
   pageaActiveIndex.value = id
-  // console.log(pageaActiveIndex.value, 'pageaActiveIndex.value')
   // pageDefalutOpenKey.value = id
   // }
 }
@@ -213,11 +207,9 @@ const handleSearch = () => {
   return MessagePlugin.info('程序员小哥哥实现中')
 }
 const editHandle = (params) => {
-  // console.log(params, '????')
   emit('editHandle', params)
 }
 const delHandle = (params) => {
-  // console.log(id, 'delHandle')
   emit('delHandle', params)
 }
 
@@ -228,7 +220,6 @@ const disableHandle = (params) => {
 watchEffect(() => {
   listData.value = props.data
   pageaActiveIndex.value = props.activeIndex
-  console.log(props, 'menuItem')
 })
 </script>
 

@@ -182,7 +182,6 @@ export const warnBlank = (val) => {
 
 // }
 // function time(value,id){
-// 	console.log(value)
 // 		const end = Date.parse(value.replace(/-/g, "/"));
 // 		const now = Date.parse(new Date());
 // 		const m15 = 15 * 60 * 1000;

@@ -6,7 +6,6 @@ const whiteList = [
 ]
 let token = uni.getStorageSync('token')//在这可以使用token,isLogin是登录成功后在本地存储登录标识
 function hasPermission (url) {
-	// console.log(url)
     if(whiteList.indexOf(url) !== -1 || token!=='') {
         return true
     }
@@ -31,14 +30,12 @@ let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
 list.forEach(item => {
 	uni.addInterceptor(item, {
 		invoke (e) {
-			console.log(e)
 		}
 	})
 })
 // uni.addInterceptor("switchTab", {
 //   // tabbar页面跳转前进行拦截
 //   invoke(e) {
-// 		console.log(e)
 //     if (!hasPermission(e.url)) {
 //       uni.reLaunch({
 //         url: "/pages/login/index",
@@ -48,6 +45,5 @@ list.forEach(item => {
 //     return true;
 //   },
 //   success(e) {
-//     console.log(e)
 //   },
 // });

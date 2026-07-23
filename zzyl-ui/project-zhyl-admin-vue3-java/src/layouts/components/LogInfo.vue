@@ -109,7 +109,6 @@ const handleLogout = () => {
   // 用来解决部分接口慢，在接口还在pendding时，就点击退出清除了token导致在登录出无权限访问接口提示
   setTimeout(() => {
     userStore.logout()
-    console.log(123)
   }, 1500)
   router.push({
     path: '/login',

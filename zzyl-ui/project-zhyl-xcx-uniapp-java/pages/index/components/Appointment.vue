@@ -91,9 +91,7 @@
 	}
 	// 取消次数接口
 	const handleCancelCount = async () => {
-		console.log(123)
 		await cancelCount().then(res => {
-			console.log(res.data)
 			if (res.code === 200) {
 				let data = res.data;
 				

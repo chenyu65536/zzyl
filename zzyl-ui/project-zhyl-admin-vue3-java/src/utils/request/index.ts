@@ -15,7 +15,6 @@ const host = env === 'mock' || !proxy.isRequestProxy ? '' : proxy[env].host
 const transform: AxiosTransform = {
   // 处理请求数据。如果数据不是预期格式，可直接抛出错误
   transformRequestHook: (res, options) => {
-    // console.log(res, 'resresresres')
     const { isTransformResponse, isReturnNativeResponse } = options
 
     // 如果204无内容直接返回
@@ -44,7 +43,6 @@ const transform: AxiosTransform = {
     //  这里 code为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { code } = data
     if (code === 500) {
-      console.log(data)
       return data
     }
     // 这里逻辑可以根据项目进行修改
@@ -156,7 +154,6 @@ const transform: AxiosTransform = {
 
   // 响应错误处理
   responseInterceptorsCatch: (error: any) => {
-    // console.log(error, 'resresresres')
     const { config, response } = error
     if (!config || !config.requestOptions.retry) return Promise.reject(error)
 

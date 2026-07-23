@@ -144,7 +144,6 @@ watch(
     if (props.routeType === 'config') {
       // 获取从入住配置里拿到的回显数据
       const bedSelectData = props.bedSelectData
-      console.log(bedSelectData)
       if (val.length > 0 && bedSelectData) {
         val.forEach((ele) => {
           if (

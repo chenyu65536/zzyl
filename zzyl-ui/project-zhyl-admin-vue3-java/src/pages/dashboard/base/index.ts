@@ -362,8 +362,6 @@ export function getServeChartDataSet(
   data,
   time
 ) {
-  console.log(data, 156)
-  console.log(time, 156)
   const dataSet = {
     color: ['#00B8A0'],
     tooltip: {

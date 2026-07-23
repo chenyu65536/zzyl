@@ -194,7 +194,6 @@ const toggleSettingPanel = () => {
 // 点击
 const active = computed(() => {
   const data = getActive()
-  console.log(data, '头部导航')
   return `/${data.split('/')[1]}`
 })
 

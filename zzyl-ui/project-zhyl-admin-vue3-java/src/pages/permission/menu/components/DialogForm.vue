@@ -235,7 +235,6 @@ const fetchData = async () => {
       }
     })
     .catch((val) => {
-      console.log(val)
     })
 }
 // 数据提交
@@ -298,7 +297,6 @@ watch(
   (val) => {
     pageTitle.value = props.title
     formVisible.value = props.visible
-    console.log(val, props, '-------------')
     if (val) {
       fetchData()
     }
@@ -350,7 +348,6 @@ const baseRules = {
       type: 'error',
       trigger: 'blur'
       // validator: (val) => {
-      //   console.log(val, 'sortNosortNo')
       //   const reg = /^[1-9]\d*$/
       //   if (!reg.test(val)) {
       //     return {

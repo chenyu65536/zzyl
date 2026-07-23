@@ -231,7 +231,6 @@
 			});
 		} else {
 			getElderList(type)
-			console.log(nowDate.value)
 			if(!nowDate.value){
 				pickerPopup.value.getMon(new Date())
 				pickerPopup.value.getDate(new Date())

@@ -193,7 +193,6 @@
 	}
 	// 去支付
 	const handleSub = async(val) => {
-		console.log(val)
 		if (!isClick.value) {
 			isClick.value = true;
 			const params = {

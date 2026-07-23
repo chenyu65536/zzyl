@@ -124,7 +124,6 @@
 								hours.value = h.splice(hour)
 								
 								if (mins - minsD < 30) {
-									console.log(mins,minsD,111)
 									//当前的事件往后推30分钟
 									minutes.value = m.splice((minsD + 30) % 60); //删除过去的时间/分
 									//总分钟减去当前分钟数减去30分钟
@@ -132,13 +131,10 @@
 										hours.value.splice(0, 1)
 									}
 								} else {
-									console.log(mins,minsD,222)
 									minutes.value = m.splice(minsD + 30)
 								}
 								
 							} else {
-								console.log(hour,hourD,333)
-								console.log(mins,minsD,333)
 								// hours.value = h.splice(hourD+1)
 								// if(hour-hourD===1&&mins-minsD<0){
 								// 	minutes.value = m.splice(mins); //删除过去的时间/分
@@ -175,7 +171,6 @@
 						}
 					});
 					// 分
-					console.log(mins, minsD, minutes.value, 145)
 					minutes.value.forEach((n, index) => {
 						if (mins === n) {
 							selectValue.value[4] = index;
@@ -499,7 +494,6 @@
 			// 关闭弹层
 			popup.value.close();
 			clearTimeout()
-			console.log(data, 458)
 
 		} else {
 			tostTip('日期不可小于当前日期');

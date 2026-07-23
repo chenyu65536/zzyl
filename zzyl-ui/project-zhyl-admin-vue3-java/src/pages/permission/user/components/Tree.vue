@@ -130,7 +130,6 @@ watch(
     //     newValue[0].children[0].value
     // ]
     emit('getTreeData', actived.value)
-    // console.log(newValue, 'newValue')
   }
 )
 // 筛选数据

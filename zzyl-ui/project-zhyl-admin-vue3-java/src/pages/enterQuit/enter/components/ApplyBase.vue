@@ -256,7 +256,6 @@ const reviewInfo1 = ref<Object | any>({}) // 能力评估
 const reviewInfo2 = ref<Object | any>({}) // 评估报告
 onMounted(() => {
   const data = props.baseData
-  console.log(data.retreat)
   if (data.retreat.otherApplyInfo !== undefined) {
     checkInfo.value = data.retreat.otherApplyInfo
   }

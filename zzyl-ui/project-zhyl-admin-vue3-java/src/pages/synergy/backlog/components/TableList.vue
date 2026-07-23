@@ -117,7 +117,6 @@ const handleOpen = (val) => {
       }
     })
   } else if (val.type === 2) {
-    console.log(val)
   } else {
     router.push({
       path: `/active/checkDetails`,

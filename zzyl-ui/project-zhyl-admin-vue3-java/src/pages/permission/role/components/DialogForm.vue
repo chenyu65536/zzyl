@@ -156,7 +156,6 @@ watch(
   () => props.data,
   (val) => {
     formData.value = JSON.parse(JSON.stringify(val))
-    console.log(formData.value, 'formData.value')
   }
 )
 

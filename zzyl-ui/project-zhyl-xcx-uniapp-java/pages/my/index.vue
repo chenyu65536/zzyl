@@ -109,7 +109,6 @@
 	}
 	// 订单列表页
 	const handleOrder = (val) => {
-		console.log(val)
 		if (val != undefined) {
       
 			store.commit('user/setOrderStatus', val);

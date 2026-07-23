@@ -89,7 +89,6 @@ const operationData = ref([])
 onMounted(() => {
   operationData.value = [...operationStatus]
   operationData.value.splice(0, 1)
-  console.log(operationData.value)
   // operationData.value.splice(0, 1)
 })
 // 重置表单

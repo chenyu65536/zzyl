@@ -87,7 +87,6 @@
 	watch(
 		() => props.baseDate,
 		(newValue, oldValue) => {
-			console.log(newValue)
 		}
 	);
 	// 关闭 弹层

@@ -22,8 +22,6 @@ const { routers: menuRouters } = storeToRefs(permissionStore)
 const { trendsRoute } = storeToRefs(userStore)
 // sideMenu是侧边栏的菜单路由
 const sideMenu = computed(() => {
-  // console.log(permissionStore, 'permissionStore')
-  // console.log(trendsRoute, 'useUserStore')
   const newMenuRouters = []
   return newMenuRouters
 })

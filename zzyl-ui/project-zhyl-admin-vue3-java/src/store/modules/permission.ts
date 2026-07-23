@@ -43,7 +43,6 @@ export const usePermissionStore = defineStore('permission', {
       // const dynamicChildrenRoutes = this.dynamic.filter((item) =>
       //   window.location.hash.includes(item.path)
       // )
-      // console.log(dynamicChildrenRoutes, 'dynamicChildrenRoutes')
       // // 判断是三级路由还是二级路由
 
       // const haveThirdBySecond = [] // 拥有三级路由的二级路由
@@ -55,7 +54,6 @@ export const usePermissionStore = defineStore('permission', {
       //     })
       //   }
       // })
-      // console.log(haveThirdBySecond, 'haveThirdBySecond')
       // const arr = [] // 把拥有三级路由的二级路由的中的children全部平铺出来
       // haveThirdBySecond.forEach((item) => {
       //   if (item.children?.length) {
@@ -128,7 +126,6 @@ export const usePermissionStore = defineStore('permission', {
       let accessedRouters = []
       let removeRoutes = []
       if (roles.includes('all')) {
-        // console.log(89889, baseRouter)
         accessedRouters = asyncRouterList // 这里是控制权限菜单 默认asyncRouterList 使用静态菜单
       } else {
         const res = filterPermissionsRouters(baseRouter, roles)
