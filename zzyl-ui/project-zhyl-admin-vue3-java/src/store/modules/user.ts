@@ -20,7 +20,9 @@ export const useUserStore = defineStore('user', {
     leftRoutes: [],
     roleSubmitData: [], // 角色模块的权限菜单和数据权限
     enterBaseData: {}, // 入住表单基本信息
-    isShowTab3: false
+    isShowTab3: false,
+    // 修改点：token 前端过期时间戳（与后端 3 天 TTL 对齐），用于请求拦截器兜底校验
+    tokenExpireAt: 0
   }),
   getters: {
     roles: (state) => {
@@ -39,6 +41,8 @@ export const useUserStore = defineStore('user', {
     },
     async login(token: string) {
       this.token = `${token}`
+      // 修改点：记录 token 前端过期时间（与后端 3 天 TTL 对齐），作为请求拦截器兜底校验
+      this.tokenExpireAt = Date.now() + 3 * 24 * 3600 * 1000
     },
     async setUserInfo(data: any) {
       this.userInfo = data

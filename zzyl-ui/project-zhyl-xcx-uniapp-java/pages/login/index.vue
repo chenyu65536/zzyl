@@ -90,7 +90,6 @@
 										uni.setStorageSync('token', res.data.token);
 										// 存储昵称
 										uni.setStorageSync('nickName', res.data.nickName);
-										console.log('token:',res.data.token)
 										//长令牌
 										// store.commit('user/setToken', res.token);
 										//登录成功后跳转到首页

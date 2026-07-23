@@ -100,14 +100,14 @@ const userBase = ref(JSON.parse(localStorage.getItem('userdata')))
 onMounted(() => {
   if (userBase.value) {
     checkbox.value = userBase.value.checkbox
+    // 修改点：自动登录仅回填用户名，禁止回填明文密码（避免凭据泄露）
     formData.value.username = userBase.value.username
-    formData.value.password = userBase.value.password
   }
 })
 const onSubmit = async ({ validateResult }) => {
-  // 存登录信息，方便自动登录
+  // 修改点：自动登录仅缓存用户名与勾选状态，禁止明文密码写入 localStorage
   const data = {
-    ...formData.value,
+    username: formData.value.username,
     checkbox: checkbox.value
   }
   if (checkbox.value) {
@@ -123,6 +123,10 @@ const onSubmit = async ({ validateResult }) => {
         // 用户token写入 pinia
         await userStore.login(res.data.userToken)
         userStore.setUserInfo(res.data)
+        // 修改点：使用初始密码登录时，提示用户尽快修改密码（后端返回 needResetPwd 标记）
+        if (res.data.needResetPwd) {
+          MessagePlugin.warning('当前使用的是初始密码，为保障账号安全请尽快修改密码')
+        }
         loadSt.value = false
         // 获取路由权限信息
         await getRuterInfo().then(async (res) => {

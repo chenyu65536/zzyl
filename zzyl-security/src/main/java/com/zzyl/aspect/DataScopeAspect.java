@@ -13,18 +13,30 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.regex.Pattern;
 
 /**
  * DataScopeAspect
  * @author itheima
  **/
+@Slf4j
 @Aspect
 @Component
 public class DataScopeAspect {
+
+    /**
+     * 修改点：部门编号白名单校验（仅允许纯数字）。
+     * 数据权限 SQL 由字符串拼接生成并经 MyBatis ${} 注入最终 SQL，
+     * 虽然 deptNo 来源于服务端登录态而非直接的请求参数，
+     * 但若用户数据被污染（如注册/导入环节写入恶意 deptNo），仍可能造成二次 SQL 注入。
+     * 拼接前强制校验为纯数字，可彻底阻断该注入面。
+     */
+    private static final Pattern DEPT_NO_PATTERN = Pattern.compile("^\\d{1,20}$");
 
     /**
      * 自定数据权限
@@ -91,7 +103,8 @@ public class DataScopeAspect {
      * @param userAlias 别名
      */
     public static void dataScopeFilter(JoinPoint joinPoint, UserVo user, String deptAlias, String userAlias) {
-        System.out.println("过滤数据---------------");
+        // 修改点：System.out.println 替换为 SLF4J 日志（规范要求，且避免生产环境污染标准输出）
+        log.debug("数据权限过滤开始，userId={}", user.getId());
         StringBuilder sqlString = new StringBuilder();
 
         for (RoleVo role : user.getRoleList()) {
@@ -102,17 +115,22 @@ public class DataScopeAspect {
                 break;
                 // 如果是自定数据权限，则只查看自己的数据
             } else if (DATA_SCOPE_CUSTOM.equals(dataScope)) {
+                // role.getId() 为 Long 类型，拼接后必然是数字，无注入风险
                 sqlString.append(" OR dept_no IN ( SELECT dept_no FROM sys_role_dept WHERE role_id = " + role.getId() + " ) ");
                 // 如果是部门数据权限，则只查看本部门数据
             } else if (DATA_SCOPE_DEPT.equals(dataScope)) {
-                sqlString.append(" OR dept_no = " + user.getDeptNo() + " ");
+                // 修改点：deptNo 为字符串，拼接进 ${dataScope} 前先做纯数字白名单校验，阻断二次 SQL 注入
+                sqlString.append(" OR dept_no = " + safeDeptNo(user.getDeptNo()) + " ");
                 // 如果是部门及以下数据权限，则查看本部门以及下级数据
             } else if (DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope)) {
-                String str = NoProcessing.processString(user.getDeptNo()) + "%";
+                // 修改点：同上，deptNo 参与两处拼接（等值 + like 前缀），均先经白名单校验
+                String safeDeptNo = safeDeptNo(user.getDeptNo());
+                String str = NoProcessing.processString(safeDeptNo) + "%";
                 sqlString.append(
-                        " OR dept_no IN ( SELECT dept_no FROM sys_dept WHERE dept_no = " + user.getDeptNo() + " or dept_no like  '" + str + "')");
+                        " OR dept_no IN ( SELECT dept_no FROM sys_dept WHERE dept_no = " + safeDeptNo + " or dept_no like  '" + str + "')");
                 // 如果是仅本人数据权限，则只查看本人的数据
             } else if (DATA_SCOPE_SELF.equals(dataScope)) {//  or u.user_id = 登录用户id
+                // user.getId() 为 Long 类型，无注入风险
                 sqlString.append(" OR create_by = " + user.getId());
             }
         }
@@ -124,6 +142,22 @@ public class DataScopeAspect {
                 baseDto.getParams().put(DATA_SCOPE, "(" + sqlString.substring(4) + ")");
             }
         }
+    }
+
+    /**
+     * 修改点：新增部门编号安全校验方法。
+     * 校验 deptNo 为纯数字（1~20 位），不通过则抛出异常终止本次查询，
+     * 防止被污染的部门编号经字符串拼接 + MyBatis ${} 造成 SQL 注入。
+     *
+     * @param deptNo 部门编号
+     * @return 校验通过的部门编号原值
+     */
+    private static String safeDeptNo(String deptNo) {
+        if (deptNo == null || !DEPT_NO_PATTERN.matcher(deptNo).matches()) {
+            log.error("数据权限过滤检测到非法部门编号，已拒绝执行，deptNo={}", deptNo);
+            throw new IllegalStateException("非法的部门编号，数据权限过滤已终止");
+        }
+        return deptNo;
     }
 
     /**

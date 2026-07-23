@@ -3,6 +3,8 @@ package com.zzyl.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.zzyl.constant.UserCacheConstant;
 import com.zzyl.properties.JwtTokenManagerProperties;
+import com.zzyl.properties.SecurityConfigProperties;
+import cn.hutool.core.util.StrUtil;
 import com.zzyl.service.LoginService;
 import com.zzyl.service.ResourceService;
 import com.zzyl.service.RoleDeptService;
@@ -47,6 +49,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private SecurityConfigProperties securityConfigProperties;
 
     @Override
     public UserVo login(UserVo userVo) {
@@ -99,6 +104,13 @@ public class LoginServiceImpl implements LoginService {
         String jwtTokenKey = UserCacheConstant.JWT_TOKEN + userToken;
         //key：uuid   value:jwttoken
         redisTemplate.opsForValue().set(jwtTokenKey, jwtToken, ttl, TimeUnit.SECONDS);
+
+        // 修改点：强制首次登录改密。若登录口令仍为系统默认口令，标记 needResetPwd=true，
+        // 前端据此强制弹出修改密码弹窗，避免长期使用弱初始口令（默认口令已在配置文件中定义）。
+        String defaulePassword = securityConfigProperties.getDefaulePassword();
+        if (StrUtil.isNotBlank(defaulePassword) && defaulePassword.equals(userVo.getPassword())) {
+            userVoResult.setNeedResetPwd(true);
+        }
 
         return userVoResult;
     }

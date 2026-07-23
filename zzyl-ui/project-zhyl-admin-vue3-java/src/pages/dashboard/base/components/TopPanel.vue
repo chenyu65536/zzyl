@@ -94,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, ref } from 'vue'
+import { onMounted, onUnmounted, computed, ref } from 'vue'
 
 import * as echarts from 'echarts/core'
 import {
@@ -164,7 +164,8 @@ let bedContainer: HTMLElement // 床位
 let serveContainer: HTMLElement // 服务
 let staffContainer: HTMLElement // 员工
 let moneyContainer: HTMLElement // 收入
-let countChart: echarts.ECharts
+// 修改点：用数组统一持有所有图表实例，便于卸载时统一释放，防止内存泄漏
+const chartList: echarts.ECharts[] = []
 // 老人数量
 const oldNumData = ref(OLDMAN_NUM_A)
 const bedNumData = ref(BED_NUM_A)
@@ -175,7 +176,7 @@ const renderCountChart = () => {
   if (!oldContainer) {
     oldContainer = document.getElementById('oldContainer')
   }
-  countChart = echarts.init(oldContainer)
+  chartList.push(echarts.init(oldContainer)
   countChart.setOption(
     getOldPieChartDataSet((chartColors as any).value, oldNumData.value)
   )
@@ -185,7 +186,7 @@ const bedCountChart = () => {
   if (!bedContainer) {
     bedContainer = document.getElementById('bedContainer')
   }
-  countChart = echarts.init(bedContainer)
+  chartList.push(echarts.init(bedContainer)
   countChart.setOption(
     getBedPieChartDataSet((chartColors as any).value, bedNumData.value)
   )
@@ -195,7 +196,7 @@ const serveCountChart = () => {
   if (!serveContainer) {
     serveContainer = document.getElementById('serveContainer')
   }
-  countChart = echarts.init(serveContainer)
+  chartList.push(echarts.init(serveContainer)
   countChart.setOption(
     getservePieChartDataSet((chartColors as any).value, serveNumData.value)
   )
@@ -205,7 +206,7 @@ const staffCountChart = () => {
   if (!staffContainer) {
     staffContainer = document.getElementById('staffContainer')
   }
-  countChart = echarts.init(staffContainer)
+  chartList.push(echarts.init(staffContainer)
   countChart.setOption(
     getStaffPieChartDataSet((chartColors as any).value, staffNumData.value)
   )
@@ -215,7 +216,7 @@ const moneyCountChart = () => {
   if (!moneyContainer) {
     moneyContainer = document.getElementById('moneyContainer')
   }
-  countChart = echarts.init(moneyContainer)
+  chartList.push(echarts.init(moneyContainer)
   countChart.setOption(
     getMoneyPieChartDataSet((chartColors as any).value, moneyNumData.value)
   )
@@ -252,6 +253,10 @@ onMounted(() => {
     moneyNumData.value = MONEY_NUM_C
   }
   renderCharts()
+})
+// 修改点：组件卸载时统一释放所有图表实例，防止内存泄漏
+onUnmounted(() => {
+  chartList.forEach((chart) => chart?.dispose())
 })
 </script>
 

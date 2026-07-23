@@ -58,7 +58,6 @@ public class TradeJob {
      * 逻辑：每次最多查询{tradingCount}个未完成的交易单，交易单id与shardTotal取模，值等于shardIndex进行处理
      */
     @XxlJob("tradingJob")
-    @Scheduled(cron = "* * * * * ?")
     public void tradingJob() {
         // 分片参数
         int shardIndex = NumberUtil.max(XxlJobHelper.getShardIndex(), 0);

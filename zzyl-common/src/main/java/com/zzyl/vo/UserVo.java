@@ -81,6 +81,9 @@ public class UserVo extends BaseVo {
 
     private String dataState;
 
+    @ApiModelProperty(value = "是否需要修改初始密码（使用系统默认口令登录时为true，前端据此强制改密）")
+    private Boolean needResetPwd = false;
+
     @Builder
     public UserVo(Long id, String dataState, String username, String password, String userType, String nickName, String post, String dept, String email, String realName, String mobile, String sex, String remark, String[] checkedIds, String openId, Set<String> roleVoIds, Set<String> roleLabels, List<RoleVo> roleList, Set<String> resourceRequestPaths, String deptNo, String postNo, Long roleId, String userToken, String dataState1) {
         super(id, dataState);

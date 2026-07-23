@@ -1,4 +1,5 @@
 package com.zzyl.vo;
+import com.zzyl.constant.SuperConstant;
 import com.zzyl.utils.EmptyUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -99,6 +100,16 @@ public class UserAuth implements UserDetails {
      */
     private String postNo;
 
+    /**
+     * 数据状态【0正常 1停用】，用于 isEnabled 判定
+     */
+    private String dataState;
+
+    /**
+     * 是否需要修改初始密码（使用系统默认口令登录时为 true，前端据此强制改密）
+     */
+    private Boolean needResetPwd = false;
+
     public UserAuth(UserVo userVo) {
         this.setId(userVo.getId().toString());
         this.setUsername(userVo.getUsername());
@@ -120,6 +131,9 @@ public class UserAuth implements UserDetails {
         this.setRemark(userVo.getRemark());
         this.setDeptNo(userVo.getDeptNo());
         this.setPostNo(userVo.getPostNo());
+        this.setDataState(userVo.getDataState());
+        // 修改点：拷贝默认口令标记，供登录接口返回前端以强制改密
+        this.setNeedResetPwd(userVo.getNeedResetPwd() != null ? userVo.getNeedResetPwd() : false);
     }
 
     @Override
@@ -154,6 +168,9 @@ public class UserAuth implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        // 修改点：原为恒返回 true，导致被停用(data_state=1)的账号仍可绕过状态校验。
+        // 虽然登录 SQL 已用 data_state='0' 过滤停用账号，但此处作为防御纵深，
+        // 严格按 dataState 判定账号是否启用，避免任何绕过登录查询的认证路径放行停用账号。
+        return SuperConstant.DATA_STATE_0.equals(this.dataState);
     }
 }

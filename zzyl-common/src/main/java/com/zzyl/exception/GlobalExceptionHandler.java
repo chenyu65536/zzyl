@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<Object> handleBaseException(BaseException exception) {
-        exception.printStackTrace();
+
         if (ObjectUtil.isNotEmpty(exception.getCause())) {
             log.error("自定义异常处理 -> ", exception);
         }
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException exception) {
-        exception.printStackTrace();
+
         if (ObjectUtil.isNotEmpty(exception.getCause())) {
             log.error("文件上传超过最大限制异常 -> ", exception);
         }
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleUnknownException(Exception exception) {
-        exception.printStackTrace();
+
         if (ObjectUtil.isNotEmpty(exception.getCause())) {
             log.error("其他未知异常 -> ", exception);
         }
@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(FileNotFoundException.class)
     public ResponseEntity<Object> handleFileNotFoundException(FileNotFoundException exception) {
-        exception.printStackTrace();
+
         if (ObjectUtil.isNotEmpty(exception.getCause())) {
             log.error("文件不存在 -> ", exception);
         }
@@ -112,7 +112,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException exception) {
-        exception.printStackTrace();
+
         if (ObjectUtil.isNotEmpty(exception.getCause())) {
             log.error("没有权限访问接口异常 -> ", exception);
         }
@@ -132,7 +132,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
-        exception.printStackTrace();
+
         if (ObjectUtil.isNotEmpty(exception.getCause())) {
             log.error("其他未知异常 -> ", exception);
         }
@@ -153,7 +153,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<Object> handleDuplicateKeyException(DuplicateKeyException exception) {
-        exception.printStackTrace();
+
         if (ObjectUtil.isNotEmpty(exception.getCause())) {
             log.error("其他未知异常 -> ", exception);
         }

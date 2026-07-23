@@ -1,11 +1,14 @@
 package com.zzyl.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.zzyl.base.PageResponse;
+import com.zzyl.exception.BaseException;
 import com.zzyl.constant.SuperConstant;
 import com.zzyl.dto.UserDto;
 import com.zzyl.entity.User;
@@ -18,6 +21,7 @@ import com.zzyl.service.UserService;
 import com.zzyl.utils.BeanConv;
 import com.zzyl.utils.EmptyUtil;
 import com.zzyl.utils.NoProcessing;
+import com.zzyl.utils.UserThreadLocal;
 import com.zzyl.vo.RoleVo;
 import com.zzyl.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +100,13 @@ public class UserServiceImpl implements UserService {
         user.setUsername(user.getEmail());
         user.setNickName(user.getRealName());
 
-        String password = bCryptPasswordEncoder.encode(securityConfigProperties.getDefaulePassword());
+        // 修改点：默认密码未配置时，原逻辑 getDefaulePassword() 为 null 会被 encode("null") 生成可知哈希，等同弱口令
+        // 此处改为未配置则直接失败，而非静默使用 "null" 作为密码
+        String defaultPassword = securityConfigProperties.getDefaulePassword();
+        if (StrUtil.isBlank(defaultPassword)) {
+            throw new BaseException("系统默认密码未配置，请联系管理员");
+        }
+        String password = bCryptPasswordEncoder.encode(defaultPassword);
         user.setPassword(password);
 
         int flag = userMapper.insert(user);
@@ -213,7 +223,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean resetPasswords(String userId) {
-        String password = bCryptPasswordEncoder.encode(securityConfigProperties.getDefaulePassword());
+        // 修改点：重置密码同样需默认密码已配置，避免哈希字符串 "null"
+        String defaultPassword = securityConfigProperties.getDefaulePassword();
+        if (StrUtil.isBlank(defaultPassword)) {
+            throw new BaseException("系统默认密码未配置，请联系管理员");
+        }
+        String password = bCryptPasswordEncoder.encode(defaultPassword);
         User user = User.builder().password(password).build();
         user.setId(Long.valueOf(userId));
         int flag = userMapper.updateByPrimaryKeySelective(user);
@@ -225,9 +240,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean modifyPasswords(UserDto userDto) {
+        // 修改点：修复越权漏洞。原逻辑直接信任前端传入的 userDto.id，
+        // 任何已登录用户均可通过篡改 id 修改他人密码。
+        // 现改为：强制以当前登录用户（UserThreadLocal 中的身份）为准，忽略前端传入的 id。
+        String subject = UserThreadLocal.getSubject();
+        if (StrUtil.isBlank(subject)) {
+            throw new BaseException("登录状态已失效，请重新登录");
+        }
+        UserVo currentUser = JSONUtil.toBean(subject, UserVo.class);
+        if (currentUser == null || currentUser.getId() == null) {
+            throw new BaseException("无法获取当前登录用户信息");
+        }
+        // 修改点：新密码不允许为空，避免 encode(null) 抛出 NPE 或产生无效哈希
+        if (StrUtil.isBlank(userDto.getPassword())) {
+            throw new BaseException("新密码不能为空");
+        }
         String newPassword = bCryptPasswordEncoder.encode(userDto.getPassword());
         User user = new User();
-        user.setId(userDto.getId());
+        // 只允许修改自己的密码
+        user.setId(currentUser.getId());
         user.setPassword(newPassword);
         int flag = userMapper.updateByPrimaryKeySelective(user);
         return flag > 0;

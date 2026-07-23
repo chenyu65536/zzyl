@@ -123,7 +123,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import type { PropType } from 'vue'
 import { useRouter } from 'vue-router'
 import { MessagePlugin } from 'tdesign-vue-next'
@@ -176,6 +176,12 @@ const visibleOperate = ref(false)
 const operateTitle = ref('') // 操作弹层标题
 const operateText = ref('') // 要操作的内容提示
 const pwd = ref(null)
+// 修改点：使用初始密码登录时，强制弹出修改密码弹窗，避免长期使用弱初始口令
+onMounted(() => {
+  if (userStore.userInfo?.needResetPwd) {
+    visible.value = true
+  }
+})
 const avatar = ref(
   'https://yjy-oss-videos.oss-accelerate.aliyuncs.com/grzxhz.jpg'
 )

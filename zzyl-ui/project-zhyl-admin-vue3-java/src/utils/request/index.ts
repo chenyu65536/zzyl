@@ -124,7 +124,14 @@ const transform: AxiosTransform = {
 
   // 请求拦截器处理
   requestInterceptors: (config, options) => {
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem('user') || '{}')
+    // 修改点：前端 token 过期兜底校验。后端 JWT/Redis TTL 为 3 天，
+    // 前端在登录时记录 tokenExpireAt，过期则清理本地登录态并跳转登录页，避免携带失效 token 请求。
+    if (user && user.tokenExpireAt && Date.now() > user.tokenExpireAt) {
+      localStorage.removeItem('user')
+      router.push('/login')
+      return config
+    }
     // 若没有token则返回登录页面
     if (!user || !user.token) {
       router.push('/login')

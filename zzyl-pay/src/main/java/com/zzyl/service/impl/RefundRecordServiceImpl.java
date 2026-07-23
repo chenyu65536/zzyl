@@ -1,5 +1,6 @@
 package com.zzyl.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.Page;
@@ -79,9 +80,32 @@ public class RefundRecordServiceImpl implements RefundRecordService {
         }
     }
 
+    /**
+     * 根据商品订单编号查询"退款中"状态的退款记录
+     * <p>
+     * 修改点：修复退款幂等校验失效问题。原实现恒返回 null，
+     * 导致 {@code BasicBeforePayHandler#idempotentRefundTrading} 中
+     * "存在退款中记录则拒绝再次退款" 的防重复退款校验形同虚设，
+     * 同一订单可被并发/重复发起退款。
+     * 现改为：复用已有 Mapper 方法查询该订单全部退款记录，
+     * 过滤出状态为 SENDING（退款中）的第一条返回；无则返回 null。
+     *
+     * @param productOrderNo 商品订单编号
+     * @return 退款中的退款记录，不存在则返回 null
+     */
     @Override
     public RefundRecord findRefundRecordByProductOrderNoAndSending(Long productOrderNo) {
-        return null;
+        if (productOrderNo == null) {
+            return null;
+        }
+        List<RefundRecord> refundRecords = refundRecordMapper.selectListByProductOrderNo(productOrderNo);
+        if (CollUtil.isEmpty(refundRecords)) {
+            return null;
+        }
+        return refundRecords.stream()
+                .filter(record -> RefundStatusEnum.SENDING.getCode().equals(record.getRefundStatus()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

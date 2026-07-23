@@ -91,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, nextTick } from 'vue'
+import { onMounted, onUnmounted, ref, computed, nextTick } from 'vue'
 import * as echarts from 'echarts/core'
 import {
   TooltipComponent,
@@ -177,9 +177,9 @@ const montyServeData = ref(MONTH_SERVE_NUM_A) // 服务情况月
 const backlogData = ref(BACKLOG_DATA_A) // 待办事项
 // 收益情况
 const renderMonitorChart = () => {
-  if (!monitorContainer) {
-    monitorContainer = document.getElementById('monitorContainer')
-  }
+  // 修改点：切换 tab 前先释放上一个图表实例，避免内存泄漏
+  monitorChart?.dispose()
+  monitorContainer = document.getElementById('monitorContainer')
   monitorChart = echarts.init(monitorContainer)
 
   getDate()
@@ -193,9 +193,9 @@ const renderMonitorChart = () => {
 }
 // 入退情况
 const enterMonitorChart = () => {
-  if (!enterContainer) {
-    enterContainer = document.getElementById('enterContainer')
-  }
+  // 修改点：切换 tab 前先释放上一个图表实例，避免内存泄漏
+  monitorChart?.dispose()
+  enterContainer = document.getElementById('enterContainer')
   monitorChart = echarts.init(enterContainer)
 
   getDate()
@@ -210,9 +210,10 @@ const enterMonitorChart = () => {
 // 服务情况
 
 const serveMonitorChart = () => {
-  if (!serveContainer) {
-    serveContainer = document.getElementById('enterContainer')
-  }
+  // 修改点：切换 tab 前先释放上一个图表实例，避免内存泄漏
+  monitorChart?.dispose()
+  // 修改点：修正容器引用，原代码误用了 enterContainer（入退情况容器）
+  serveContainer = document.getElementById('serveContainer')
   monitorChart = echarts.init(serveContainer)
 
   getDate()
@@ -276,6 +277,10 @@ onMounted(() => {
 
     renderCharts()
   })
+})
+// 修改点：组件卸载时释放图表实例，防止内存泄漏
+onUnmounted(() => {
+  monitorChart?.dispose()
 })
 // 触发 tab
 const changeTab = (e) => {

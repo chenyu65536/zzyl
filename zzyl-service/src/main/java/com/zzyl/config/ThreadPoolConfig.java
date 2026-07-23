@@ -43,7 +43,9 @@ public class ThreadPoolConfig {
                 TimeUnit.MILLISECONDS,
                 queue,
                 r -> new Thread(r, "zzyl-pool-" + c.getAndIncrement()),
-                new ThreadPoolExecutor.DiscardPolicy()
+                // 修改点：原 DiscardPolicy 在队列满时静默丢弃任务（如 IoT 设备消息），
+                // 改为 CallerRunsPolicy 由提交线程执行，反向压低消费速率，杜绝消息无声丢失
+                new ThreadPoolExecutor.CallerRunsPolicy()
         );
     }
 }

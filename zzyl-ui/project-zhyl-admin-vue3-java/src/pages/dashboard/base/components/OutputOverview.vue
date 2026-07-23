@@ -168,6 +168,8 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', updateContainer)
+  // 修改点：组件卸载时释放图表实例，防止内存泄漏
+  stokeChart?.dispose()
 })
 
 watch(

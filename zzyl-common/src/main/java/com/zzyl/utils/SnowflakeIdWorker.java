@@ -78,8 +78,16 @@ public class SnowflakeIdWorker {
                     String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
         }
 
-        //分表节点数
-        sequence = (int)(Math.random()*3);
+        // 修复：原逻辑使用 Math.random() 生成序列，会丢失雪花算法自增特性并显著增加 ID 碰撞风险
+        // 改为标准实现：同一毫秒内序列自增，跨毫秒序列归零；序列溢出则自旋等待下一毫秒
+        if (lastTimestamp == timestamp) {
+            sequence = (sequence + 1) & sequenceMask;
+            if (sequence == 0) {
+                timestamp = tilNextMillis(lastTimestamp);
+            }
+        } else {
+            sequence = 0L;
+        }
 
         //上次生成ID的时间截
         lastTimestamp = timestamp;

@@ -29,6 +29,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.annotation.PreDestroy;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.jms.*;
@@ -37,6 +38,7 @@ import javax.naming.InitialContext;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.lang.management.ManagementFactory;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -65,7 +67,9 @@ public class AmqpClient implements ApplicationRunner {
 
     static {
         try {
-            clientId = InetAddress.getLocalHost().getHostAddress();
+            // 修改点：追加进程 PID，避免同一主机多实例部署时 clientId 冲突导致消费组互相踢除
+            String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+            clientId = InetAddress.getLocalHost().getHostAddress() + "-" + pid;
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -76,13 +80,14 @@ public class AmqpClient implements ApplicationRunner {
     // 连接数和消费速率及rebalance相关，建议每500QPS增加一个连接
     private static int connectionCount = 4;
 
+    // 持有所有连接，便于容器销毁时统一关闭，避免连接泄漏
+    private final List<Connection> connections = new ArrayList<>();
+
     //业务处理异步线程池，线程池参数可以根据您的业务特点调整，或者您也可以用其他异步方式处理接收到的消息。
     @Autowired
     private ExecutorService executorService;
 
     public void start() throws Exception {
-        List<Connection> connections = new ArrayList<>();
-
         //参数说明，请参见AMQP客户端接入说明文档。
         for (int i = 0; i < connectionCount; i++) {
             long timeStamp = System.currentTimeMillis();
@@ -116,9 +121,9 @@ public class AmqpClient implements ApplicationRunner {
 
             ((JmsConnection) connection).addConnectionListener(myJmsConnectionListener);
             // 创建会话。
-            // Session.CLIENT_ACKNOWLEDGE: 收到消息后，需要手动调用message.acknowledge()。
-            // Session.AUTO_ACKNOWLEDGE: SDK自动ACK（推荐）。
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            // 修改点：由 AUTO_ACKNOWLEDGE 改为 CLIENT_ACKNOWLEDGE，业务处理成功后再手动 message.acknowledge()，
+            // 失败时不予确认，由 Broker 重投，避免设备数据在异常时静默丢失
+            Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
 
             connection.start();
             // 创建Receiver连接。
@@ -201,6 +206,8 @@ public class AmqpClient implements ApplicationRunner {
                 list.add(deviceDataVo);
             });
             redisTemplate.opsForHash().put(Constants.DEVICE_LASTDATA_CACHE_KEY, c.getIotId(), JSONUtil.toJsonStr(list));
+            // 修改点：业务处理成功后手动确认消息；若上述任一步抛异常则不确认，触发重投（CLIENT_ACKNOWLEDGE 模式）
+            message.acknowledge();
         } catch (Exception e) {
             logger.error("processMessage occurs error ", e);
         }
@@ -422,7 +429,27 @@ public class AmqpClient implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        start();
+    public void run(ApplicationArguments args) {
+        // 修改点：捕获启动异常，避免消息中间件（阿里云 IoT AMQP）暂不可用时导致整个应用上下文启动失败
+        try {
+            start();
+        } catch (Exception e) {
+            logger.error("AMQP 客户端启动失败，IoT 设备数据接收已停用", e);
+        }
+    }
+
+    /**
+     * 容器销毁时统一关闭所有 AMQP 连接，避免连接泄漏
+     */
+    @PreDestroy
+    public void destroy() {
+        for (Connection connection : connections) {
+            try {
+                connection.close();
+            } catch (JMSException e) {
+                logger.error("关闭 AMQP 连接失败", e);
+            }
+        }
+        connections.clear();
     }
 }

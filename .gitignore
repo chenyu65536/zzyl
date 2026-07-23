@@ -12,6 +12,12 @@ dist/
 unpackage/
 **/dist/
 **/unpackage/
+# uni-app 依赖缓存（等同 node_modules，禁止入库）
+uni_modules/
+**/uni_modules/
+# 微信小程序编译产物（由 uniapp 工程编译生成，等同构建产物，禁止入库）
+mp-weixin/
+**/mp-weixin/
 *.local
 .env.*.local
 

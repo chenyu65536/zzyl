@@ -100,7 +100,6 @@
 				if (data >= 3) {
 					popupVisit.value.popup.open();
 				} else {
-					console.log(token.value,456)
 					if (token.value) {
 						if (allElderData.value.length === 0 && typeVal.value === 1) {
 							popupLook.value.popup.open()
