@@ -71,7 +71,8 @@ public class AmqpClient implements ApplicationRunner {
             String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
             clientId = InetAddress.getLocalHost().getHostAddress() + "-" + pid;
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            // 修改点：e.printStackTrace() 改为 SLF4J 日志，避免污染标准输出并保留堆栈
+            logger.error("获取本地 IP 失败，clientId 将不含主机地址", e);
         }
     }
 

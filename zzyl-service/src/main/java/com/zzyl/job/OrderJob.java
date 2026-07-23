@@ -64,7 +64,7 @@ public class OrderJob {
         for(Order order : executedOrders){
             if(order.getUpdateTime().plusMinutes(30).isBefore(LocalDateTime.now())){
                 order.setStatus(OrderStatus.FINISHED.getCode());
-                System.out.println(order.getUpdateTime() + "--" + LocalDateTime.now());
+                // 修改点：移除调试用 System.out，统一走 SLF4J
                 log.info("######更新为已完成######" + order.getUpdateTime() + "--" + LocalDateTime.now());
                 orderService.save(order);
             }

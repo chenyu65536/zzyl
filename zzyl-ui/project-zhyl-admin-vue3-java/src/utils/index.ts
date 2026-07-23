@@ -92,6 +92,8 @@ const transitionJsonToString = (jsonObj, callback) => {
 }
 // 将后端返回的JSON转为JSON字符串并格式化展示
 export const formatJson = (jsonObj, callback) => {
+  // 修改点：转义 HTML 特殊字符，防御 v-html 渲染 API 响应 JSON 时的存储型 XSS
+  const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   // 正则表达式匹配规则变量
   const reg = null
   // 转换后的字符串变量
@@ -184,7 +186,7 @@ export const formatJson = (jsonObj, callback) => {
     for (i = 0; i < pad; i++) {
       padding += PADDING
     }
-    formatted += `${padding + item}<br />`
+    formatted += `${padding + escapeHtml(item)}<br />`
     pad += indent
   })
   // 返回的数据需要去除两边的空格和换行

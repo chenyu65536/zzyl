@@ -1,5 +1,6 @@
 package com.zzyl.websocket;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
@@ -15,6 +16,7 @@ import java.util.Map;
 /**
  * WebSocket服务
  */
+@Slf4j
 @Component
 @ServerEndpoint("/ws/{sid}")
 public class WebSocketServer {
@@ -27,7 +29,7 @@ public class WebSocketServer {
      */
     @OnOpen
     public void onOpen(Session session, @PathParam("sid") String sid) {
-        System.out.println("客户端：" + sid + "建立连接");
+        log.info("客户端：{} 建立连接", sid);
         sessionMap.put(sid, session);
     }
 
@@ -38,11 +40,11 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(String message, @PathParam("sid") String sid) {
-        System.out.println("收到来自客户端：" + sid + "的信息:" + message);
+        log.info("收到来自客户端：{} 的信息:{}", sid, message);
         try {
             sessionMap.get(sid).getBasicRemote().sendText("你好");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("向客户端 {} 发送消息失败", sid, e);
         }
     }
 
@@ -51,7 +53,7 @@ public class WebSocketServer {
      */
     @OnClose
     public void onClose(@PathParam("sid") String sid) {
-        System.out.println("连接断开:" + sid);
+        log.info("连接断开:{}", sid);
         sessionMap.remove(sid);
     }
 
@@ -66,7 +68,7 @@ public class WebSocketServer {
             try {
                 session.getBasicRemote().sendText(message);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("群发消息失败", e);
             }
         }
     }

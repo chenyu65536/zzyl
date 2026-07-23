@@ -34,6 +34,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -48,6 +50,16 @@ import java.util.stream.Collectors;
  */
 @Service
 public class RetreatServiceImpl implements RetreatService {
+
+    /**
+     * 日志对象（显式声明，避免依赖 Lombok 注解处理器，保证各环境一致可用）
+     */
+    private static final Logger log = LoggerFactory.getLogger(RetreatServiceImpl.class);
+
+    /**
+     * 日志对象（显式声明，避免依赖 Lombok 注解处理器，保证各环境一致可用）
+     */
+    private static final Logger log = LoggerFactory.getLogger(RetreatServiceImpl.class);
 
     private static final String RETREAT_CODE_PREFIX = "TZ";
 
@@ -115,7 +127,8 @@ public class RetreatServiceImpl implements RetreatService {
             try {
                 billService.createMonthBill(billDto);
             }catch (Exception e) {
-                e.printStackTrace();
+                // 修改点：吞异常改为 SLF4J 记录，避免月度账单生成失败被静默忽略
+                log.error("生成月度账单失败, elderId={}, billMonth={}", elderId, format, e);
             }
             firstDayOfMonth = firstDayOfMonth.plusMonths(1);
         }

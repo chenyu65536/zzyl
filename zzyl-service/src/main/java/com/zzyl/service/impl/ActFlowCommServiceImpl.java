@@ -83,8 +83,8 @@ public class ActFlowCommServiceImpl implements ActFlowCommService {
                 .name(flowInfo.getFlowname())
                 .key(flowInfo.getFlowkey())
                 .deploy();
-        System.out.println("流程部署id：" + deployment.getId());
-        System.out.println("流程部署名称：" + deployment.getName());
+        // 修改点：移除调试用 System.out，统一走 SLF4J
+        log.info("流程部署id：{}，名称：{}", deployment.getId(), deployment.getName());
     }
 
     /**
@@ -503,7 +503,8 @@ public class ActFlowCommServiceImpl implements ActFlowCommService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            // 修改点：e.printStackTrace() 改为 SLF4J 日志
+            log.error("删除历史任务实例失败", e);
         }
     }
 

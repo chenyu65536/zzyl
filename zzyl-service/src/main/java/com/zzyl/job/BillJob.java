@@ -45,9 +45,10 @@ public class BillJob {
             try {
                 billService.createMonthBill(billDto);
                 nursingTaskService.createMonthTask(elder, LocalDateTime.now(), LocalDateTime.now());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            // 修改点：吞异常改为 SLF4J 记录，避免月度账单/护理任务生成失败被静默忽略
+            log.error("生成月度账单或护理任务失败, elderId={}, billMonth={}", elder.getId(), format, e);
+        }
         }
     }
 }
