@@ -1,7 +1,8 @@
 package com.zzyl.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.zzyl.base.PageResponse;
@@ -59,9 +60,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public PageResponse<RoleVo> findRolePage(RoleDto roleDto, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<List<Role>> page = roleMapper.selectPage(roleDto);
-        PageResponse<RoleVo> pageResponse = PageResponse.of(page, RoleVo.class);
+        Page<Role> mpPage = new Page<>(pageNum, pageSize);
+        IPage<Role> pageResult = roleMapper.selectPage(mpPage, roleDto);
+        PageResponse<RoleVo> pageResponse = PageResponse.of(pageResult, RoleVo.class);
         if (!EmptyUtil.isNullOrEmpty(pageResponse.getRecords())){
             List<Long> roleIdSet = pageResponse.getRecords().stream().map(RoleVo::getId).collect(Collectors.toList());
             //查询对应资源

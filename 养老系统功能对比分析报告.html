@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>养老系统功能对比分析报告 - Excel MVP清单 vs 当前项目</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  }
+  .header h1 { font-size: 24px; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; opacity: 0.9; }
+  .header .meta { font-size: 13px; opacity: 0.8; margin-top: 10px; }
+
+  .summary-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .summary-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+  .summary-card:hover { transform: translateY(-2px); }
+  .summary-card .number { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+  .summary-card .label { font-size: 13px; color: #888; }
+  .summary-card.total .number { color: #667eea; }
+  .summary-card.exist .number { color: #52c41a; }
+  .summary-card.missing .number { color: #ff4d4f; }
+  .summary-card.partial .number { color: #faad14; }
+
+  .section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon { font-size: 22px; }
+  .section-title.missing { color: #ff4d4f; }
+  .section-title.partial { color: #faad14; }
+
+  .module-block {
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    transition: box-shadow 0.2s;
+  }
+  .module-block:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .module-block.missing { border-left: 4px solid #ff4d4f; background: #fff1f0; }
+  .module-block.partial { border-left: 4px solid #faad14; background: #fffbe6; }
+
+  .module-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .module-name { font-size: 16px; font-weight: 600; }
+  .badge {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .badge.missing { background: #ff4d4f; color: #fff; }
+  .badge.partial { background: #faad14; color: #fff; }
+
+  .feature-list { list-style: none; padding-left: 0; }
+  .feature-list li {
+    padding: 6px 0;
+    padding-left: 24px;
+    position: relative;
+    font-size: 14px;
+    border-bottom: 1px dashed #f0f0f0;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list li::before {
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+  .feature-list.missing li::before { content: "\2716"; color: #ff4d4f; }
+  .feature-list.partial li::before { content: "\26A0"; color: #faad14; }
+
+  .desc { color: #888; font-size: 13px; margin-top: 4px; padding-left: 0; }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #666;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+  .legend-dot.red { background: #ff4d4f; }
+  .legend-dot.yellow { background: #faad14; }
+  .legend-dot.green { background: #52c41a; }
+
+  .footer {
+    text-align: center;
+    color: #aaa;
+    font-size: 12px;
+    padding: 20px 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>养老系统功能对比分析报告</h1>
+    <div class="subtitle">Excel MVP功能清单 vs 当前项目（zzyl）实际已实现功能</div>
+    <div class="meta">分析文件：养老系统功能清单【MVP】 20260730.xlsx ｜ 项目：E:\IdeaProjects\zzyl ｜ 生成时间：2026-08-10</div>
+  </div>
+
+  <div class="summary-cards">
+    <div class="summary-card total">
+      <div class="number">7</div>
+      <div class="label">Excel功能模块总数</div>
+    </div>
+    <div class="summary-card exist">
+      <div class="number">3</div>
+      <div class="label">已完整实现</div>
+    </div>
+    <div class="summary-card partial">
+      <div class="number">4</div>
+      <div class="label">部分实现（有缺失）</div>
+    </div>
+    <div class="summary-card missing">
+      <div class="number">3</div>
+      <div class="label">完全缺失模块</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot red"></div> 完全缺失：项目中无任何相关实现</div>
+    <div class="legend-item"><div class="legend-dot yellow"></div> 部分缺失：模块已存在但缺少部分子功能</div>
+    <div class="legend-item"><div class="legend-dot green"></div> 已实现：项目中已有对应功能</div>
+  </div>
+
+  <!-- 完全缺失的模块 -->
+  <div class="section">
+    <div class="section-title missing"><span class="icon">&#128680;</span> 一、完全缺失的模块（项目中无任何实现）</div>
+
+    <div class="module-block missing">
+      <div class="module-header">
+        <span class="module-name">1. 物品管理（运营管理子模块）</span>
+        <span class="badge missing">完全缺失</span>
+      </div>
+      <ul class="feature-list missing">
+        <li><strong>物资入库</strong> — 采购入库、捐赠入库、记录数量/规格</li>
+        <li><strong>物资出库</strong> — 护理用品、办公用品领用、审批流程</li>
+        <li><strong>库存预警</strong> — 低库存提醒、库存盘点</li>
+      </ul>
+      <div class="desc">项目中未找到任何与物品/库存/物资管理相关的控制器、Service、实体类或前端页面。</div>
+    </div>
+
+    <div class="module-block missing">
+      <div class="module-header">
+        <span class="module-name">2. 餐饮管理（运营管理子模块）</span>
+        <span class="badge missing">完全缺失</span>
+      </div>
+      <ul class="feature-list missing">
+        <li><strong>食谱管理</strong> — 每日食谱制定、按老人饮食禁忌调整</li>
+        <li><strong>订餐管理</strong> — 老人订餐记录、特殊餐食记录+特殊标识</li>
+        <li><strong>食材采购</strong> — 采购申请、入库/出库记录</li>
+        <li><strong>用餐记录</strong> — 老人用餐打卡、剩余餐食统计</li>
+      </ul>
+      <div class="desc">项目中未找到任何与餐饮/膳食/菜单管理相关的代码实现。</div>
+    </div>
+
+    <div class="module-block missing">
+      <div class="module-header">
+        <span class="module-name">3. 机构信息管理（系统管理子模块）</span>
+        <span class="badge missing">完全缺失</span>
+      </div>
+      <ul class="feature-list missing">
+        <li><strong>机构基本信息维护</strong> — 名称、地址、联系方式、床位数量、收费标准等</li>
+        <li><strong>收费项目配置</strong> — 床位费、护理费、餐饮费、服务费等标准设置</li>
+      </ul>
+      <div class="desc">项目为单一养老机构设计，无独立的机构信息管理模块和收费项目配置功能。注：楼栋/楼层/房间/床位可视化管理已实现。</div>
+    </div>
+
+    <div class="module-block missing">
+      <div class="module-header">
+        <span class="module-name">4. 电子工牌设备API对接（IOT设备对接子模块）</span>
+        <span class="badge missing">完全缺失</span>
+      </div>
+      <ul class="feature-list missing">
+        <li><strong>电子工牌API对接</strong> — 对接电子工牌API，获取电子工牌记录信息（考勤、定位等）</li>
+      </ul>
+      <div class="desc">项目已实现阿里云IoT设备管理（智能床垫、报警设备等），但未对接电子工牌设备API。Excel要求对接电子工牌获取记录信息。</div>
+    </div>
+  </div>
+
+  <!-- 部分缺失的模块 -->
+  <div class="section">
+    <div class="section-title partial"><span class="icon">&#9888;</span> 二、部分缺失的模块（已有基础功能但缺少子功能）</div>
+
+    <div class="module-block partial">
+      <div class="module-header">
+        <span class="module-name">5. 合同管理 — 缺失3项子功能</span>
+        <span class="badge partial">部分缺失</span>
+      </div>
+      <ul class="feature-list partial">
+        <li><strong>合同续签/变更/终止</strong> — Excel要求：记录变更原因、生成变更协议。项目仅有合同的CRUD和解除，无续签、变更协议生成功能。</li>
+        <li><strong>合同到期提醒</strong> — Excel要求：提前预警即将到期的合同。项目中无合同到期提醒/预警功能。</li>
+        <li><strong>合同归档</strong> — Excel要求：分类存储、支持检索。项目中无合同归档管理功能。</li>
+      </ul>
+      <div class="desc">已实现：合同台账（分页查询、按编号/老人/状态/时间筛选）、合同详情查看、合同更新/删除。</div>
+    </div>
+
+    <div class="module-block partial">
+      <div class="module-header">
+        <span class="module-name">6. 离院管理 — 缺失1项子功能</span>
+        <span class="badge partial">部分缺失</span>
+      </div>
+      <ul class="feature-list partial">
+        <li><strong>离院回访</strong> — Excel要求：记录回访意见信息。项目退住流程终止于"费用算清"，无离院后回访记录功能。</li>
+      </ul>
+      <div class="desc">已实现：离院申请（退住审批工作流）、费用结算（账单调整/审批/清算）、离院登记（注销床位、归档老人档案）。</div>
+    </div>
+
+    <div class="module-block partial">
+      <div class="module-header">
+        <span class="module-name">7. 护理工作管理 — 缺失1项子功能</span>
+        <span class="badge partial">部分缺失</span>
+      </div>
+      <ul class="feature-list partial">
+        <li><strong>护理质量检查</strong> — Excel要求：管理员抽查、记录检查结果。项目有护理等级/项目/计划/任务管理，但无护理质量检查/抽查功能。</li>
+      </ul>
+      <div class="desc">已实现：护理计划制定（关联护理项目和护理等级）、护理记录（护理员打卡执行、填写详情、上传图片）、护理任务管理（取消/改期/执行）。</div>
+    </div>
+
+    <div class="module-block partial">
+      <div class="module-header">
+        <span class="module-name">8. 费用管理 — 缺失费用设置整个子模块 + 结算中4项功能</span>
+        <span class="badge partial">部分缺失</span>
+      </div>
+      <ul class="feature-list partial">
+        <li><strong>费用设置（整个子模块缺失）</strong> — 费用项目设置、月费用标准定义、入住初始费用、优惠配置。项目中无独立的费用配置功能模块。</li>
+        <li><strong>费用调整</strong> — Excel要求费用结算中包含费用调整功能，项目中未找到。</li>
+        <li><strong>缴费预警提醒</strong> — Excel要求缴费预警提醒，项目有欠费查询但无主动预警提醒功能。</li>
+        <li><strong>日常消费记账</strong> — Excel要求日常消费记账，项目中未找到。</li>
+        <li><strong>月费用报表</strong> — Excel要求月费用报表，项目中未找到报表生成功能。</li>
+      </ul>
+      <div class="desc">已实现：费用预缴（预缴款充值记录）、费用账单管理（创建/取消/分页查询）、欠费管理、费用结算及缴费、老人费用查询（余额查询）、退住缴费。</div>
+    </div>
+
+    <div class="module-block partial">
+      <div class="module-header">
+        <span class="module-name">9. 订单管理 — 缺失3项子功能</span>
+        <span class="badge partial">部分缺失</span>
+      </div>
+      <ul class="feature-list partial">
+        <li><strong>后台订单创建（多类型）</strong> — Excel要求支持后台创建餐饮、药品、其他增值服务订单。项目仅支持护理服务订单，无餐饮/药品/增值服务订单类型。</li>
+        <li><strong>后台生成线上扫码支付二维码</strong> — Excel要求后台生成扫码支付二维码（支持微信、支付宝）。项目仅支持客户端微信JSAPI支付，无后台扫码支付、无支付宝支付。</li>
+        <li><strong>聚合支付/智能POS正扫</strong> — Excel要求对接聚合支付（动态收款码或智能Pos正扫回调）。项目未实现聚合支付对接。</li>
+      </ul>
+      <div class="desc">已实现：订单汇总（分页查询、按状态/时间/编号/客户筛选）、订单支付（微信JSAPI支付）、线下收款（账单线下支付记录）、账单汇总（账单分页查询）、退款管理。</div>
+    </div>
+
+    <div class="module-block partial">
+      <div class="module-header">
+        <span class="module-name">10. 老年人档案管理 — 缺失3项子功能</span>
+        <span class="badge partial">部分缺失</span>
+      </div>
+      <ul class="feature-list partial">
+        <li><strong>健康档案</strong> — Excel要求：既往病史、过敏史、用药记录、体检记录（血压、血脂、血糖、心电图登记）。项目老人实体仅有基础信息，无健康档案子模块。</li>
+        <li><strong>生活档案</strong> — Excel要求：饮食禁忌、生活习惯、兴趣爱好、宗教信仰。项目中未找到相关字段或功能。</li>
+        <li><strong>档案变更记录</strong> — Excel要求：信息修改记录、档案作废/恢复。项目中无档案变更历史记录功能。</li>
+      </ul>
+      <div class="desc">已实现：基础信息管理（姓名、年龄、身份证、联系方式、紧急联系人等）、老人列表/分页查询、设置护理员。</div>
+    </div>
+
+    <div class="module-block partial">
+      <div class="module-header">
+        <span class="module-name">11. 系统管理 — 缺失1项子功能</span>
+        <span class="badge partial">部分缺失</span>
+      </div>
+      <ul class="feature-list partial">
+        <li><strong>操作日志</strong> — Excel要求：关键操作记录，支持追溯。项目有RBAC权限体系（用户/角色/部门/岗位/资源管理），但无操作日志/审计日志功能。</li>
+      </ul>
+      <div class="desc">已实现：角色管理、账号管理（员工账号创建/停用/密码重置）、部门管理、岗位管理、资源/菜单管理。</div>
+    </div>
+
+    <div class="module-block partial">
+      <div class="module-header">
+        <span class="module-name">12. 首页展示/机构看板 — 缺失4项展示内容</span>
+        <span class="badge partial">部分缺失</span>
+      </div>
+      <ul class="feature-list partial">
+        <li><strong>功能快捷入口</strong> — Excel要求：展示各个功能模块的快捷入口，支持根据权限展示。项目首页为数据概览仪表盘（饼图+个人信息卡），无功能快捷入口。</li>
+        <li><strong>用餐情况展示</strong> — Excel要求机构看板展示入住老人用餐情况。项目首页未展示用餐相关数据。</li>
+        <li><strong>健康标识（绿、黄、红）</strong> — Excel要求按健康状态用绿/黄/红三色标识老人。项目首页未展示老人健康标识。</li>
+        <li><strong>电子工牌设备信息展示</strong> — Excel要求看板展示IOT电子工牌设备信息。项目首页未展示电子工牌相关数据。</li>
+      </ul>
+      <div class="desc">已实现：首页数据概览（老人数量、床位数量、服务数量、员工数量、收入金额的图表展示）、个人信息卡。</div>
+    </div>
+  </div>
+
+  <!-- 已完整实现的模块 -->
+  <div class="section">
+    <div class="section-title" style="color: #52c41a;"><span class="icon">&#9989;</span> 三、已完整实现的模块（Excel功能在项目中均有对应）</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div style="background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 16px;">
+        <strong style="color: #52c41a;">&#10003; 入住办理</strong><br>
+        <span style="font-size: 13px; color: #888;">入住申请、入住评估（健康评估/护理等级评定）、床位分配、入住登记（签约办理）</span>
+      </div>
+      <div style="background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 16px;">
+        <strong style="color: #52c41a;">&#10003; 床位分配</strong><br>
+        <span style="font-size: 13px; color: #888;">楼层-房间-床位三级管理，支持老人床位绑定分配</span>
+      </div>
+      <div style="background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 16px;">
+        <strong style="color: #52c41a;">&#10003; 费用预缴</strong><br>
+        <span style="font-size: 13px; color: #888;">预缴款充值记录、余额查询（系统仅记录金额和扣减记录）</span>
+      </div>
+      <div style="background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; padding: 12px 16px;">
+        <strong style="color: #52c41a;">&#10003; 账单汇总</strong><br>
+        <span style="font-size: 13px; color: #888;">账单分页查询、按时间/编号/客户筛选</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 汇总表 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">&#128202;</span> 四、缺失功能汇总表</div>
+    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+      <thead>
+        <tr style="background: #fafafa;">
+          <th style="padding: 10px 12px; text-align: left; border-bottom: 2px solid #e8e8e8;">序号</th>
+          <th style="padding: 10px 12px; text-align: left; border-bottom: 2px solid #e8e8e8;">所属模块</th>
+          <th style="padding: 10px 12px; text-align: left; border-bottom: 2px solid #e8e8e8;">缺失功能</th>
+          <th style="padding: 10px 12px; text-align: left; border-bottom: 2px solid #e8e8e8;">缺失类型</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">1</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">运营管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">物品管理（物资入库/出库/库存预警）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge missing">完全缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">2</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">运营管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">餐饮管理（食谱/订餐/食材采购/用餐记录）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge missing">完全缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">3</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">系统管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">机构信息管理（机构基本信息/收费项目配置）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge missing">完全缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">4</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">系统管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">电子工牌设备API对接</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge missing">完全缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">5</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">入住管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">合同续签/变更/终止（生成变更协议）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">6</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">入住管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">合同到期提醒（预警）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">7</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">入住管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">合同归档（分类存储/检索）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">8</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">入住管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">离院回访（记录回访意见信息）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">9</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">运营管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">护理质量检查（管理员抽查/记录检查结果）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">10</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">费用管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">费用设置（费用项目/月费用标准/初始费用/优惠配置）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge missing">完全缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">11</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">费用管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">费用调整</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">12</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">费用管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">缴费预警提醒</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">13</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">费用管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">日常消费记账</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">14</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">费用管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">月费用报表</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">15</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">订单管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">后台订单创建（餐饮/药品/增值服务类型）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">16</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">订单管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">后台生成线上扫码支付二维码（支付宝）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">17</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">订单管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">聚合支付/智能Pos正扫对接</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">18</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">老年人管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">健康档案（病史/过敏史/用药/体检记录）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">19</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">老年人管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">生活档案（饮食禁忌/生活习惯/兴趣爱好/宗教信仰）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">20</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">老年人管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">档案变更记录（修改记录/作废恢复）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">21</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">系统管理</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">操作日志（关键操作记录/追溯）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">22</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">首页展示</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">功能快捷入口（按权限展示）</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+        <tr><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">23</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">首页展示</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;">机构看板-用餐情况/健康标识/电子工牌信息展示</td><td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0;"><span class="badge partial">部分缺失</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    养老系统功能对比分析报告 ｜ 共识别 23 项缺失功能（5项完全缺失 + 18项部分缺失）
+  </div>
+
+</div>
+</body>
+</html>

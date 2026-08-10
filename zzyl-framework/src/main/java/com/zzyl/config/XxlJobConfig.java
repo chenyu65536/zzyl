@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 /**
  *
@@ -25,7 +26,12 @@ public class XxlJobConfig {
     private int port;
 
 
+    /**
+     * 修改点：@Lazy 懒加载，避免本地未部署 xxl-job-admin 时启动阶段占用 9999 端口并尝试注册 admin 失败导致启动报错。
+     * 仅在首次被使用（如 Job 被调度）时才初始化执行器。
+     */
     @Bean
+    @Lazy
     public XxlJobSpringExecutor xxlJobExecutor() {
         logger.info(">>>>>>>>>>> xxl-job config init.");
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();

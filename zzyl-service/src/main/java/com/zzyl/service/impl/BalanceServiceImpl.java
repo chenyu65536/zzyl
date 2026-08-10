@@ -1,7 +1,8 @@
 package com.zzyl.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.zzyl.base.PageResponse;
 import com.zzyl.entity.Balance;
 import com.zzyl.entity.Bill;
@@ -45,21 +46,21 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public PageResponse<BalanceVo> page(String bedNo, String elderName, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<Balance> page =  balanceMapper.page(bedNo, elderName);
+        Page mpPage = new Page<>(pageNum, pageSize);
+        IPage<Balance> pageResult = balanceMapper.page(mpPage, bedNo, elderName);
         // 押金是否已经交过
-        List<Long> list = page.getResult().stream().map(Balance::getElderId).distinct().collect(Collectors.toList());
+        List<Long> list = pageResult.getRecords().stream().map(Balance::getElderId).distinct().collect(Collectors.toList());
         if(!list.isEmpty()){
             List<Bill> bills = billMapper.selectDepositByEldersAndStatus(list, BillStatus.PAY.getOrdinal());
             Map<Long, BigDecimal> map = bills.stream().collect(Collectors.toMap(Bill::getElderId, Bill::getDepositAmount));
-            page.getResult().forEach(v -> {
+            pageResult.getRecords().forEach(v -> {
                 BigDecimal bigDecimal = map.get(v.getElderId());
                 if (ObjectUtil.isEmpty(bigDecimal)) {
                     v.setDepositAmount(new BigDecimal(0));
                 }
             });
         }
-        return PageResponse.of(page, BalanceVo.class);
+        return PageResponse.of(pageResult, BalanceVo.class);
     }
     /**
      * 关闭余额账户

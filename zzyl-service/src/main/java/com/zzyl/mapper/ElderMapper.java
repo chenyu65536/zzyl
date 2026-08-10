@@ -1,7 +1,8 @@
 
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.Elder;
 import com.zzyl.vo.ChoiceElderVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -72,7 +73,7 @@ public interface ElderMapper {
 
     List<Elder> selectByIds(List<Long> ids);
 
-    Page<List<ChoiceElderVo>> selectListByPage(@Param("name") String name, @Param("idCardNo") String idCardNo, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    IPage<ChoiceElderVo> selectListByPage(Page<ChoiceElderVo> page, @Param("name") String name, @Param("idCardNo") String idCardNo);
 
     Elder selectByIdCard(String idCard);
 

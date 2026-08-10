@@ -1,10 +1,11 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.zzyl.base.PageResponse;
 import com.zzyl.entity.*;
@@ -140,8 +141,8 @@ public class NursingTaskServiceImpl implements NursingTaskService {
     @Override
     public PageResponse<NursingTaskVo> getTasksByPage(int page, int size, String elderName, Long nurseId, Long projectId, LocalDateTime startTime, LocalDateTime endTime, Integer status) {
         // 实现方法
-        PageHelper.startPage(page, size);
-        Page<NursingTask> nursingTasks = nursingTaskMapper.selectByParams(elderName, nurseId, projectId, startTime, endTime, status);
+        Page mpPage = new Page<>(page, size);
+        IPage<NursingTask> nursingTasks = nursingTaskMapper.selectByParams(mpPage, elderName, nurseId, projectId, startTime, endTime, status);
         return PageResponse.of(nursingTasks, NursingTaskVo.class);
     }
 

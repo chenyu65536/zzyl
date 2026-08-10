@@ -109,7 +109,7 @@
     </delete>
     <insert id="insert" parameterType="com.zzyl.entity.Bill">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-            SELECT LAST_INSERT_ID()
+            SELECT currval('bill_id_seq')
         </selectKey>
         insert into bill (bill_no, trading_order_no, bill_type, bill_month,
         elder_id, bill_amount, payable_amount,
@@ -131,7 +131,7 @@
     </insert>
     <insert id="insertSelective" parameterType="com.zzyl.entity.Bill">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-            SELECT LAST_INSERT_ID()
+            SELECT currval('bill_id_seq')
         </selectKey>
         insert into bill
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -433,14 +433,23 @@
 
 
     <select id="arrears" resultMap="BaseResultMap">
-        SELECT b.elder_id, b.payment_deadline,
-        e.name as ename, e.id_card_no as id_card_no
-        , bed.* ,
-        SUM(b.payable_amount) AS total
-        FROM
-        bill b
-        left join elder e on b.elder_id = e.id
-        left join bed bed on bed.id = e.bed_id
+        SELECT t.elder_id,
+               t.payment_deadline,
+               e.name as ename, e.id_card_no as id_card_no,
+               bed.*,
+               t.total
+        FROM (
+            SELECT elder_id,
+                   MAX(payment_deadline) AS payment_deadline,
+                   SUM(payable_amount) AS total,
+                   MAX(create_time) AS create_time
+            FROM bill
+            WHERE transaction_status = 0
+              AND CURRENT_TIMESTAMP > payment_deadline
+            GROUP BY elder_id
+        ) t
+        LEFT JOIN elder e ON t.elder_id = e.id
+        LEFT JOIN bed bed ON bed.id = e.bed_id
         <where>
             <if test="bedNo != null ">
                 AND bed.bed_number = #{bedNo}
@@ -448,14 +457,11 @@
             <if test="elderName != null ">
                 AND e.name = #{elderName}
             </if>
-            and transaction_status = 0
-            and sysdate() > b.payment_deadline
         </where>
-        group by elder_id
-        ORDER BY b.create_time DESC
+        ORDER BY t.create_time DESC
     </select>
     <select id="selectBytradingOrderNo" resultType="com.zzyl.entity.Bill">
-        select * from `bill`
+        select * from bill
         where trading_order_no in
         <foreach collection="list" item="item" separator="," open="(" close=")">
             #{item,jdbcType=BIGINT}

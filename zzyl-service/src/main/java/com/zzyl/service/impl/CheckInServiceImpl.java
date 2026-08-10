@@ -1,12 +1,13 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
 import com.zzyl.constant.AccraditationRecordConstant;
@@ -496,9 +497,9 @@ public class CheckInServiceImpl implements CheckInService {
 
     @Override
     public ResponseResult<PageResponse<CheckInVo>> selectByPage(String checkInCode, String name, String idCardNo, LocalDateTime start, LocalDateTime end, Integer pageNum, Integer pageSize, String deptNo, Long userId) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<List<CheckIn>> lists = checkInMapper.selectByPage(checkInCode, name, idCardNo, start, end, userId, deptNo);
-        return ResponseResult.success(PageResponse.of(lists, CheckInVo.class));
+        Page<CheckIn> mpPage = new Page<>(pageNum, pageSize);
+        IPage<CheckIn> pageResult = checkInMapper.selectByPage(mpPage, checkInCode, name, idCardNo, start, end, userId, deptNo);
+        return ResponseResult.success(PageResponse.of(pageResult, CheckInVo.class));
     }
 
     /**

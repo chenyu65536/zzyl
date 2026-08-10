@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.DeviceData;
 import com.zzyl.vo.DeviceDataVo;
 import org.apache.ibatis.annotations.Delete;
@@ -27,9 +28,9 @@ public interface DeviceDataMapper {
 
     int batchInsert(@Param("list") List<DeviceData> list);
 
-    Page<DeviceDataVo> page(@Param("status") Integer status, @Param("deviceName") String deviceName, @Param("accessLocation") String accessLocation, @Param("locationType") Integer locationType, @Param("functionId")String functionId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
+    IPage<DeviceDataVo> page(Page<DeviceDataVo> page, @Param("status") Integer status, @Param("deviceName") String deviceName, @Param("accessLocation") String accessLocation, @Param("locationType") Integer locationType, @Param("functionId")String functionId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 
-    Page<DeviceDataVo> pageWeek(@Param("status") Integer status, @Param("deviceName") String deviceName, @Param("accessLocation") String accessLocation, @Param("locationType") Integer locationType, @Param("functionId")String functionId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
+    IPage<DeviceDataVo> pageWeek(Page<DeviceDataVo> page, @Param("status") Integer status, @Param("deviceName") String deviceName, @Param("accessLocation") String accessLocation, @Param("locationType") Integer locationType, @Param("functionId")String functionId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 
     @Delete("delete from device_data where status != 2")
     void clearDeviceDataJob();

@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.Bill;
 import com.zzyl.vo.BillVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -141,7 +142,7 @@ public interface BillMapper {
      * @param startTime   账单月份
      * @return 分页结果
      */
-    Page<BillVo> page(@Param("billNo")String billNo, @Param("elderName")String elderName, @Param("elderIdCard")String elderIdCard, @Param("startTime")LocalDateTime startTime, @Param("endTime")LocalDateTime endTime, @Param("transactionStatus")Integer transactionStatus, @Param("elderIds")List<Long> elderIds);
+    IPage<BillVo> page(Page<BillVo> page, @Param("billNo")String billNo, @Param("elderName")String elderName, @Param("elderIdCard")String elderIdCard, @Param("startTime")LocalDateTime startTime, @Param("endTime")LocalDateTime endTime, @Param("transactionStatus")Integer transactionStatus, @Param("elderIds")List<Long> elderIds);
 
     /**
      * 分页查询欠费账单
@@ -150,7 +151,7 @@ public interface BillMapper {
      * @param elderName 老人姓名
      * @return 分页结果
      */
-    Page<BillVo> arrears(@Param("bedNo")String bedNo, @Param("elderName")String elderName);
+    IPage<BillVo> arrears(Page<BillVo> page, @Param("bedNo")String bedNo, @Param("elderName")String elderName);
 
     /**
      * 批量选择性更新账单

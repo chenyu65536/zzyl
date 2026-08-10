@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zzyl.utils.ConvertHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -84,64 +84,47 @@ public class PageResponse<T> implements Serializable {
 
     /**
      * 返回一个分页对象实例
-     *
-     * @return 分页数据对象
      */
     public static <T> PageResponse<T> getInstance() {
         return new PageResponse<>();
     }
 
     /**
-     * Page{@link Page}对象封装为PageResponse,不封装 items 属性
-     *
-     * @param page 源分页对象
-     * @return 目标分页数据对象
+     * IPage{@link IPage}对象封装为PageResponse,不封装 items 属性
      */
-    public static <T> PageResponse<T> of(Page<?> page) {
+    public static <T> PageResponse<T> of(IPage<?> page) {
         PageResponse<T> result = new PageResponse<>();
-        result.setPage(Convert.toInt(page.getPageNum()));
-        result.setPageSize(Convert.toInt(page.getPageSize()));
-        result.setPages((long) page.getPages());
+        result.setPage(Convert.toInt(page.getCurrent()));
+        result.setPageSize(Convert.toInt(page.getSize()));
+        result.setPages(page.getPages());
         result.setTotal(page.getTotal());
         return result;
     }
 
     /**
-     * Page{@link Page}对象封装为PageResponse,
+     * IPage{@link IPage}对象封装为PageResponse,
      * 并将Page中的Records转换为指定类型封装为items
-     *
-     * @param page 源分页对象
-     * @return 目标分页数据对象
      */
-    public static <T> PageResponse<T> of(Page<?> page, Class<T> clazz) {
+    public static <T> PageResponse<T> of(IPage<?> page, Class<T> clazz) {
         return of(page, clazz, null);
     }
 
     /**
-     * Page{@link Page}对象封装为PageResponse,
+     * IPage{@link IPage}对象封装为PageResponse,
      * 并将Page中的Records转换为指定类型封装为items
-     *
-     * @param page           源分页对象
-     * @param clazz          指定items 属性的类型
-     * @param convertHandler 特殊对象类型转换器，可传null，即不进行特殊处理
-     * @return 目标分页数据对象
      */
-    public static <O, T> PageResponse<T> of(Page<O> page, Class<T> clazz, ConvertHandler<O, T> convertHandler) {
+    public static <O, T> PageResponse<T> of(IPage<O> page, Class<T> clazz, ConvertHandler<O, T> convertHandler) {
         PageResponse<T> result = new PageResponse<>();
-        result.setPage(Convert.toInt(page.getPageNum()));
-        result.setPageSize(Convert.toInt(page.getPageSize()));
-        result.setPages((long) page.getPages());
+        result.setPage(Convert.toInt(page.getCurrent()));
+        result.setPageSize(Convert.toInt(page.getSize()));
+        result.setPages(page.getPages());
         result.setTotal(page.getTotal());
-        result.setRecords(copyToList(page.getResult(), clazz, convertHandler));
+        result.setRecords(copyToList(page.getRecords(), clazz, convertHandler));
         return result;
     }
 
     /**
      * 对items进行类型转换
-     *
-     * @param origin 源分页数据对象
-     * @param clazz  指定items 属性的类型,不能为null
-     * @return 目标分页数据对象
      */
     public static <O, T> PageResponse<T> of(PageResponse<O> origin, Class<T> clazz) {
         return of(origin, clazz, null);
@@ -149,11 +132,6 @@ public class PageResponse<T> implements Serializable {
 
     /**
      * 对items进行类型转换
-     *
-     * @param origin         源分页数据对象
-     * @param clazz          指定items 属性的类型,不能为null
-     * @param convertHandler 特殊对象类型转换器，可传null，即不进行特殊处理
-     * @return 目标分页数据对象
      */
     public static <O, T> PageResponse<T> of(PageResponse<O> origin, Class<T> clazz, ConvertHandler<O, T> convertHandler) {
         PageResponse<T> target = getInstance();
@@ -170,13 +148,6 @@ public class PageResponse<T> implements Serializable {
 
     /**
      * List{@link List}封装为分页数据对象
-     *
-     * @param items    item数据
-     * @param page     页码,可不传,数据不为空时默认为1
-     * @param pageSize 页尺寸,可不传,数据不为空时默认为1
-     * @param pages    页尺寸,可不传,数据不为空时默认为1
-     * @param counts   总条目数,可不传,数据不为空时默认为1
-     * @return 目标分页数据对象
      */
     public static <T> PageResponse<T> of(List<T> items, Integer page, Integer pageSize, Long pages, Long counts) {
         PageResponse<T> pageResponse = new PageResponse<>();
@@ -195,10 +166,6 @@ public class PageResponse<T> implements Serializable {
 
     /**
      * List{@link List}封装为分页数据对象
-     * 数据不为空时，page、pageSize、pages、counts均默认为1
-     *
-     * @param items item数据
-     * @return 目标分页数据对象
      */
     public static <T> PageResponse<T> of(List<T> items) {
         return of(items, null, null, null, null);
@@ -206,10 +173,6 @@ public class PageResponse<T> implements Serializable {
 
     /**
      * 返回包含任意数量元素的分页对象
-     * 数据不为空时，page、pageSize、pages、counts均默认为1
-     *
-     * @param elements items元素
-     * @return 目标分页数据对象
      */
     public static <E> PageResponse<E> of(E... elements) {
         return of(Arrays.asList(elements));
@@ -217,10 +180,6 @@ public class PageResponse<T> implements Serializable {
 
     /**
      * 对items进行类型转换
-     *
-     * @param origin         源分页数据对象
-     * @param function 自定义函数
-     * @return 目标分页数据对象
      */
     public static <O, T> PageResponse<T> of(PageResponse<O> origin, Function<List<O>, List<T>> function) {
         List<T> orderVOList = function.apply(origin.getRecords());

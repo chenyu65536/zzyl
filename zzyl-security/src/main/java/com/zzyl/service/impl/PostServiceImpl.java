@@ -1,9 +1,10 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.constant.SuperConstant;
 import com.zzyl.dto.DeptDto;
@@ -51,12 +52,12 @@ public class PostServiceImpl implements PostService {
      */
     @Override
     public PageResponse<PostVo> findPostPage(PostDto postDto, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        Page<Post> mpPage = new Page<>(pageNum, pageSize);
         if (EmptyUtil.isNullOrEmpty(postDto.getDeptNo())){
             throw new BaseException("部门不能为空");
         }
-        Page<List<Post>> page = postMapper.selectPage(postDto);
-        PageResponse<PostVo> pageResponse = PageResponse.of(page, PostVo.class);
+        IPage<Post> pageResult = postMapper.selectPage(mpPage, postDto);
+        PageResponse<PostVo> pageResponse = PageResponse.of(pageResult, PostVo.class);
         if (!EmptyUtil.isNullOrEmpty(pageResponse.getRecords())){
             //对应部门
             List<String> deptNos = pageResponse.getRecords().stream().map(PostVo::getDeptNo).collect(Collectors.toList());

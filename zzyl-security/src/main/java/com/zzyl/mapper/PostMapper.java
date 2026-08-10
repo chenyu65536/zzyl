@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.dto.PostDto;
 import com.zzyl.entity.Post;
 import com.zzyl.vo.PostVo;
@@ -24,7 +25,7 @@ public interface PostMapper {
 
     int updateByPrimaryKey(Post record);
 
-    Page<List<Post>> selectPage(@Param("postDto") PostDto postDto);
+    IPage<Post> selectPage(Page<Post> page, @Param("postDto") PostDto postDto);
 
     List<Post> selectList(@Param("postDto")PostDto postDto);
 

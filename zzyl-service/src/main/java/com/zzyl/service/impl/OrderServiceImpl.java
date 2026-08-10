@@ -1,10 +1,11 @@
 
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.BillDto;
 import com.zzyl.dto.OrderDto;
@@ -200,11 +201,11 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public PageResponse<OrderVo> searchOrders(Integer status, String orderNo, String elderlyName, String creator, LocalDateTime startTime, LocalDateTime endTime, Integer page, Integer pageSize) {
-        PageHelper.startPage(page, pageSize);
+        Page<Order> mpPage = new Page<>(page, pageSize);
         Long userId = UserThreadLocal.getUserId();
-        Page<List<Order>> lists =
-                orderMapper.searchOrders(status, orderNo, elderlyName, creator, startTime, endTime, userId);
-        return PageResponse.of(lists, OrderVo.class);
+        IPage<Order> pageResult =
+                orderMapper.searchOrders(mpPage, status, orderNo, elderlyName, creator, startTime, endTime, userId);
+        return PageResponse.of(pageResult, OrderVo.class);
     }
 
     @Override

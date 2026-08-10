@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.NursingLevel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -52,15 +53,13 @@ public interface NursingLevelMapper {
     /**
      * 根据指定名称和状态分页查询护理等级信息列表
      *
-     * @param page 页码
-     * @param pageSize 页大小
+     * @param page 分页对象
      * @param name 护理等级名称
      * @param status 护理等级状态，0：禁用，1：启用
      * @return 满足条件的护理等级信息列表
      */
-    Page<List<NursingLevel>> listByPage(
-            @Param("page") int page, @Param("pageSize") int pageSize, @Param("name") String name,
-            @Param("status") Integer status
+    IPage<NursingLevel> listByPage(
+            Page<NursingLevel> page, @Param("name") String name, @Param("status") Integer status
     );
 
 

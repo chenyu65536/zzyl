@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.dto.UserDto;
 import com.zzyl.entity.User;
 import com.zzyl.vo.UserVo;
@@ -20,7 +21,7 @@ public interface UserMapper {
 
     int updateByPrimaryKeySelective(User record);
 
-    Page<List<User>> selectPage(@Param("userDto") UserDto userDto);
+    IPage<User> selectPage(Page<User> page, @Param("userDto") UserDto userDto);
 
     List<User> selectList(@Param("userVo") UserVo userVo);
 

@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.Balance;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -63,6 +64,6 @@ public interface BalanceMapper {
      * @param elderName 老人姓名
      * @return 余额信息列表
      */
-    Page<Balance> page(@Param("bedNo")String bedNo, @Param("elderName")String elderName);
+    IPage<Balance> page(Page<Balance> page, @Param("bedNo")String bedNo, @Param("elderName")String elderName);
 
 }

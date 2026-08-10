@@ -1,10 +1,11 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.zzyl.base.PageResponse;
@@ -59,9 +60,9 @@ public class UserServiceImpl implements UserService {
         }
 
         //构建分页对象
-        PageHelper.startPage(pageNum, pageSize);
-        Page<List<User>> page = userMapper.selectPage(userDto);
-        PageResponse<UserVo> pageResponse = PageResponse.of(page, UserVo.class);
+        Page<User> mpPage = new Page<>(pageNum, pageSize);
+        IPage<User> pageResult = userMapper.selectPage(mpPage, userDto);
+        PageResponse<UserVo> pageResponse = PageResponse.of(pageResult, UserVo.class);
         if (!EmptyUtil.isNullOrEmpty(pageResponse.getRecords())){
             List<Long> userIds = pageResponse.getRecords().stream().map(UserVo::getId).collect(Collectors.toList());
             //查询对应角色

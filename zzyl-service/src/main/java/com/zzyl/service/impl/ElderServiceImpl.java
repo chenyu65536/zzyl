@@ -1,9 +1,10 @@
 
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.ElderDto;
 import com.zzyl.dto.NursingElderDto;
@@ -149,11 +150,11 @@ public class ElderServiceImpl implements ElderService {
      */
     @Override
     public PageResponse selectListByPage(String name, String idCardNo, Integer pageNum, Integer pageSize) {
-        // 使用pagehelper进行分页查询护理等级数据
-        PageHelper.startPage(pageNum, pageSize);
-        Page<List<ChoiceElderVo>> page = elderMapper.selectListByPage(name, idCardNo, pageNum, pageSize);
+        // 使用MyBatis-Plus进行分页查询护理等级数据
+        Page<ChoiceElderVo> mpPage = new Page<>(pageNum, pageSize);
+        IPage<ChoiceElderVo> pageResult = elderMapper.selectListByPage(mpPage, name, idCardNo);
         // 封装分页信息
-        return PageResponse.of(page, ChoiceElderVo.class);
+        return PageResponse.of(pageResult, ChoiceElderVo.class);
     }
 
     @Override

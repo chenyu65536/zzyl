@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import com.zzyl.properties.AliOssConfigProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -18,9 +19,10 @@ import java.util.List;
 
 @Slf4j
 @Component
+@Lazy
 public class OSSAliyunFileStorageService {
 
-    @Autowired
+    @Autowired(required = false)
     OSS ossClient;
 
     @Autowired

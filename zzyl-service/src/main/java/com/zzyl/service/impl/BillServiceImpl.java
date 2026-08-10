@@ -1,12 +1,13 @@
 
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.json.JSONUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.BillDto;
@@ -758,7 +759,7 @@ public class BillServiceImpl implements BillService {
      */
     @Override
     public PageResponse<BillVo> getBillPage(String billNo, String elderName, String elderIdCard, LocalDateTime startTime, LocalDateTime endTime, Integer transactionStatus, Long elderId, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        Page mpPage = new Page<>(pageNum, pageSize);
         List<Long> elderIds = null;
         Long userId = UserThreadLocal.getUserId();
         // C 端：只能查询自己绑定老人的账单
@@ -784,8 +785,8 @@ public class BillServiceImpl implements BillService {
             // 管理端可按老人筛选
             elderIds = Collections.singletonList(elderId);
         }
-        Page<BillVo> page = billMapper.page(billNo, elderName, elderIdCard, startTime, endTime, transactionStatus, elderIds);
-        return PageResponse.of(page, BillVo.class);
+        IPage<BillVo> pageResult = billMapper.page(mpPage, billNo, elderName, elderIdCard, startTime, endTime, transactionStatus, elderIds);
+        return PageResponse.of(pageResult, BillVo.class);
     }
 
     /**
@@ -798,9 +799,9 @@ public class BillServiceImpl implements BillService {
      */
     @Override
     public PageResponse<BillVo> arrears(String bedNo, String elderName, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<BillVo> page =  billMapper.arrears(bedNo, elderName);
-        return PageResponse.of(page, BillVo.class);
+        Page mpPage = new Page<>(pageNum, pageSize);
+        IPage<BillVo> pageResult = billMapper.arrears(mpPage, bedNo, elderName);
+        return PageResponse.of(pageResult, BillVo.class);
     }
 
     @Resource
@@ -914,9 +915,9 @@ public class BillServiceImpl implements BillService {
      */
     @Override
     public PageResponse<PrepaidRechargeRecordVo> prepaidRechargeRecordPage(String bedNo, String elderName, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<PrepaidRechargeRecord> page =  prepaidRechargeRecordMapper.prepaidRechargeRecordPage(bedNo, elderName);
-        return PageResponse.of(page, PrepaidRechargeRecordVo.class);
+        Page mpPage = new Page<>(pageNum, pageSize);
+        IPage<PrepaidRechargeRecord> pageResult = prepaidRechargeRecordMapper.prepaidRechargeRecordPage(mpPage, bedNo, elderName);
+        return PageResponse.of(pageResult, PrepaidRechargeRecordVo.class);
     }
 
     /**

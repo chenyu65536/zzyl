@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.MemberElder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -62,6 +63,6 @@ public interface MemberElderMapper {
     List<MemberElder> listByElderId(Long elderId);
 
 
-    Page<List<MemberElder>> listByCondition(@Param("memberId") Long memberId, @Param("elderId") Long elderId); // 根据客户id和老人id查询客户老人关联记录列表
+    IPage<MemberElder> listByCondition(Page<MemberElder> page, @Param("memberId") Long memberId, @Param("elderId") Long elderId); // 根据客户id和老人id查询客户老人关联记录列表
 }
 

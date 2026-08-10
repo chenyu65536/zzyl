@@ -1,5 +1,8 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.alibaba.fastjson.JSON;
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
@@ -483,15 +486,15 @@ public class LeaveServiceImpl implements LeaveService {
      */
     @Override
     public ResponseResult selectByPage(LeaveQueryDto leaveQueryDto) {
-        com.github.pagehelper.PageHelper.startPage(leaveQueryDto.getPageNum(), leaveQueryDto.getPageSize());
-        List<Leave> list = leaveMapper.selectByPage(
+        Page<Leave> mpPage = new Page<>(leaveQueryDto.getPageNum(), leaveQueryDto.getPageSize());
+        IPage<Leave> pageResult = leaveMapper.selectByPage(
+                mpPage,
                 leaveQueryDto.getLeaveCode(),
                 leaveQueryDto.getName(),
                 leaveQueryDto.getIdCardNo(),
                 leaveQueryDto.getStartTime(),
                 leaveQueryDto.getEndTime(),
                 null);
-        com.github.pagehelper.Page<Leave> page = (com.github.pagehelper.Page<Leave>) list;
-        return ResponseResult.success(PageResponse.of(page, Leave.class));
+        return ResponseResult.success(PageResponse.of(pageResult, Leave.class));
     }
 }

@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.PrepaidRechargeRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -61,5 +62,5 @@ public interface PrepaidRechargeRecordMapper {
      * @param elderName 老人姓名
      * @return 分页结果
      */
-    Page<PrepaidRechargeRecord> prepaidRechargeRecordPage(@Param("bedNo")String bedNo, @Param("elderName")String elderName);
+    IPage<PrepaidRechargeRecord> prepaidRechargeRecordPage(Page<PrepaidRechargeRecord> page, @Param("bedNo")String bedNo, @Param("elderName")String elderName);
 }

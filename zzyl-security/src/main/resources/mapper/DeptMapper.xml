@@ -99,11 +99,11 @@
     <select id="hasChildByDeptId" parameterType="java.lang.String" resultType="int">
         select count(1)
         from sys_dept
-        where `parent_dept_no` = #{deptId} limit 1
+        where parent_dept_no = #{deptId} limit 1
     </select>
     <select id="checkDeptExistUser" parameterType="java.lang.String" resultType="int">
         SELECT COUNT(1)
-        FROM `sys_user`
+        FROM sys_user
         where dept_no = #{deptId}
     </select>
 
@@ -116,11 +116,11 @@
     <select id="selectChildrenDeptById" parameterType="java.lang.String" resultMap="BaseResultVoMap">
         select *
         from sys_dept
-        where find_in_set(#{deptId}, ancestors)
+        where #{deptId} = ANY(string_to_array(ancestors, ','))
     </select>
     <insert id="insert" parameterType="com.zzyl.entity.Dept">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-            SELECT LAST_INSERT_ID()
+            SELECT currval('sys_dept_id_seq')
         </selectKey>
         insert into sys_dept
         <trim prefix="(" suffix=")" suffixOverrides=",">

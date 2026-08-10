@@ -1,10 +1,11 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.entity.RefundRecord;
 import com.zzyl.enums.RefundStatusEnum;
@@ -118,8 +119,8 @@ public class RefundRecordServiceImpl implements RefundRecordService {
         } catch (Exception e) {
             return PageResponse.of(new Page<>(),RefundRecordVo.class);
         }
-        PageHelper.startPage(refundRecordVo.getPageNum(), refundRecordVo.getPageSize());
-        Page<List<RefundRecordVo>> lists = refundRecordMapper.queryRefundRecord(refundRecordVo);
+        Page<RefundRecordVo> mpPage = new Page<>(refundRecordVo.getPageNum(), refundRecordVo.getPageSize());
+        IPage<RefundRecordVo> lists = refundRecordMapper.queryRefundRecord(mpPage, refundRecordVo);
         return PageResponse.of(lists,RefundRecordVo.class);
     }
 }

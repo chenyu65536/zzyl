@@ -84,20 +84,20 @@
         <include refid="Base_Column_List"/>
         from retreat
         where status = 2
-        <if test="retreatCode != null and retreatCode != ''">
-            AND retreat_code = #{retreatCode}
+        <if test="retreatReqDto.retreatCode != null and retreatReqDto.retreatCode != ''">
+            AND retreat_code = #{retreatReqDto.retreatCode}
         </if>
-        <if test="name != null">
-            and name like concat('%', #{name}, '%')
+        <if test="retreatReqDto.name != null">
+            and name like concat('%', #{retreatReqDto.name}, '%')
         </if>
-        <if test="idCardNo != null and idCardNo != ''">
-            AND id_card_no = #{idCardNo}
+        <if test="retreatReqDto.idCardNo != null and retreatReqDto.idCardNo != ''">
+            AND id_card_no = #{retreatReqDto.idCardNo}
         </if>
-        <if test="startTime != null and endTime != null">
-            and check_out_time between #{startTime} and #{endTime}
+        <if test="retreatReqDto.startTime != null and retreatReqDto.endTime != null">
+            and check_out_time between #{retreatReqDto.startTime} and #{retreatReqDto.endTime}
         </if>
-        <if test="params.dataScope != null">
-            and ${params.dataScope}
+        <if test="retreatReqDto.params.dataScope != null">
+            and ${retreatReqDto.params.dataScope}
         </if>
         order by create_time desc
     </select>

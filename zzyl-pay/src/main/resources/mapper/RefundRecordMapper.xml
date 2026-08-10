@@ -64,7 +64,7 @@
                o.order_no                                           as order_no
         FROM refund_record r
                  LEFT JOIN sys_user adminu ON r.create_by = adminu.id
-                 left join `order` o on o.id = r.product_order_no
+                 left join "order" o on o.id = r.product_order_no
         WHERE r.refund_no = #{refundNo}
 
     </select>
@@ -342,25 +342,25 @@
         refund_record r
         LEFT JOIN sys_user adminu ON r.create_by = adminu.id
         left join member m on m.id = r.create_by
-        left join `order` o on o.id = r.product_order_no
-        WHERE r.refund_status != ''
-        and r.refund_no != ''
-        <if test="orderNo != null">
-            and o.order_no = #{orderNo,jdbcType=VARCHAR}
+        left join "order" o on o.id = r.product_order_no
+        WHERE r.refund_status IS NOT NULL
+        and r.refund_no IS NOT NULL
+        <if test="refundRecordVo.orderNo != null">
+            and o.order_no = #{refundRecordVo.orderNo,jdbcType=VARCHAR}
         </if>
-        <if test="refundNo != null">
-            and r.refund_no = #{refundNo,jdbcType=BIGINT}
+        <if test="refundRecordVo.refundNo != null">
+            and r.refund_no = #{refundRecordVo.refundNo,jdbcType=BIGINT}
         </if>
-        <if test="refundStatus != null">
-            and r.refund_status = #{refundStatus,jdbcType=INTEGER}
+        <if test="refundRecordVo.refundStatus != null">
+            and r.refund_status = #{refundRecordVo.refundStatus,jdbcType=INTEGER}
         </if>
-        <if test="startTime != null and endTime != null">
-            and r.create_time between #{startTime} and #{endTime}
+        <if test="refundRecordVo.startTime != null and refundRecordVo.endTime != null">
+            and r.create_time between #{refundRecordVo.startTime} and #{refundRecordVo.endTime}
         </if>
-        <if test="creator != null">
+        <if test="refundRecordVo.creator != null">
             and (
-            m.name like concat('%', #{creator}, '%')
-            or adminu.real_name like concat('%', #{creator}, '%')
+            m.name like concat('%', #{refundRecordVo.creator}, '%')
+            or adminu.real_name like concat('%', #{refundRecordVo.creator}, '%')
             )
         </if>
         order by r.create_time desc

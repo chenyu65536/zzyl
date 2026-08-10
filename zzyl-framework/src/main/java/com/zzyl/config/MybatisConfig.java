@@ -1,21 +1,28 @@
 package com.zzyl.config;
 
-import com.zzyl.intercept.AutoFillInterceptor;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *  webMvc高级配置
+ * MyBatis-Plus 配置
  */
 @Configuration
+@MapperScan("com.zzyl.mapper")
 public class MybatisConfig {
 
-    /***
-     *  自动填充拦截器
+    /**
+     * MyBatis-Plus 插件配置
+     * 分页插件 + 自动填充
      */
     @Bean
-    public AutoFillInterceptor autoFillInterceptor(){
-        return new AutoFillInterceptor();
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // PostgreSQL 分页插件
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.POSTGRE_SQL));
+        return interceptor;
     }
-
 }

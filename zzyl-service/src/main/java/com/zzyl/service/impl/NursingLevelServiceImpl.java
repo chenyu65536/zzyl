@@ -1,8 +1,9 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.NursingLevelDto;
 import com.zzyl.entity.NursingLevel;
@@ -56,11 +57,11 @@ public class NursingLevelServiceImpl implements NursingLevelService {
     // 分页查询护理等级数据
     @Override
     public PageResponse<NursingLevelVo> listByPage(Integer pageNum, Integer pageSize, String name, Integer status) {
-        // 使用pagehelper进行分页查询护理等级数据
-        PageHelper.startPage(pageNum, pageSize);
-        Page<List<NursingLevel>> page = nursingLevelMapper.listByPage(pageNum, pageSize, name, status);
+        // 使用MyBatis-Plus分页查询护理等级数据
+        Page<NursingLevel> mpPage = new Page<>(pageNum, pageSize);
+        IPage<NursingLevel> pageResult = nursingLevelMapper.listByPage(mpPage, name, status);
         // 封装分页信息
-        return  PageResponse.of(page, NursingLevelVo.class);
+        return PageResponse.of(pageResult, NursingLevelVo.class);
     }
 
     @Override

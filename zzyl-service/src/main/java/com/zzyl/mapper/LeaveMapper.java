@@ -1,5 +1,7 @@
 package com.zzyl.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.Leave;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -58,7 +60,8 @@ public interface LeaveMapper {
             "</script>")
     void update(Leave leave);
 
-    List<Leave> selectByPage(@Param("leaveCode") String leaveCode,
+    IPage<Leave> selectByPage(Page<Leave> page,
+                              @Param("leaveCode") String leaveCode,
                               @Param("name") String name,
                               @Param("idCardNo") String idCardNo,
                               @Param("startTime") LocalDateTime startTime,

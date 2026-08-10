@@ -1,8 +1,9 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.VisitDto;
 import com.zzyl.entity.Visit;
@@ -130,9 +131,9 @@ public class VisitServiceImpl implements VisitService {
      */
     @Override
     public PageResponse<VisitVo> findByPage(int page, int size, String name, String phone, Integer status, Integer type, LocalDateTime startTime, LocalDateTime endTime) {
-        PageHelper.startPage(page, size);
+        Page mpPage = new Page<>(page, size);
         Long userId = UserThreadLocal.getMgtUserId();;
-        Page<Visit> byPage = visitMapper.findByPage(page, size, name, phone, status, type, userId, startTime, endTime);
+        IPage<Visit> byPage = visitMapper.findByPage(mpPage, page, size, name, phone, status, type, userId, startTime, endTime);
         return PageResponse.of(byPage, VisitVo.class);
     }
 

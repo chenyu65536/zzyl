@@ -176,7 +176,8 @@ const renderCountChart = () => {
   if (!oldContainer) {
     oldContainer = document.getElementById('oldContainer')
   }
-  chartList.push(echarts.init(oldContainer)
+  const countChart = echarts.init(oldContainer)
+  chartList.push(countChart)
   countChart.setOption(
     getOldPieChartDataSet((chartColors as any).value, oldNumData.value)
   )
@@ -186,7 +187,8 @@ const bedCountChart = () => {
   if (!bedContainer) {
     bedContainer = document.getElementById('bedContainer')
   }
-  chartList.push(echarts.init(bedContainer)
+  const countChart = echarts.init(bedContainer)
+  chartList.push(countChart)
   countChart.setOption(
     getBedPieChartDataSet((chartColors as any).value, bedNumData.value)
   )
@@ -196,7 +198,8 @@ const serveCountChart = () => {
   if (!serveContainer) {
     serveContainer = document.getElementById('serveContainer')
   }
-  chartList.push(echarts.init(serveContainer)
+  const countChart = echarts.init(serveContainer)
+  chartList.push(countChart)
   countChart.setOption(
     getservePieChartDataSet((chartColors as any).value, serveNumData.value)
   )
@@ -206,7 +209,8 @@ const staffCountChart = () => {
   if (!staffContainer) {
     staffContainer = document.getElementById('staffContainer')
   }
-  chartList.push(echarts.init(staffContainer)
+  const countChart = echarts.init(staffContainer)
+  chartList.push(countChart)
   countChart.setOption(
     getStaffPieChartDataSet((chartColors as any).value, staffNumData.value)
   )
@@ -216,7 +220,8 @@ const moneyCountChart = () => {
   if (!moneyContainer) {
     moneyContainer = document.getElementById('moneyContainer')
   }
-  chartList.push(echarts.init(moneyContainer)
+  const countChart = echarts.init(moneyContainer)
+  chartList.push(countChart)
   countChart.setOption(
     getMoneyPieChartDataSet((chartColors as any).value, moneyNumData.value)
   )

@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.dto.RoleDto;
 import com.zzyl.entity.Role;
 import com.zzyl.vo.RoleVo;
@@ -18,7 +19,7 @@ public interface RoleMapper {
 
     int updateByPrimaryKeySelective(Role record);
 
-    Page<List<Role>> selectPage(@Param("roleDto") RoleDto roleDto);
+    IPage<Role> selectPage(Page<Role> page, @Param("roleDto") RoleDto roleDto);
 
     List<Role> selectList(@Param("roleVo") RoleVo roleVo);
 

@@ -1,9 +1,10 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.ReservationDto;
 import com.zzyl.dto.VisitDto;
@@ -159,9 +160,9 @@ public class ReservationServiceImpl implements ReservationService {
      */
     @Override
     public PageResponse<ReservationVo> findByPage(int page, int size, String name, String phone, Integer status, Integer type, LocalDateTime startTime, LocalDateTime endTime) {
-        PageHelper.startPage(page, size);
+        Page mpPage = new Page<>(page, size);
         Long userId = UserThreadLocal.getUserId();
-        Page<Reservation> byPage = reservationMapper.findByPage(page, size, name, phone, status, type, userId, startTime, endTime);
+        IPage<Reservation> byPage = reservationMapper.findByPage(mpPage, page, size, name, phone, status, type, userId, startTime, endTime);
         return PageResponse.of(byPage, ReservationVo.class);
     }
 

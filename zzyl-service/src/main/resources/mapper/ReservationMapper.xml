@@ -100,7 +100,7 @@
     <select id="countReservationsForEachTimeWithinTimeRange" resultType="com.zzyl.vo.TimeCountVo">
         SELECT time, 6 - COUNT(*) AS count
         FROM reservation
-        WHERE `time` BETWEEN #{startTime}
+        WHERE time BETWEEN #{startTime}
           AND #{endTime}
           and status != 2
         GROUP BY time

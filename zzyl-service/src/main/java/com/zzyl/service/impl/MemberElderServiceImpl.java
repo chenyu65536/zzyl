@@ -1,8 +1,9 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.MemberElderDto;
 import com.zzyl.entity.MemberElder;
@@ -116,12 +117,12 @@ public class MemberElderServiceImpl implements MemberElderService {
      */
     @Override
     public PageResponse<MemberElderVo> listByPage(Long memberId, Long elderId, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        Page<MemberElder> mpPage = new Page<>(pageNum, pageSize);
         if (ObjectUtil.isEmpty(memberId)) {
             memberId = UserThreadLocal.getUserId();
         }
-        Page<List<MemberElder>> page = memberElderMapper.listByCondition(memberId, elderId);
-        return PageResponse.of(page,  MemberElderVo.class);
+        IPage<MemberElder> pageResult = memberElderMapper.listByCondition(mpPage, memberId, elderId);
+        return PageResponse.of(pageResult, MemberElderVo.class);
     }
 
     @Override

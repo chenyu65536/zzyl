@@ -1,11 +1,12 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.constant.AccraditationRecordConstant;
 import com.zzyl.dto.BedDto;
@@ -240,7 +241,7 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public PageResponse<ContractVo> selectByPage(Integer pageNum, Integer pageSize, String contractNo, String elderName,
                                                  Integer status, LocalDateTime startTime, LocalDateTime endTime) {
-        PageHelper.startPage(pageNum, pageSize);
+        Page<Contract> mpPage = new Page<>(pageNum, pageSize);
 
         // 通过丙方手机号关联合同
         String phone = null;
@@ -251,8 +252,8 @@ public class ContractServiceImpl implements ContractService {
                 phone = byId.getPhone();
             }
         }
-        Page<List<Contract>> page = contractMapper.selectByPage(phone, contractNo, elderName, status, startTime, endTime);
-        return PageResponse.of(page, ContractVo.class);
+        IPage<Contract> pageResult = contractMapper.selectByPage(mpPage, phone, contractNo, elderName, status, startTime, endTime);
+        return PageResponse.of(pageResult, ContractVo.class);
     }
 
     @Override

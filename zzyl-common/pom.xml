@@ -17,11 +17,6 @@
     </properties>
 
     <dependencies>
-        <!--分页攻击-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-        </dependency>
         <!--工具包-->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -80,6 +75,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-core</artifactId>
         </dependency>
 
     </dependencies>

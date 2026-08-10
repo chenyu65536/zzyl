@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.NursingTask;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -34,7 +35,7 @@ public interface NursingTaskMapper {
 
     int batchInsert(@Param("list") List<NursingTask> list);
 
-    Page<NursingTask> selectByParams(@Param("elderName") String elderName, @Param("nurseId") Long nurseId, @Param("projectId") Long projectId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime, @Param("status") Integer status);
+    IPage<NursingTask> selectByParams(Page<NursingTask> page, @Param("elderName") String elderName, @Param("nurseId") Long nurseId, @Param("projectId") Long projectId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime, @Param("status") Integer status);
 
     void updateByBillNoSelective(@Param("roleIds") List<String> roleIds);
 }

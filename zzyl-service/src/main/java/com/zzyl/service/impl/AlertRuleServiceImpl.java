@@ -1,8 +1,9 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.AlertRuleDto;
 import com.zzyl.entity.AlertRule;
@@ -21,14 +22,14 @@ public class AlertRuleServiceImpl implements AlertRuleService {
 
     @Override
     public PageResponse<AlertRuleVo> getAlertRulePage(Integer pageNum, Integer pageSize, String alertRuleName, String productId, String functionName) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<AlertRuleVo> page = alertRuleMapper.page(alertRuleName, productId, functionName);
-        page.getResult().forEach(v -> {
+        Page mpPage = new Page<>(pageNum, pageSize);
+        IPage<AlertRuleVo> pageResult = alertRuleMapper.page(mpPage, alertRuleName, productId, functionName);
+        pageResult.getRecords().forEach(v -> {
             v.setProductKey(v.getProductId());
             v.setDeviceId(v.getRelatedDevice());
             v.setRules(new StringBuilder("ThingModelPropertyDeviceValue ").append(v.getOperator()).append(v.getValue()).append("持续触发").append(v.getDuration()).append("个周期时发生报警").toString());
         });
-        return PageResponse.of(page, AlertRuleVo.class);
+        return PageResponse.of(pageResult, AlertRuleVo.class);
     }
 
     @Override

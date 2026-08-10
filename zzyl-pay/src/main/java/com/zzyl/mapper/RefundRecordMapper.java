@@ -1,7 +1,8 @@
 
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.RefundRecord;
 import com.zzyl.vo.RefundRecordVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -72,6 +73,6 @@ public interface RefundRecordMapper {
      */
     List<RefundRecord> selectListByRefundStatus(@Param("refundStatus")Integer refundStatus, @Param("count")Integer count);
 
-    Page<List<RefundRecordVo>> queryRefundRecord(RefundRecordVo refundRecordVo);
+    IPage<RefundRecordVo> queryRefundRecord(Page<RefundRecordVo> page, @Param("refundRecordVo") RefundRecordVo refundRecordVo);
 }
 

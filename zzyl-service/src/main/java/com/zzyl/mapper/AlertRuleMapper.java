@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.AlertRule;
 import com.zzyl.vo.AlertRuleVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,7 +22,7 @@ public interface AlertRuleMapper {
 
     int updateByPrimaryKeySelective(AlertRule record);
 
-    Page<AlertRuleVo> page(@Param("alertRuleName")String alertRuleName, @Param("productId")String productId, @Param("functionName")String functionName);
+    IPage<AlertRuleVo> page(Page<AlertRuleVo> page, @Param("alertRuleName")String alertRuleName, @Param("productId")String productId, @Param("functionName")String functionName);
 
     /**
      * 启用或禁用

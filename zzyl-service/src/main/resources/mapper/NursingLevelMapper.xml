@@ -112,7 +112,7 @@
                 #{createTime}, #{updateTime})
     </insert>
 
-    <select id="listByPage" resultMap="NursingLevelResultMap" parameterType="java.util.Map">
+    <select id="listByPage" resultMap="NursingLevelResultMap">
         SELECT
         nl.id,
         nl.name,
@@ -131,6 +131,7 @@
         nursing_level nl
         LEFT JOIN nursing_plan npp ON nl.lplan_id = npp.id
         LEFT JOIN sys_user s ON nl.create_by = s.id
+        WHERE 1=1
         <if test="name != null and name != ''">
             and name like concat('%', #{name}, '%')
         </if>

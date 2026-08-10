@@ -1,10 +1,11 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.zzyl.base.PageResponse;
 import com.zzyl.constant.Constants;
@@ -186,8 +187,8 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public PageResponse<MemberVo> page(Integer page, Integer pageSize, String phone, String nickname) {
-        PageHelper.startPage(page, pageSize);
-        Page<List<Member>> listPage = memberMapper.page(phone, nickname);
+        Page mpPage = new Page<>(page, pageSize);
+        IPage<Member> listPage = memberMapper.page(mpPage, phone, nickname);
 
         PageResponse<MemberVo> pageResponse = PageResponse.of(listPage, MemberVo.class);
         List<Long> ids = pageResponse.getRecords().stream().map(MemberVo::getId).distinct().collect(Collectors.toList());

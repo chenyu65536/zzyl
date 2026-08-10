@@ -43,7 +43,7 @@
 
     <insert id="insert" parameterType="com.zzyl.entity.DeviceData">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-            SELECT LAST_INSERT_ID()
+            SELECT currval('device_data_id_seq')
         </selectKey>
         insert into device_data (device_name, note_name, product_id,
         product_name, function_name, access_location,
@@ -61,7 +61,7 @@
     </insert>
     <insert id="insertSelective" parameterType="com.zzyl.entity.DeviceData">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-            SELECT LAST_INSERT_ID()
+            SELECT currval('device_data_id_seq')
         </selectKey>
         insert into device_data
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -203,7 +203,7 @@
     </select>
     <select id="pageWeek" resultType="com.zzyl.vo.DeviceDataVo">
         select
-        DATE_FORMAT(`alarm_time`, '%m月%d日') AS `data`, AVG(`data_value`) AS `data_value`
+        TO_CHAR(alarm_time, 'MM月DD日') AS data, AVG(data_value) AS data_value
         from device_data
         <where>
             <if test="status != null and status == -1">
@@ -228,7 +228,7 @@
                 AND alarm_time BETWEEN #{startTime} AND #{endTime}
             </if>
         </where>
-        group by data
+        group by TO_CHAR(alarm_time, 'MM月DD日')
         order by create_time desc
 
     </select>

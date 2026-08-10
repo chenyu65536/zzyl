@@ -1,10 +1,11 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
 import com.zzyl.constant.AccraditationRecordConstant;
@@ -56,10 +57,6 @@ public class RetreatServiceImpl implements RetreatService {
      */
     private static final Logger log = LoggerFactory.getLogger(RetreatServiceImpl.class);
 
-    /**
-     * 日志对象（显式声明，避免依赖 Lombok 注解处理器，保证各环境一致可用）
-     */
-    private static final Logger log = LoggerFactory.getLogger(RetreatServiceImpl.class);
 
     private static final String RETREAT_CODE_PREFIX = "TZ";
 
@@ -888,8 +885,8 @@ public class RetreatServiceImpl implements RetreatService {
      */
     @Override
     public ResponseResult selectByPage(RetreatReqDto retreatReqDto) {
-        PageHelper.startPage(retreatReqDto.getPageNum(), retreatReqDto.getPageSize());
-        Page<List<Retreat>> pages = retreatMapper.selectByPage(retreatReqDto);
+        Page<Retreat> mpPage = new Page<>(retreatReqDto.getPageNum(), retreatReqDto.getPageSize());
+        IPage<Retreat> pages = retreatMapper.selectByPage(mpPage, retreatReqDto);
         PageResponse<Retreat> of = PageResponse.of(pages, Retreat.class);
         return ResponseResult.success(of);
     }

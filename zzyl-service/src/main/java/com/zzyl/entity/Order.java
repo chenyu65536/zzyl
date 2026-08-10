@@ -1,5 +1,6 @@
 package com.zzyl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zzyl.base.BaseEntity;
 import com.zzyl.vo.*;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@TableName("orders")
 public class Order extends BaseEntity {
 
     /**

@@ -38,7 +38,7 @@
     </delete>
     <insert id="insertSelective" parameterType="com.zzyl.entity.RoleDept">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-            SELECT LAST_INSERT_ID()
+            SELECT LASTVAL()
         </selectKey>
         insert into sys_role_dept
         <trim prefix="(" suffix=")" suffixOverrides=",">

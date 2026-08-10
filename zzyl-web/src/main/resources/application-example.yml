@@ -1,7 +1,7 @@
 #服务配置
 server:
   #端口
-  port: 9995
+  port: 8080
   #服务编码
   tomcat:
     uri-encoding: UTF-8
@@ -25,16 +25,20 @@ spring:
       max-request-size: 6MB
   #数据源配置
   datasource:
-    druid:
-      driver-class-name: com.mysql.jdbc.Driver
-      # 修改点：主机/库名可按需调整；密码通过环境变量注入，禁止硬编码
-      url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/zhyl-auth?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-      username: ${MYSQL_USERNAME:root}
-      password: ${MYSQL_PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+    # 数据库连接，参考 web-demo 项目本地配置
+    url: jdbc:postgresql://${PG_HOST:127.0.0.1}:${PG_PORT:5432}/${PG_DATABASE:zhyl-auth}?options=-c%20lc_messages%3DC
+    username: ${PG_USERNAME:postgres}
+    password: ${PG_PASSWORD:chenyu123}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
   redis:
     host: ${REDIS_HOST:127.0.0.1}
     port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:}
+    password: ${REDIS_PASSWORD:123456}
   activiti:
     #是否让activiti自动创建所有的历史表
     history-level: full
@@ -44,8 +48,8 @@ spring:
     check-process-definitions: false
     #关闭启动服务自动框架部署
     deployment-mode: never-fail
-# MyBatis配置
-mybatis:
+# MyBatis-Plus配置
+mybatis-plus:
   #mapper配置文件
   mapper-locations: classpath*:mapper*/*Mapper.xml
   type-aliases-package: com.zzyl.entity
@@ -54,9 +58,11 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 驼峰下划线转换
     map-underscore-to-camel-case: true
-    use-generated-keys: true
     default-statement-timeout: 60
     default-fetch-size: 100
+  global-config:
+    db-config:
+      id-type: auto
 logging:
   config: classpath:logback.xml
   level:
@@ -90,8 +96,8 @@ zzyl:
       contact-url: www.itheima.com
       contact-email: itheima@itcast.cn
     jwt:
-      # 修改点：JWT 密钥通过环境变量注入，禁止硬编码
-      base64-encoded-secret-key: ${JWT_SECRET_KEY:}
+      # JWT 密钥通过环境变量注入；默认值仅用于本地开发，生产环境务必配置 JWT_SECRET_KEY
+      base64-encoded-secret-key: ${JWT_SECRET_KEY:zzyl-dev-secret-key-please-change-in-production-256bit}
       ttl: 3600000
     oss:
       endpoint: oss-cn-beijing.aliyuncs.com

@@ -3,7 +3,8 @@
  */
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.Contract;
 import com.zzyl.vo.ContractVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -64,7 +65,7 @@ public interface ContractMapper {
      * @param endTime 结束时间
      * @return 分页结果
      */
-    Page<List<Contract>> selectByPage(@Param("memberPhone") String memberPhone, @Param("contractNo") String contractNo, @Param("elderName") String elderName,
+    IPage<Contract> selectByPage(Page<Contract> page, @Param("memberPhone") String memberPhone, @Param("contractNo") String contractNo, @Param("elderName") String elderName,
                                       @Param("status") Integer status, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 
 

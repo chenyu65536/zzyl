@@ -1,9 +1,10 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.DeviceDataDto;
 import com.zzyl.entity.DeviceData;
@@ -52,15 +53,15 @@ public class DeviceDataServiceImpl implements DeviceDataService {
 
     @Override
     public PageResponse<DeviceDataVo> getDeviceDataPage(Integer pageNum, Integer pageSize, Integer status, String deviceName, String accessLocation, Integer locationType, String functionId, LocalDateTime startTime, LocalDateTime endTime) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<DeviceDataVo> page = deviceDataMapper.page(status, deviceName, accessLocation, locationType, functionId, startTime, endTime);
-        return PageResponse.of(page, DeviceDataVo.class);
+        Page mpPage = new Page<>(pageNum, pageSize);
+        IPage<DeviceDataVo> pageResult = deviceDataMapper.page(mpPage, status, deviceName, accessLocation, locationType, functionId, startTime, endTime);
+        return PageResponse.of(pageResult, DeviceDataVo.class);
     }
 
     @Override
     public PageResponse<DeviceDataVo> getDeviceWeekDataPage(Integer pageNum, Integer pageSize, Integer status, String deviceName, String accessLocation, Integer locationType, String functionId, LocalDateTime startTime, LocalDateTime endTime) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<DeviceDataVo> page = deviceDataMapper.pageWeek(status, deviceName, accessLocation, locationType, functionId, startTime, endTime);
-        return PageResponse.of(page, DeviceDataVo.class);
+        Page mpPage = new Page<>(pageNum, pageSize);
+        IPage<DeviceDataVo> pageResult = deviceDataMapper.pageWeek(mpPage, status, deviceName, accessLocation, locationType, functionId, startTime, endTime);
+        return PageResponse.of(pageResult, DeviceDataVo.class);
     }
 }

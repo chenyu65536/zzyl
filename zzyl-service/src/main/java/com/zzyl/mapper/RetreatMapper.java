@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.dto.RetreatReqDto;
 import com.zzyl.entity.Retreat;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,7 +30,7 @@ public interface RetreatMapper {
 
     void update(Retreat retreat);
 
-    Page<List<Retreat>> selectByPage(RetreatReqDto retreatReqDto);
+    IPage<Retreat> selectByPage(Page<Retreat> page, @Param("retreatReqDto") RetreatReqDto retreatReqDto);
 
     @Select("select * from retreat where elder_id = #{elderId} and status = 1")
     Retreat selectByElderId(Long elderId);

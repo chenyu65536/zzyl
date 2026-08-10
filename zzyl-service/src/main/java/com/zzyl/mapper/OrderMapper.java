@@ -1,7 +1,8 @@
 
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.Order;
 import com.zzyl.vo.OrderVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -47,7 +48,7 @@ public interface OrderMapper {
      * @param userId
      * @return 订单列表
      */
-    Page<List<Order>> searchOrders(@Param("status") Integer status, @Param("orderNo") String orderNo, @Param("elderlyName") String elderlyName, @Param("creator") String creator, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime,  @Param("userId")Long userId);
+    IPage<Order> searchOrders(Page<Order> page, @Param("status") Integer status, @Param("orderNo") String orderNo, @Param("elderlyName") String elderlyName, @Param("creator") String creator, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime,  @Param("userId")Long userId);
 
     /**
      * 根据会员ID查询订单

@@ -1,6 +1,5 @@
 import path from 'path'
 import { ConfigEnv, UserConfig, loadEnv } from 'vite'
-import { viteMockServe } from 'vite-plugin-mock'
 import createVuePlugin from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import svgLoader from 'vite-svg-loader'
@@ -36,19 +35,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     plugins: [
       createVuePlugin(),
       vueJsx(),
-      viteMockServe({
-        mockPath: 'mock',
-        localEnabled: false, // 是否开启本地mock 我们用的远程连接 直接关闭 走代理就OK
-        // 修改点：生产环境关闭 mock。原 prodEnabled:true 会把 mock 服务打进生产包，
-        // setupProdMockServer() 会拦截/伪造后端接口响应，导致生产环境数据错乱与安全隐患。
-        prodEnabled: false,
-        supportTs: true,
-        logger: true,
-        injectCode: `
-          import { setupProdMockServer } from '../mockProdServer';
-          setupProdMockServer();
-        `
-      }),
       svgLoader()
     ],
     server: {
@@ -57,7 +43,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       hmr: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:9995',
+          target: 'http://localhost:8080',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         }

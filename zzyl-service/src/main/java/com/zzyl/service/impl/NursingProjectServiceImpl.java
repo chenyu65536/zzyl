@@ -1,8 +1,9 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.collection.CollUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.NursingProjectDto;
 import com.zzyl.entity.NursingProject;
@@ -55,11 +56,11 @@ public class NursingProjectServiceImpl implements NursingProjectService {
 
     @Override
     public PageResponse<NursingProjectVo> getByPage(String name, Integer status, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<NursingProject> nursingProjects = nursingProjectMapper.selectByPage(name, status, pageNum, pageSize);
+        Page mpPage = new Page<>(pageNum, pageSize);
+        IPage<NursingProject> nursingProjects = nursingProjectMapper.selectByPage(mpPage, name, status, pageNum, pageSize);
         PageResponse<NursingProjectVo> projectVoPageResponse = PageResponse.of(nursingProjects, NursingProjectVo.class);
         // 增加护理项目和计划的绑定关系
-        List<Long> ids = nursingProjects.getResult()
+        List<Long> ids = nursingProjects.getRecords()
                 .stream()
                 .map(NursingProject::getId)
                 .distinct()

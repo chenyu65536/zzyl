@@ -6,6 +6,7 @@ import com.zzyl.properties.AliIoTConfigProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 public class IotClientConfig {
@@ -14,10 +15,14 @@ public class IotClientConfig {
     private AliIoTConfigProperties aliIoTConfigProperties;
 
     /**
+     * 修改点：@Lazy 懒加载，本地未配置阿里云 IoT 凭证（ALIYUN_IOT_AK/SK）时不立即创建客户端，
+     * 避免启动阶段因凭证缺失导致 Bean 创建异常。
+     *
      * @return
      * @throws Exception
      */
     @Bean
+    @Lazy
     public Client instance() throws Exception {
         Config config = new Config();
         config.accessKeyId = aliIoTConfigProperties.getAccessKeyId();

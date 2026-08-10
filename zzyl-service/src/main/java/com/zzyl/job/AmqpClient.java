@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -50,6 +51,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+@Lazy
 @Component
 public class AmqpClient implements ApplicationRunner {
     private final static Logger logger = LoggerFactory.getLogger(AmqpClient.class);
@@ -431,12 +433,14 @@ public class AmqpClient implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // 修改点：捕获启动异常，避免消息中间件（阿里云 IoT AMQP）暂不可用时导致整个应用上下文启动失败
-        try {
-            start();
-        } catch (Exception e) {
-            logger.error("AMQP 客户端启动失败，IoT 设备数据接收已停用", e);
-        }
+        // 已停用：阿里云 IoT AMQP 客户端暂不启动，避免凭证未配置时的报错
+        // 如需启用 IoT 设备数据接收，将下面的注释打开，并配置 ALIYUN_IOT_AK/SK/HOST 等环境变量
+        logger.info("AMQP 客户端已停用，IoT 设备数据接收功能未启动");
+        // try {
+        //     start();
+        // } catch (Exception e) {
+        //     logger.error("AMQP 客户端启动失败，IoT 设备数据接收已停用", e);
+        // }
     }
 
     /**

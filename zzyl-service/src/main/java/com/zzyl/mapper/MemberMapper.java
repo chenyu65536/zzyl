@@ -1,12 +1,11 @@
 
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * 会员Mapper接口
@@ -51,11 +50,12 @@ public interface MemberMapper {
 
     /**
      * 分页
+     * @param page 分页对象
      * @param phone phone
      * @param nickname nickname
      * @return 返回
      */
-    Page<List<Member>> page(@Param("phone") String phone, @Param("name") String nickname);
+    IPage<Member> page(Page<Member> page, @Param("phone") String phone, @Param("name") String nickname);
 }
 
 

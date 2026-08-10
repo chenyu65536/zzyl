@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.NursingPlan;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -52,7 +53,7 @@ public interface NursingPlanMapper {
      * @param status 状态
      * @return 分页的护理计划实体列表
      */
-    Page<List<NursingPlan>> listByPage(@Param("page") int page, @Param("pageSize") int pageSize, @Param("name") String name, @Param("status") Integer status);
+    IPage<NursingPlan> listByPage(Page<NursingPlan> page, @Param("name") String name, @Param("status") Integer status);
 
     /**
      * 启用或禁用护理计划

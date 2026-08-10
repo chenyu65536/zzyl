@@ -1,9 +1,10 @@
 package com.zzyl.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.NursingPlanDto;
 import com.zzyl.entity.NursingLevel;
@@ -112,9 +113,9 @@ public class NursingPlanServiceImpl implements NursingPlanService {
      */
     @Override
     public PageResponse<NursingPlanVo> listByPage(String name, Integer status, Integer pageNum, Integer pageSize) {
-        // 使用 PageHelper 分页插件
-        PageHelper.startPage(pageNum, pageSize);
-        Page<List<NursingPlan>> lists = nursingPlanMapper.listByPage(pageNum, pageSize, name, status);// 获取所有护理计划
+        // 使用 MyBatis-Plus 分页插件
+        Page<NursingPlan> mpPage = new Page<>(pageNum, pageSize);
+        IPage<NursingPlan> lists = nursingPlanMapper.listByPage(mpPage, name, status);// 获取所有护理计划
         // 增加护理项目和计划的绑定关系
         PageResponse<NursingPlanVo> nursingPlanVoPageResponse = PageResponse.of(lists, NursingPlanVo.class);
         List<Long> ids = nursingPlanVoPageResponse.getRecords().stream().map(NursingPlanVo::getId).distinct().collect(Collectors.toList());

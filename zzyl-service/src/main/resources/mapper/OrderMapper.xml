@@ -214,7 +214,7 @@
                n.update_by,
                n.remark,
                admint.real_name as acreator
-        FROM `order` o
+        FROM "orders" o
                  LEFT JOIN sys_user s ON o.create_by = s.id
                  LEFT JOIN sys_user u ON o.update_by = u.id
                  left join member m on o.member_id = m.id
@@ -234,7 +234,7 @@
     <select id="listByMemberId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from `order`
+        from "orders"
         where member_id = #{memberId}
         and status in (1,3)
     </select>
@@ -242,18 +242,18 @@
     <select id="selectByStatus" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from `order`
+        from "orders"
         where status = #{status,jdbcType=INTEGER}
     </select>
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        update `order`
+        update "orders"
         set view_status = 1
         where id = #{id,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="com.zzyl.entity.Order" useGeneratedKeys="true" keyProperty="id">
-        insert into `order` (id, trading_order_no, payment_status,
+        insert into "orders" (id, trading_order_no, payment_status,
                              amount, refund, is_refund,
                              member_id, project_id, elder_id,
                              estimated_arrival_time, order_no, reason,
@@ -267,7 +267,7 @@
                 #{createBy,jdbcType=BIGINT}, #{updateBy,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.zzyl.entity.Order">
-        insert into `order`
+        insert into "orders"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -383,7 +383,7 @@
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.zzyl.entity.Order" useGeneratedKeys="true"
             keyProperty="id">
-        update `order`
+        update "orders"
         <set>
             <if test="tradingOrderNo != null">
                 trading_order_no = #{tradingOrderNo,jdbcType=BIGINT},
@@ -443,7 +443,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.zzyl.entity.Order">
-        update `order`
+        update "orders"
         set trading_order_no       = #{tradingOrderNo,jdbcType=BIGINT},
             payment_status         = #{paymentStatus,jdbcType=TINYINT},
             amount                 = #{amount,jdbcType=DECIMAL},
@@ -469,7 +469,7 @@
         , t.*
         , rr.memo as rrmemo , rr.refund_status as refund_status, rr.create_by as rrcreate_by,rr.refund_code,
         rr.refund_no, rr.refund_amount, rr.refund_msg, rr.refund_code, rr.refund_msg
-        FROM `order` o
+        FROM "orders" o
 
         left join member m on o.member_id = m.id
         left join elder e on o.elder_id = e.id
@@ -501,7 +501,7 @@
     </select>
 
     <update id="batchUpdateByTradingOrderNoSelective">
-        update `order`
+        update "orders"
         <set>
             <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
@@ -515,7 +515,7 @@
     </update>
 
     <select id="selectByTradingOrderNo" resultMap="BaseResultMap">
-        select * from `order`
+        select * from "orders"
         where trading_order_no in
         <foreach collection="list" item="item" separator="," open="(" close=")">
             #{item,jdbcType=BIGINT}

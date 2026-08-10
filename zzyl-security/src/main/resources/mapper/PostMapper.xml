@@ -27,7 +27,7 @@
     </select>
     <insert id="insert" parameterType="com.zzyl.entity.Post">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-            SELECT LAST_INSERT_ID()
+            SELECT currval('sys_post_id_seq')
         </selectKey>
         insert into sys_post (dept_no, post_no, post_name,
         sort_no, data_state, create_time,
@@ -40,7 +40,7 @@
     </insert>
     <insert id="insertSelective" parameterType="com.zzyl.entity.Post">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-            SELECT LAST_INSERT_ID()
+            SELECT currval('sys_post_id_seq')
         </selectKey>
         insert into sys_post
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -255,10 +255,10 @@
 
     <select id="checkPostHasUser" resultType="Integer">
         SELECT
-        COUNT(DISTINCT(u.`user_id`)) AS userTotal
+        COUNT(DISTINCT(u.user_id)) AS userTotal
         FROM
-        `sys_user` u
-        where u.`post_no` in
+        sys_user u
+        where u.post_no in
         <foreach collection="postIds" item="index" open="(" separator="," close=")">
             #{index}
         </foreach>

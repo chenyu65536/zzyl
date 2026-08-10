@@ -1,9 +1,11 @@
 package com.zzyl.mapper;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.entity.NursingProject;
 import com.zzyl.vo.NursingProjectVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public interface NursingProjectMapper {
      * @param pageSize 每页显示数量
      * @return List<NursingProjectVO>
      */
-    Page<NursingProject> selectByPage(String name, Integer status, Integer pageNum, Integer pageSize);
+    IPage<NursingProject> selectByPage(Page<NursingProject> page, @Param("name") String name, @Param("status") Integer status, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
     /**
      * 更新护理项目信息
