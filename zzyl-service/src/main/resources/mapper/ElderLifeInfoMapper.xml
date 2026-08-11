@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.ElderLifeInfoMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.ElderLifeInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into elder_life_info(elder_id, diet_taboo, living_habit, hobby, religion, create_by, remark, create_time)
+        values (#{elderId}, #{dietTaboo}, #{livingHabit}, #{hobby}, #{religion}, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.ElderLifeInfo">
+        update elder_life_info
+        <set>
+            <if test="dietTaboo != null">diet_taboo = #{dietTaboo},</if>
+            <if test="livingHabit != null">living_habit = #{livingHabit},</if>
+            <if test="hobby != null">hobby = #{hobby},</if>
+            <if test="religion != null">religion = #{religion},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findByElderId" parameterType="java.lang.Long" resultType="com.zzyl.entity.ElderLifeInfo">
+        select *
+        from elder_life_info
+        where elder_id = #{elderId}
+    </select>
+</mapper>

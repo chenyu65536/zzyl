@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.WarehouseMaterialMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.WarehouseMaterial" useGeneratedKeys="true" keyProperty="id">
+        insert into warehouse_material(warehouse_record_id, material_id, warehouse_num, inventory, product_date,
+                                       expire_date, create_by, remark, create_time)
+        values (#{warehouseRecordId}, #{materialId}, #{warehouseNum}, #{inventory}, #{productDate},
+                #{expireDate}, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="updateInventory">
+        update warehouse_material
+        set inventory   = #{inventory},
+            update_time = now()
+        where id = #{id}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.zzyl.entity.WarehouseMaterial">
+        select *
+        from warehouse_material
+        where id = #{id}
+    </select>
+
+    <select id="findByIds" resultType="com.zzyl.entity.WarehouseMaterial">
+        select *
+        from warehouse_material
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByWarehouseRecordId" parameterType="java.lang.Long" resultType="com.zzyl.vo.WarehouseMaterialVo">
+        select wm.*, m.name as material_name, m.spec, m.price, mt.name as type_name
+        from warehouse_material wm
+                 left join material m on wm.material_id = m.id
+                 left join material_type mt on m.type_id = mt.id
+        where wm.warehouse_record_id = #{warehouseRecordId}
+        order by wm.id
+    </select>
+
+    <select id="findStockByPage" resultType="com.zzyl.vo.WarehouseMaterialVo">
+        select wm.*, m.name as material_name, m.spec, m.price, mt.name as type_name, w.name as warehouse_name
+        from warehouse_material wm
+        left join material m on wm.material_id = m.id
+        left join material_type mt on m.type_id = mt.id
+        left join warehouse_record wr on wm.warehouse_record_id = wr.id
+        left join warehouse w on wr.warehouse_id = w.id
+        where wm.inventory &gt; 0
+        and wr.status = 1
+        and wr.del_flag = 0
+        <if test="warehouseId != null">
+            and wr.warehouse_id = #{warehouseId}
+        </if>
+        <if test="materialName != null and materialName != ''">
+            and m.name like concat('%', #{materialName}, '%')
+        </if>
+        order by wm.create_time desc
+    </select>
+
+    <select id="findInventoryByPage" resultType="com.zzyl.vo.InventoryVo">
+        select m.id as material_id,
+        m.name as material_name,
+        mt.name as type_name,
+        m.spec,
+        m.price,
+        m.warn_threshold,
+        coalesce(sum(wm.inventory), 0) as total_inventory,
+        case when m.warn_threshold is not null and coalesce(sum(wm.inventory), 0) &lt; m.warn_threshold
+        then 1 else 0 end as low_stock
+        from material m
+        left join material_type mt on m.type_id = mt.id
+        left join warehouse_material wm on wm.material_id = m.id
+        left join warehouse_record wr on wm.warehouse_record_id = wr.id and wr.status = 1 and wr.del_flag = 0
+        <if test="warehouseId != null">
+            and wr.warehouse_id = #{warehouseId}
+        </if>
+        where m.del_flag = 0
+        <if test="materialName != null and materialName != ''">
+            and m.name like concat('%', #{materialName}, '%')
+        </if>
+        <if test="typeId != null">
+            and m.type_id = #{typeId}
+        </if>
+        group by m.id, m.name, mt.name, m.spec, m.price, m.warn_threshold
+        order by m.id
+    </select>
+
+    <select id="findWarningList" resultType="com.zzyl.vo.InventoryVo">
+        select m.id                           as material_id,
+               m.name                         as material_name,
+               mt.name                        as type_name,
+               m.spec,
+               m.price,
+               m.warn_threshold,
+               coalesce(sum(wm.inventory), 0) as total_inventory,
+               1                              as low_stock
+        from material m
+                 left join material_type mt on m.type_id = mt.id
+                 left join warehouse_material wm on wm.material_id = m.id
+                 left join warehouse_record wr on wm.warehouse_record_id = wr.id and wr.status = 1 and wr.del_flag = 0
+        where m.del_flag = 0
+          and m.warn_threshold is not null
+        group by m.id, m.name, mt.name, m.spec, m.price, m.warn_threshold
+        having coalesce(sum(wm.inventory), 0) &lt; m.warn_threshold
+        order by m.id
+    </select>
+
+    <select id="sumInventoryByWarehouseId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select coalesce(sum(wm.inventory), 0)
+        from warehouse_material wm
+                 left join warehouse_record wr on wm.warehouse_record_id = wr.id
+        where wr.warehouse_id = #{warehouseId}
+          and wr.del_flag = 0
+    </select>
+</mapper>

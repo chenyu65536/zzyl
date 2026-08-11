@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.StaffMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.Staff" useGeneratedKeys="true" keyProperty="id">
+        insert into staff(name, phone, email, role_id, dept_no, sex, avatar, leave_flag, create_by, remark, create_time)
+        values (#{name}, #{phone}, #{email}, #{roleId}, #{deptNo}, #{sex}, #{avatar}, '0', #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.Staff">
+        update staff
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="roleId != null">role_id = #{roleId},</if>
+            <if test="deptNo != null and deptNo != ''">dept_no = #{deptNo},</if>
+            <if test="sex != null and sex != ''">sex = #{sex},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="leaveFlag != null and leaveFlag != ''">leave_flag = #{leaveFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.zzyl.entity.Staff">
+        select *
+        from staff
+        where id = #{id}
+    </select>
+
+    <select id="findByPhone" resultType="com.zzyl.entity.Staff">
+        select *
+        from staff
+        where phone = #{phone}
+    </select>
+
+    <select id="findByEmail" resultType="com.zzyl.entity.Staff">
+        select *
+        from staff
+        where email = #{email}
+    </select>
+
+    <select id="findAll" resultType="com.zzyl.entity.Staff">
+        select *
+        from staff
+        where leave_flag = '0'
+        <if test="name != null and name != ''">
+            and name like concat('%', #{name}, '%')
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="findByPage" resultType="com.zzyl.vo.StaffVo">
+        select *
+        from staff
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="leaveFlag != null and leaveFlag != ''">
+                and leave_flag = #{leaveFlag}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+</mapper>

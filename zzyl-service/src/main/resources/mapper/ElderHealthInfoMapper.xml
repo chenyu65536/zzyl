@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.ElderHealthInfoMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.ElderHealthInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into elder_health_info(elder_id, self_care, vision, hearing, hospital, doctor, hospital_phone,
+                                      allergy_drug, medical_history, major_disease, create_by, remark, create_time)
+        values (#{elderId}, #{selfCare}, #{vision}, #{hearing}, #{hospital}, #{doctor}, #{hospitalPhone},
+                #{allergyDrug}, #{medicalHistory}, #{majorDisease}, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.ElderHealthInfo">
+        update elder_health_info
+        <set>
+            <if test="selfCare != null">self_care = #{selfCare},</if>
+            <if test="vision != null">vision = #{vision},</if>
+            <if test="hearing != null">hearing = #{hearing},</if>
+            <if test="hospital != null">hospital = #{hospital},</if>
+            <if test="doctor != null">doctor = #{doctor},</if>
+            <if test="hospitalPhone != null">hospital_phone = #{hospitalPhone},</if>
+            <if test="allergyDrug != null">allergy_drug = #{allergyDrug},</if>
+            <if test="medicalHistory != null">medical_history = #{medicalHistory},</if>
+            <if test="majorDisease != null">major_disease = #{majorDisease},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findByElderId" parameterType="java.lang.Long" resultType="com.zzyl.entity.ElderHealthInfo">
+        select *
+        from elder_health_info
+        where elder_id = #{elderId}
+    </select>
+</mapper>

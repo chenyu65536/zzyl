@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.MealOrderMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.MealOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into meal_order(elder_id, catering_set_id, staff_id, deliver_time, dine_date, dine_type,
+                               pay_amount, status, dine_flag, create_by, remark, create_time)
+        values (#{elderId}, #{cateringSetId}, #{staffId}, #{deliverTime}, #{dineDate}, #{dineType},
+                #{payAmount}, #{status}, #{dineFlag}, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.MealOrder">
+        update meal_order
+        <set>
+            <if test="staffId != null">staff_id = #{staffId},</if>
+            <if test="deliverTime != null">deliver_time = #{deliverTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="dineFlag != null">dine_flag = #{dineFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.zzyl.entity.MealOrder">
+        select *
+        from meal_order
+        where id = #{id}
+    </select>
+
+    <select id="findVoById" parameterType="java.lang.Long" resultType="com.zzyl.vo.MealOrderVo">
+        select mo.*, e.name as elder_name, cs.name as catering_set_name, s.name as staff_name
+        from meal_order mo
+                 left join elder e on mo.elder_id = e.id
+                 left join catering_set cs on mo.catering_set_id = cs.id
+                 left join staff s on mo.staff_id = s.id
+        where mo.id = #{id}
+    </select>
+
+    <select id="findByPage" resultType="com.zzyl.vo.MealOrderVo">
+        select mo.*, e.name as elder_name, cs.name as catering_set_name, s.name as staff_name,
+        (select string_agg(od.dishes_name, ',')
+        from meal_order_dishes od
+        where od.meal_order_id = mo.id) as dishes_names
+        from meal_order mo
+        left join elder e on mo.elder_id = e.id
+        left join catering_set cs on mo.catering_set_id = cs.id
+        left join staff s on mo.staff_id = s.id
+        where 1 = 1
+        <if test="elderName != null and elderName != ''">
+            and e.name like concat('%', #{elderName}, '%')
+        </if>
+        <if test="status != null">
+            and mo.status = #{status}
+        </if>
+        <if test="startDate != null">
+            and mo.dine_date &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and mo.dine_date &lt;= #{endDate}
+        </if>
+        order by mo.create_time desc
+    </select>
+
+    <select id="countTodayOrders" resultType="int">
+        select count(*)
+        from meal_order
+        where dine_date = current_date
+    </select>
+
+    <select id="countTodayDined" resultType="int">
+        select count(*)
+        from meal_order
+        where dine_date = current_date
+          and dine_flag = 1
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.SetDishesMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.SetDishes" useGeneratedKeys="true" keyProperty="id">
+        insert into set_dishes(set_id, dishes_id, create_by, remark, create_time)
+        values (#{setId}, #{dishesId}, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <delete id="deleteBySetId" parameterType="java.lang.Long">
+        delete
+        from set_dishes
+        where set_id = #{setId}
+    </delete>
+
+    <select id="findBySetId" parameterType="java.lang.Long" resultType="com.zzyl.entity.SetDishes">
+        select *
+        from set_dishes
+        where set_id = #{setId}
+        order by id
+    </select>
+</mapper>

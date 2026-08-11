@@ -100,11 +100,15 @@ zzyl:
       base64-encoded-secret-key: ${JWT_SECRET_KEY:zzyl-dev-secret-key-please-change-in-production-256bit}
       ttl: 3600000
     oss:
-      endpoint: oss-cn-beijing.aliyuncs.com
-      # 修改点：阿里云 OSS 密钥通过环境变量注入
-      accessKeyId: ${ALIYUN_OSS_AK:}
-      accessKeySecret: ${ALIYUN_OSS_SK:}
-      bucketName: itxinfei-zzyl
+      # 京东云对象存储配置（S3 兼容协议）
+      # endpoint 在京东云控制台 → 对象存储 → 空间管理 → 空间信息中查看"外网访问"
+      endpoint: s3.cn-north-1.jdcloud-oss.com
+      # region 从 endpoint 中提取（s3.{region}.jdcloud-oss.com → {region}）
+      region: cn-north-1
+      # 京东云 AccessKey（控制台 → 账户管理 → AccessKey管理）
+      accessKeyId: ${JDCLOUD_OSS_AK:}
+      accessKeySecret: ${JDCLOUD_OSS_SK:}
+      bucketName: zzyl-bucket
   wechat:
     appId: ${WECHAT_APP_ID:}
     # 修改点：微信 appSecret 通过环境变量注入

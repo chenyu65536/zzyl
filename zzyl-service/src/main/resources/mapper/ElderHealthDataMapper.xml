@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.ElderHealthDataMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.ElderHealthData" useGeneratedKeys="true" keyProperty="id">
+        insert into elder_health_data(elder_id, height, weight, temperature, heart_rate, systolic_blood_pressure,
+                                      diastolic_blood_pressure, fasting_blood_glucose, postprandial_blood_glucose,
+                                      blood_oxygen_saturation, cholesterol, uric_acid, left_eye, right_eye,
+                                      left_ear, right_ear, muscle_percentage, body_fat_percentage,
+                                      waist_circumference, hip_circumference, moisture_content, check_date,
+                                      create_by, remark, create_time)
+        values (#{elderId}, #{height}, #{weight}, #{temperature}, #{heartRate}, #{systolicBloodPressure},
+                #{diastolicBloodPressure}, #{fastingBloodGlucose}, #{postprandialBloodGlucose},
+                #{bloodOxygenSaturation}, #{cholesterol}, #{uricAcid}, #{leftEye}, #{rightEye},
+                #{leftEar}, #{rightEar}, #{musclePercentage}, #{bodyFatPercentage},
+                #{waistCircumference}, #{hipCircumference}, #{moistureContent}, #{checkDate},
+                #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.ElderHealthData">
+        update elder_health_data
+        <set>
+            <if test="height != null">height = #{height},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="heartRate != null">heart_rate = #{heartRate},</if>
+            <if test="systolicBloodPressure != null">systolic_blood_pressure = #{systolicBloodPressure},</if>
+            <if test="diastolicBloodPressure != null">diastolic_blood_pressure = #{diastolicBloodPressure},</if>
+            <if test="fastingBloodGlucose != null">fasting_blood_glucose = #{fastingBloodGlucose},</if>
+            <if test="postprandialBloodGlucose != null">postprandial_blood_glucose = #{postprandialBloodGlucose},</if>
+            <if test="bloodOxygenSaturation != null">blood_oxygen_saturation = #{bloodOxygenSaturation},</if>
+            <if test="cholesterol != null">cholesterol = #{cholesterol},</if>
+            <if test="uricAcid != null">uric_acid = #{uricAcid},</if>
+            <if test="leftEye != null">left_eye = #{leftEye},</if>
+            <if test="rightEye != null">right_eye = #{rightEye},</if>
+            <if test="leftEar != null and leftEar != ''">left_ear = #{leftEar},</if>
+            <if test="rightEar != null and rightEar != ''">right_ear = #{rightEar},</if>
+            <if test="musclePercentage != null">muscle_percentage = #{musclePercentage},</if>
+            <if test="bodyFatPercentage != null">body_fat_percentage = #{bodyFatPercentage},</if>
+            <if test="waistCircumference != null">waist_circumference = #{waistCircumference},</if>
+            <if test="hipCircumference != null">hip_circumference = #{hipCircumference},</if>
+            <if test="moistureContent != null">moisture_content = #{moistureContent},</if>
+            <if test="checkDate != null">check_date = #{checkDate},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete
+        from elder_health_data
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.zzyl.entity.ElderHealthData">
+        select *
+        from elder_health_data
+        where id = #{id}
+    </select>
+
+    <select id="findByElderId" parameterType="java.lang.Long" resultType="com.zzyl.entity.ElderHealthData">
+        select *
+        from elder_health_data
+        where elder_id = #{elderId}
+        order by check_date desc
+    </select>
+
+    <select id="findLatestByElderId" parameterType="java.lang.Long" resultType="com.zzyl.entity.ElderHealthData">
+        select *
+        from elder_health_data
+        where elder_id = #{elderId}
+        order by check_date desc
+        limit 1
+    </select>
+</mapper>

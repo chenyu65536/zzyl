@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.DashboardMapper">
+
+    <select id="countBedTotal" resultType="java.lang.Integer">
+        select count(*)
+        from bed
+    </select>
+
+    <select id="countBedOccupied" resultType="java.lang.Integer">
+        select count(*)
+        from bed
+        where bed_status = 1
+    </select>
+
+    <select id="countRoomTotal" resultType="java.lang.Integer">
+        select count(*)
+        from room
+    </select>
+
+    <select id="countFloorTotal" resultType="java.lang.Integer">
+        select count(*)
+        from floor
+    </select>
+
+    <select id="countElderInLive" resultType="java.lang.Integer">
+        select count(*)
+        from elder
+        where bed_id is not null
+    </select>
+
+    <select id="countElderHealthRed" resultType="java.lang.Integer">
+        select count(*)
+        from elder e
+        where e.bed_id is not null
+          and exists(select 1
+                     from elder_health_info hi
+                     where hi.elder_id = e.id
+                       and hi.major_disease is not null
+                       and hi.major_disease != '')
+    </select>
+
+    <select id="countElderHealthYellow" resultType="java.lang.Integer">
+        select count(*)
+        from elder e
+        where e.bed_id is not null
+          and not exists(select 1
+                         from elder_health_info hi
+                         where hi.elder_id = e.id
+                           and hi.major_disease is not null
+                           and hi.major_disease != '')
+          and exists(select 1
+                     from elder_health_info hi
+                     where hi.elder_id = e.id
+                       and ((hi.medical_history is not null and hi.medical_history != '')
+                         or (hi.allergy_drug is not null and hi.allergy_drug != '')))
+    </select>
+
+    <select id="countTodayMealOrders" resultType="java.lang.Integer">
+        select count(*)
+        from meal_order
+        where dine_date = current_date
+    </select>
+
+    <select id="countTodayMealDined" resultType="java.lang.Integer">
+        select count(*)
+        from meal_order
+        where dine_date = current_date
+          and dine_flag = 1
+    </select>
+
+    <select id="countTodayNursingTotal" resultType="java.lang.Integer">
+        select count(*)
+        from nursing_task
+        where estimated_server_time &gt;= current_date
+          and estimated_server_time &lt; current_date + interval '1 day'
+    </select>
+
+    <select id="countTodayNursingDone" resultType="java.lang.Integer">
+        select count(*)
+        from nursing_task
+        where estimated_server_time &gt;= current_date
+          and estimated_server_time &lt; current_date + interval '1 day'
+          and status = 2
+    </select>
+
+    <select id="countDeviceTotal" resultType="java.lang.Integer">
+        select count(*)
+        from device
+        where is_deleted = false
+    </select>
+
+    <select id="countTodayAlarmTotal" resultType="java.lang.Integer">
+        select count(*)
+        from device_data
+        where alarm_time &gt;= current_date
+          and alarm_time &lt; current_date + interval '1 day'
+    </select>
+
+    <select id="countTodayAlarmUnprocessed" resultType="java.lang.Integer">
+        select count(*)
+        from device_data
+        where alarm_time &gt;= current_date
+          and alarm_time &lt; current_date + interval '1 day'
+          and status in ('1', '2')
+    </select>
+</mapper>

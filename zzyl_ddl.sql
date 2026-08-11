@@ -1360,3 +1360,424 @@ COMMENT ON COLUMN visit.update_by IS '更新人';
 COMMENT ON COLUMN visit.remark IS '备注';
 COMMENT ON COLUMN visit.creator IS '创建人姓名';
 COMMENT ON COLUMN visit.updater IS '更新人姓名';
+
+-- ============================================================
+-- MVP 功能迁移新增表 (2026-08-11)
+-- 模块: 物资管理 / 餐饮管理 / 老人档案 / 楼栋管理 / 员工管理
+-- ============================================================
+
+-- 员工表 (业务员工档案,区别于 sys_user 系统账号)
+CREATE TABLE staff (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    name VARCHAR(64),
+    phone VARCHAR(32),
+    email VARCHAR(64),
+    password VARCHAR(128),
+    role_id BIGINT,
+    dept_no VARCHAR(32),
+    sex VARCHAR(8),
+    avatar VARCHAR(512),
+    leave_flag VARCHAR(8) DEFAULT '0'
+);
+COMMENT ON TABLE staff IS '员工表';
+COMMENT ON COLUMN staff.leave_flag IS '离职状态 0在职 1离职';
+
+-- 楼栋表
+CREATE TABLE building (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    name VARCHAR(64),
+    code VARCHAR(32),
+    sort_no INTEGER,
+    status INTEGER DEFAULT 1
+);
+COMMENT ON TABLE building IS '楼栋表';
+
+-- 楼层表增加楼栋关联
+ALTER TABLE floor ADD COLUMN building_id BIGINT;
+COMMENT ON COLUMN floor.building_id IS '楼栋编号';
+
+-- 仓库表
+CREATE TABLE warehouse (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    name VARCHAR(64),
+    staff_id BIGINT,
+    del_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE warehouse IS '仓库表';
+
+-- 物资类别表
+CREATE TABLE material_type (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    name VARCHAR(64),
+    del_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE material_type IS '物资类别表';
+
+-- 物资表
+CREATE TABLE material (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    type_id BIGINT,
+    name VARCHAR(64),
+    spec VARCHAR(64),
+    price NUMERIC(10,2),
+    warn_threshold INTEGER,
+    del_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE material IS '物资表';
+COMMENT ON COLUMN material.warn_threshold IS '库存预警阈值';
+
+-- 入库登记表
+CREATE TABLE warehouse_record (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    warehouse_id BIGINT,
+    staff_id BIGINT,
+    source VARCHAR(64),
+    warehouse_time TIMESTAMP,
+    status INTEGER DEFAULT 0,
+    del_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE warehouse_record IS '入库登记表';
+COMMENT ON COLUMN warehouse_record.status IS '入库状态 0待审核 1已通过 2未通过';
+
+-- 入库物资表 (批次库存)
+CREATE TABLE warehouse_material (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    warehouse_record_id BIGINT,
+    material_id BIGINT,
+    warehouse_num INTEGER,
+    inventory INTEGER,
+    product_date DATE,
+    expire_date DATE
+);
+COMMENT ON TABLE warehouse_material IS '入库物资表(批次库存)';
+
+-- 出库登记表
+CREATE TABLE outbound_record (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    warehouse_id BIGINT,
+    staff_id BIGINT,
+    recipient_id BIGINT,
+    recipient_type INTEGER,
+    material_use VARCHAR(128),
+    outbound_time TIMESTAMP,
+    status INTEGER DEFAULT 0,
+    del_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE outbound_record IS '出库登记表';
+COMMENT ON COLUMN outbound_record.recipient_type IS '领用人类型 0员工 1老人';
+COMMENT ON COLUMN outbound_record.status IS '出库状态 0待审核 1已通过 2未通过';
+
+-- 出库物资表
+CREATE TABLE outbound_material (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    outbound_record_id BIGINT,
+    warehouse_material_id BIGINT,
+    material_id BIGINT,
+    outbound_num INTEGER
+);
+COMMENT ON TABLE outbound_material IS '出库物资表';
+
+-- 菜品类别表
+CREATE TABLE dishes_type (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    name VARCHAR(64),
+    del_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE dishes_type IS '菜品类别表';
+
+-- 菜品表
+CREATE TABLE dishes (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    type_id BIGINT,
+    name VARCHAR(64),
+    price NUMERIC(10,2),
+    image VARCHAR(512),
+    del_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE dishes IS '菜品表';
+
+-- 餐饮套餐表
+CREATE TABLE catering_set (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    name VARCHAR(64),
+    month_price NUMERIC(10,2),
+    del_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE catering_set IS '餐饮套餐表';
+
+-- 套餐菜品关联表
+CREATE TABLE set_dishes (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    set_id BIGINT,
+    dishes_id BIGINT
+);
+COMMENT ON TABLE set_dishes IS '套餐菜品关联表';
+
+-- 订餐表
+CREATE TABLE meal_order (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    elder_id BIGINT,
+    catering_set_id BIGINT,
+    staff_id BIGINT,
+    deliver_time TIMESTAMP,
+    dine_date DATE,
+    dine_type VARCHAR(32),
+    pay_amount NUMERIC(10,2),
+    status INTEGER DEFAULT 0,
+    dine_flag INTEGER DEFAULT 0
+);
+COMMENT ON TABLE meal_order IS '订餐表';
+COMMENT ON COLUMN meal_order.status IS '订单状态 0待支付 1已完成';
+COMMENT ON COLUMN meal_order.dine_flag IS '用餐打卡 0未用餐 1已用餐';
+
+-- 订餐菜品表
+CREATE TABLE meal_order_dishes (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    meal_order_id BIGINT,
+    dishes_id BIGINT,
+    dishes_name VARCHAR(64),
+    dishes_price NUMERIC(10,2),
+    order_num INTEGER,
+    set_flag INTEGER DEFAULT 0,
+    total_amount NUMERIC(10,2),
+    really_amount NUMERIC(10,2)
+);
+COMMENT ON TABLE meal_order_dishes IS '订餐菜品表';
+
+-- 老人健康数据表 (体检记录)
+CREATE TABLE elder_health_data (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    elder_id BIGINT,
+    height INTEGER,
+    weight NUMERIC(5,2),
+    temperature NUMERIC(4,1),
+    heart_rate INTEGER,
+    systolic_blood_pressure INTEGER,
+    diastolic_blood_pressure INTEGER,
+    fasting_blood_glucose NUMERIC(5,2),
+    postprandial_blood_glucose NUMERIC(5,2),
+    blood_oxygen_saturation INTEGER,
+    cholesterol NUMERIC(5,2),
+    uric_acid INTEGER,
+    left_eye NUMERIC(3,1),
+    right_eye NUMERIC(3,1),
+    left_ear VARCHAR(32),
+    right_ear VARCHAR(32),
+    muscle_percentage NUMERIC(5,2),
+    body_fat_percentage NUMERIC(5,2),
+    waist_circumference INTEGER,
+    hip_circumference INTEGER,
+    moisture_content NUMERIC(5,2),
+    check_date TIMESTAMP
+);
+COMMENT ON TABLE elder_health_data IS '老人健康数据表(体检记录)';
+
+-- 老人健康信息表
+CREATE TABLE elder_health_info (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    elder_id BIGINT,
+    self_care VARCHAR(64),
+    vision VARCHAR(64),
+    hearing VARCHAR(64),
+    hospital VARCHAR(128),
+    doctor VARCHAR(64),
+    hospital_phone VARCHAR(32),
+    allergy_drug VARCHAR(512),
+    medical_history VARCHAR(1024),
+    major_disease VARCHAR(512)
+);
+COMMENT ON TABLE elder_health_info IS '老人健康信息表';
+
+-- 老人生活档案表
+CREATE TABLE elder_life_info (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    elder_id BIGINT,
+    diet_taboo VARCHAR(512),
+    living_habit VARCHAR(512),
+    hobby VARCHAR(512),
+    religion VARCHAR(64)
+);
+COMMENT ON TABLE elder_life_info IS '老人生活档案表';
+
+-- 紧急联系人表
+CREATE TABLE emergency_contact (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    elder_id BIGINT,
+    name VARCHAR(64),
+    phone VARCHAR(32),
+    email VARCHAR(64),
+    relation VARCHAR(32),
+    receive_flag VARCHAR(8)
+);
+COMMENT ON TABLE emergency_contact IS '紧急联系人表';
+
+-- 老人家属表
+CREATE TABLE family_member (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    elder_id BIGINT,
+    name VARCHAR(64),
+    id_num VARCHAR(32),
+    phone VARCHAR(32),
+    email VARCHAR(64),
+    address VARCHAR(255),
+    relation VARCHAR(32),
+    receive_flag VARCHAR(8),
+    del_flag VARCHAR(8) DEFAULT '0'
+);
+COMMENT ON TABLE family_member IS '老人家属表';
+
+-- 老人档案变更记录表
+CREATE TABLE elder_record_log (
+    id BIGSERIAL PRIMARY KEY,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    create_by BIGINT,
+    update_by BIGINT,
+    remark VARCHAR(512),
+    creator VARCHAR(64),
+    updater VARCHAR(64),
+    elder_id BIGINT,
+    change_type VARCHAR(32),
+    change_content VARCHAR(1024)
+);
+COMMENT ON TABLE elder_record_log IS '老人档案变更记录表';

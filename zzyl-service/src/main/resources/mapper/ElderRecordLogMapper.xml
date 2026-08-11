@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.ElderRecordLogMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.ElderRecordLog" useGeneratedKeys="true" keyProperty="id">
+        insert into elder_record_log(elder_id, change_type, change_content, create_by, remark, create_time)
+        values (#{elderId}, #{changeType}, #{changeContent}, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <select id="findByElderId" parameterType="java.lang.Long" resultType="com.zzyl.entity.ElderRecordLog">
+        select *
+        from elder_record_log
+        where elder_id = #{elderId}
+        order by create_time desc
+    </select>
+</mapper>

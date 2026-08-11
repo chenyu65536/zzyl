@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.OutboundMaterialMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.OutboundMaterial" useGeneratedKeys="true" keyProperty="id">
+        insert into outbound_material(outbound_record_id, warehouse_material_id, material_id, outbound_num,
+                                      create_by, remark, create_time)
+        values (#{outboundRecordId}, #{warehouseMaterialId}, #{materialId}, #{outboundNum},
+                #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <select id="findByOutboundRecordId" parameterType="java.lang.Long" resultType="com.zzyl.entity.OutboundMaterial">
+        select *
+        from outbound_material
+        where outbound_record_id = #{outboundRecordId}
+    </select>
+
+    <select id="findVoByOutboundRecordId" parameterType="java.lang.Long" resultType="com.zzyl.vo.OutboundMaterialVo">
+        select om.*, m.name as material_name, m.spec, m.price, mt.name as type_name
+        from outbound_material om
+                 left join material m on om.material_id = m.id
+                 left join material_type mt on m.type_id = mt.id
+        where om.outbound_record_id = #{outboundRecordId}
+        order by om.id
+    </select>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.BuildingMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.Building" useGeneratedKeys="true" keyProperty="id">
+        insert into building(name, code, sort_no, status, create_by, remark, create_time)
+        values (#{name}, #{code}, #{sortNo}, #{status}, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.Building">
+        update building
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="code != null and code != ''">code = #{code},</if>
+            <if test="sortNo != null">sort_no = #{sortNo},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete
+        from building
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.zzyl.entity.Building">
+        select *
+        from building
+        where id = #{id}
+    </select>
+
+    <select id="findByName" resultType="com.zzyl.entity.Building">
+        select *
+        from building
+        where name = #{name}
+    </select>
+
+    <select id="findAll" resultType="com.zzyl.entity.Building">
+        select *
+        from building
+        order by sort_no asc, code asc
+    </select>
+
+    <select id="findByPage" resultType="com.zzyl.vo.BuildingVo">
+        select *
+        from building
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%', #{name}, '%')
+            </if>
+        </where>
+        order by sort_no asc, code asc
+    </select>
+</mapper>

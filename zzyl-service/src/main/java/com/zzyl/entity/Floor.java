@@ -18,5 +18,11 @@ public class Floor extends BaseEntity {
      */
     @ApiModelProperty(value = "楼层编号")
     private Integer code;
+
+    /**
+     * 楼栋编号
+     */
+    @ApiModelProperty("楼栋编号")
+    private Long buildingId;
 }
 

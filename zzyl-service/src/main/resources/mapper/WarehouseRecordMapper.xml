@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.WarehouseRecordMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.WarehouseRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into warehouse_record(warehouse_id, staff_id, source, warehouse_time, status, del_flag, create_by, remark, create_time)
+        values (#{warehouseId}, #{staffId}, #{source}, #{warehouseTime}, #{status}, 0, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.WarehouseRecord">
+        update warehouse_record
+        <set>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.zzyl.entity.WarehouseRecord">
+        select *
+        from warehouse_record
+        where id = #{id}
+          and del_flag = 0
+    </select>
+
+    <select id="findVoById" parameterType="java.lang.Long" resultType="com.zzyl.vo.WarehouseRecordVo">
+        select wr.*, w.name as warehouse_name, s.name as staff_name
+        from warehouse_record wr
+                 left join warehouse w on wr.warehouse_id = w.id
+                 left join staff s on wr.staff_id = s.id
+        where wr.id = #{id}
+          and wr.del_flag = 0
+    </select>
+
+    <select id="findByPage" resultType="com.zzyl.vo.WarehouseRecordVo">
+        select wr.*, w.name as warehouse_name, s.name as staff_name,
+        (select string_agg(m.name, ',')
+        from warehouse_material wm
+        left join material m on wm.material_id = m.id
+        where wm.warehouse_record_id = wr.id) as material_names
+        from warehouse_record wr
+        left join warehouse w on wr.warehouse_id = w.id
+        left join staff s on wr.staff_id = s.id
+        where wr.del_flag = 0
+        <if test="warehouseId != null">
+            and wr.warehouse_id = #{warehouseId}
+        </if>
+        <if test="source != null and source != ''">
+            and wr.source like concat('%', #{source}, '%')
+        </if>
+        <if test="status != null">
+            and wr.status = #{status}
+        </if>
+        <if test="startTime != null">
+            and wr.warehouse_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and wr.warehouse_time &lt;= #{endTime}
+        </if>
+        order by wr.create_time desc
+    </select>
+</mapper>

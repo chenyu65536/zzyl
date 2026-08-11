@@ -1,7 +1,7 @@
 package com.zzyl.controller;
 
 import com.zzyl.base.ResponseResult;
-import com.zzyl.config.OSSAliyunFileStorageService;
+import com.zzyl.config.JdOssFileStorageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,7 +28,7 @@ import java.util.UUID;
 public class CommonController {
 
     @Autowired
-    private OSSAliyunFileStorageService fileStorageService;
+    private JdOssFileStorageService fileStorageService;
 
     /**
      * 允许上传的图片扩展名白名单（不含 svg：svg 在浏览器可直接执行脚本，存在存储型 XSS 风险）

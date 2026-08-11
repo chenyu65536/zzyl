@@ -41,7 +41,7 @@
         <jwt.version>3.8.1</jwt.version>
         <!--jjwt版本-->
         <jjwt.version>0.9.1</jjwt.version>
-        <aliyun.sdk.oss>3.10.2</aliyun.sdk.oss>
+        <aws.s3.version>1.12.770</aws.s3.version>
         <zhyl.version>1.0.0</zhyl.version>
         <!--微信支付-->
         <wechatpay.version>0.4.7</wechatpay.version>
@@ -139,9 +139,9 @@
             </dependency>
             <!--###################- 模块管理 #######################-->
             <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${aliyun.sdk.oss}</version>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${aws.s3.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.redisson</groupId>

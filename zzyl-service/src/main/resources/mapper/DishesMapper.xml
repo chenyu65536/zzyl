@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.DishesMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.Dishes" useGeneratedKeys="true" keyProperty="id">
+        insert into dishes(type_id, name, price, image, del_flag, create_by, remark, create_time)
+        values (#{typeId}, #{name}, #{price}, #{image}, 0, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.Dishes">
+        update dishes
+        <set>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.zzyl.entity.Dishes">
+        select *
+        from dishes
+        where id = #{id}
+          and del_flag = 0
+    </select>
+
+    <select id="findByTypeIdAndName" resultType="com.zzyl.entity.Dishes">
+        select *
+        from dishes
+        where type_id = #{typeId}
+          and name = #{name}
+          and del_flag = 0
+    </select>
+
+    <select id="findByTypeId" resultType="com.zzyl.entity.Dishes">
+        select *
+        from dishes
+        where type_id = #{typeId}
+          and del_flag = 0
+    </select>
+
+    <select id="findByIds" resultType="com.zzyl.entity.Dishes">
+        select *
+        from dishes
+        where del_flag = 0
+        and id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByPage" resultType="com.zzyl.vo.DishesVo">
+        select d.*, dt.name as type_name
+        from dishes d
+        left join dishes_type dt on d.type_id = dt.id
+        where d.del_flag = 0
+        <if test="name != null and name != ''">
+            and d.name like concat('%', #{name}, '%')
+        </if>
+        <if test="typeId != null">
+            and d.type_id = #{typeId}
+        </if>
+        order by d.create_time desc
+    </select>
+
+    <select id="findBySetId" parameterType="java.lang.Long" resultType="com.zzyl.vo.DishesVo">
+        select d.*, dt.name as type_name
+        from set_dishes sd
+                 left join dishes d on sd.dishes_id = d.id
+                 left join dishes_type dt on d.type_id = dt.id
+        where sd.set_id = #{setId}
+          and d.del_flag = 0
+        order by sd.id
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.MealOrderDishesMapper">
+
+    <insert id="insert" parameterType="com.zzyl.entity.MealOrderDishes" useGeneratedKeys="true" keyProperty="id">
+        insert into meal_order_dishes(meal_order_id, dishes_id, dishes_name, dishes_price, order_num,
+                                      set_flag, total_amount, really_amount, create_by, remark, create_time)
+        values (#{mealOrderId}, #{dishesId}, #{dishesName}, #{dishesPrice}, #{orderNum},
+                #{setFlag}, #{totalAmount}, #{reallyAmount}, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <select id="findByMealOrderId" parameterType="java.lang.Long" resultType="com.zzyl.vo.MealOrderDishesVo">
+        select *
+        from meal_order_dishes
+        where meal_order_id = #{mealOrderId}
+        order by id
+    </select>
+</mapper>

@@ -9,6 +9,7 @@
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="code" property="code"/>
+        <result column="building_id" property="buildingId"/>
         <result column="create_by" property="createBy"/>
         <result column="update_by" property="updateBy"/>
         <result column="remark" property="remark"/>
@@ -49,8 +50,8 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.zzyl.entity.Floor">
-        insert into floor(name, code, create_by, update_by, remark, create_time, update_time)
-        values (#{name}, #{code}, #{createBy}, #{updateBy}, #{remark}, #{createTime}, #{updateTime})
+        insert into floor(name, code, building_id, create_by, update_by, remark, create_time, update_time)
+        values (#{name}, #{code}, #{buildingId}, #{createBy}, #{updateBy}, #{remark}, #{createTime}, #{updateTime})
     </insert>
 
     <delete id="deleteById" parameterType="java.lang.Long">
@@ -63,6 +64,7 @@
         update floor
         set name        = #{name},
             code        = #{code},
+            <if test="buildingId != null">building_id = #{buildingId},</if>
             update_by   = #{updateBy},
             update_time = #{updateTime}
         where id = #{id}
@@ -110,6 +112,13 @@
         order by code, create_time desc
 
     </select>
+    <select id="findByBuildingId" resultMap="floorResultMap" parameterType="java.lang.Long">
+        select *
+        from floor
+        where building_id = #{buildingId}
+        order by code
+    </select>
+
     <select id="selectAllRoomAndBed" resultMap="floorResultMapWithRoomAndBed">
         select f.name,
                f.id,

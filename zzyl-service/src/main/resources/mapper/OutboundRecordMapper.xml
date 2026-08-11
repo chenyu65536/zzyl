@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzyl.mapper.OutboundRecordMapper">
+
+    <sql id="recipientNameColumn">
+        case
+            when o.recipient_type = 0 then (select s2.name from staff s2 where s2.id = o.recipient_id)
+            when o.recipient_type = 1 then (select e.name from elder e where e.id = o.recipient_id)
+            end as recipient_name
+    </sql>
+
+    <insert id="insert" parameterType="com.zzyl.entity.OutboundRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into outbound_record(warehouse_id, staff_id, recipient_id, recipient_type, material_use, outbound_time,
+                                    status, del_flag, create_by, remark, create_time)
+        values (#{warehouseId}, #{staffId}, #{recipientId}, #{recipientType}, #{materialUse}, #{outboundTime},
+                #{status}, 0, #{createBy}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.zzyl.entity.OutboundRecord">
+        update outbound_record
+        <set>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.zzyl.entity.OutboundRecord">
+        select *
+        from outbound_record
+        where id = #{id}
+          and del_flag = 0
+    </select>
+
+    <select id="findVoById" parameterType="java.lang.Long" resultType="com.zzyl.vo.OutboundRecordVo">
+        select o.*, w.name as warehouse_name, s.name as staff_name,
+        <include refid="recipientNameColumn"/>
+        from outbound_record o
+        left join warehouse w on o.warehouse_id = w.id
+        left join staff s on o.staff_id = s.id
+        where o.id = #{id}
+        and o.del_flag = 0
+    </select>
+
+    <select id="findByPage" resultType="com.zzyl.vo.OutboundRecordVo">
+        select o.*, w.name as warehouse_name, s.name as staff_name,
+        <include refid="recipientNameColumn"/>,
+        (select string_agg(m.name, ',')
+        from outbound_material om
+        left join material m on om.material_id = m.id
+        where om.outbound_record_id = o.id) as material_names
+        from outbound_record o
+        left join warehouse w on o.warehouse_id = w.id
+        left join staff s on o.staff_id = s.id
+        where o.del_flag = 0
+        <if test="warehouseId != null">
+            and o.warehouse_id = #{warehouseId}
+        </if>
+        <if test="materialUse != null and materialUse != ''">
+            and o.material_use like concat('%', #{materialUse}, '%')
+        </if>
+        <if test="status != null">
+            and o.status = #{status}
+        </if>
+        <if test="startTime != null">
+            and o.outbound_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and o.outbound_time &lt;= #{endTime}
+        </if>
+        order by o.create_time desc
+    </select>
+</mapper>

@@ -1,6 +1,6 @@
 package com.zzyl.service.impl;
 
-import com.zzyl.config.OSSAliyunFileStorageService;
+import com.zzyl.config.JdOssFileStorageService;
 import com.zzyl.dto.RoomTypeDto;
 import com.zzyl.entity.RoomType;
 import com.zzyl.mapper.RoomTypeMapper;
@@ -28,7 +28,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     private RoomService roomService;
 
     @Autowired
-    private OSSAliyunFileStorageService fileStorageService;
+    private JdOssFileStorageService fileStorageService;
 
     /**
      * 添加房间类型
