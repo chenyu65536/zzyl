@@ -185,6 +185,19 @@ java -jar zzyl-web/target/zzyl-web-1.0.1.jar
 
 后端默认端口 `9995`，API 文档（Knife4j）地址：`http://localhost:9995/doc.html`。
 
+### 接口文档（API 文档）
+
+本项目使用 **Knife4j**（增强版 Swagger UI）自动生成在线接口文档，后端启动后即可访问：
+
+| 端口 | 说明 | 地址 |
+|------|------|------|
+| 本地开发（9995） | IDEA 直接启动 `ZzylApplication` | http://localhost:9995/doc.html |
+| Docker 部署（8080） | `docker compose up` 后访问 | http://localhost:8080/doc.html |
+| Swagger 原生 UI | 通用 Swagger 页面 | http://localhost:9995/swagger-ui.html |
+| OpenAPI JSON | 供导入 Postman / Apifox 等工具 | http://localhost:9995/v2/api-docs |
+
+> 文档需登录后浏览部分受权限保护的接口；`/v2/api-docs` 返回的 JSON 可直接导入三方接口调试工具。
+
 ### 4. 启动前端
 
 ```bash

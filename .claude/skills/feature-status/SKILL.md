@@ -8,6 +8,17 @@ description: 罗列 zzyl 养老系统已有功能清单,以及相比《养老系
 基准文件:`C:\Users\Administrator\Desktop\养老系统功能清单【MVP】 20260730.xlsx`
 盘点时间:2026-08-11(物资/餐饮/档案/楼栋员工/看板迁移完成后)。
 
+## 接口文档(API 文档)
+
+后端启动后由 Knife4j 自动生成在线接口文档:
+
+| 端口 | 说明 | 地址 |
+|---|---|---|
+| 本地开发(9995) | IDEA 直接启动 `ZzylApplication` | http://localhost:9995/doc.html |
+| Docker 部署(8080) | `docker compose up` 后访问 | http://localhost:8080/doc.html |
+| Swagger 原生 UI | 通用 Swagger 页面 | http://localhost:9995/swagger-ui.html |
+| OpenAPI JSON | 供导入 Postman / Apifox | http://localhost:9995/v2/api-docs |
+
 回答用户时:直接输出下面两节内容(可按用户关注点裁剪);若怀疑代码已变化,先按"刷新方法"一节校验再输出。
 
 ## 一、已有功能(按 Excel 清单逐项对照)
