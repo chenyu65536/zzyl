@@ -35,4 +35,4 @@ ENV JAVA_OPTS="--add-opens=java.base/java.lang=ALL-UNNAMED \
 --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"
 
 # 通过 spring.profiles.active 激活 example 配置；数据库/Redis 等通过环境变量注入
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE:-example}"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE:-local}"]
