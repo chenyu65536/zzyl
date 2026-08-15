@@ -7,10 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.FileNotFoundException;
 import java.nio.file.AccessDeniedException;
 import org.slf4j.Logger;
@@ -37,6 +44,81 @@ public class GlobalExceptionHandler {
         return ResponseEntity.ok(MapUtil.<String, Object>builder()
                 .put("code", exception.getCode())
                 .put("msg", exception.getDefaultMessage())
+                .build());
+    }
+
+    /**
+     * 处理@RequestBody参数校验失败异常（含MethodArgumentNotValidException，为BindException子类）。
+     * 返回HTTP响应状态码200，包含错误代码和第一条字段校验错误消息。
+     *
+     * @param exception 参数绑定校验异常
+     * @return 响应数据，包含错误代码和错误消息
+     */
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<Object> handleBindException(BindException exception) {
+
+        FieldError fieldError = exception.getBindingResult().getFieldError();
+        String msg = ObjectUtil.isNotEmpty(fieldError) ? fieldError.getDefaultMessage() : "请求参数不合法";
+        log.warn("参数校验失败 -> {}", msg);
+        return ResponseEntity.ok(MapUtil.<String, Object>builder()
+                .put("code", HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .put("msg", msg)
+                .build());
+    }
+
+    /**
+     * 处理@RequestParam/@PathVariable参数级约束校验失败异常。
+     * 返回HTTP响应状态码200，包含错误代码和第一条约束校验错误消息。
+     *
+     * @param exception 约束校验异常
+     * @return 响应数据，包含错误代码和错误消息
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException exception) {
+
+        String msg = exception.getConstraintViolations().stream()
+                .findFirst()
+                .map(ConstraintViolation::getMessage)
+                .orElse("请求参数不合法");
+        log.warn("参数校验失败 -> {}", msg);
+        return ResponseEntity.ok(MapUtil.<String, Object>builder()
+                .put("code", HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .put("msg", msg)
+                .build());
+    }
+
+    /**
+     * 处理缺少必填请求参数异常。
+     * 返回HTTP响应状态码200，包含错误代码和缺失参数名。
+     *
+     * @param exception 缺少请求参数异常
+     * @return 响应数据，包含错误代码和错误消息
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException exception) {
+
+        String msg = "缺少必填参数：" + exception.getParameterName();
+        log.warn("参数校验失败 -> {}", msg);
+        return ResponseEntity.ok(MapUtil.<String, Object>builder()
+                .put("code", HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .put("msg", msg)
+                .build());
+    }
+
+    /**
+     * 处理请求体不可读（非法JSON）和参数类型不匹配异常。
+     * 返回HTTP响应状态码200，包含错误代码和错误消息。
+     *
+     * @param exception 请求格式异常
+     * @return 响应数据，包含错误代码和错误消息
+     */
+    @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<Object> handleRequestFormatException(Exception exception) {
+
+        log.warn("请求参数格式错误 -> {}", exception.getMessage());
+        return ResponseEntity.ok(MapUtil.<String, Object>builder()
+                .put("code", HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .put("msg", "请求参数格式错误")
                 .build());
     }
 

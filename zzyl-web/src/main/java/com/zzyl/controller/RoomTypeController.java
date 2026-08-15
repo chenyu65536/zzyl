@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class RoomTypeController extends BaseController {
 
     @PostMapping
     @ApiOperation("添加房型")
-    public ResponseResult addRoomType(@RequestBody RoomTypeDto roomTypeDTO) {
+    public ResponseResult addRoomType(@Validated @RequestBody RoomTypeDto roomTypeDTO) {
         roomTypeService.addRoomType(roomTypeDTO);
         return success();
     }
@@ -38,7 +39,7 @@ public class RoomTypeController extends BaseController {
     @ApiOperation("修改房型")
     public ResponseResult modifyRoomType(
             @ApiParam(value = "房型ID", required = true) @PathVariable Long id,
-            @RequestBody RoomTypeDto roomTypeDTO) {
+            @Validated @RequestBody RoomTypeDto roomTypeDTO) {
         roomTypeService.modifyRoomType(id, roomTypeDTO);
         return success();
     }

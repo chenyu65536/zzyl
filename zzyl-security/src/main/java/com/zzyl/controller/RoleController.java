@@ -13,6 +13,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @Slf4j
 @Api(tags = "角色管理")
+@Validated
 @RestController
 @RequestMapping("role")
 public class RoleController {
@@ -46,8 +50,8 @@ public class RoleController {
     @ApiOperationSupport(includeParameters = {"roleDto.roleName"})
     public ResponseResult<PageResponse<RoleVo>> findRoleVoPage(
                                     @RequestBody RoleDto roleDto,
-                                    @PathVariable("pageNum") int pageNum,
-                                    @PathVariable("pageSize") int pageSize) {
+                                    @Min(value = 1, message = "页码最小为1") @PathVariable("pageNum") int pageNum,
+                                    @Min(value = 1, message = "每页条数最小为1") @Max(value = 100, message = "每页条数最大为100") @PathVariable("pageSize") int pageSize) {
         PageResponse<RoleVo> roleVoPage = roleService.findRolePage(roleDto, pageNum, pageSize);
         return ResponseResult.success(roleVoPage);
     }
@@ -61,7 +65,7 @@ public class RoleController {
     @ApiOperation(value = "角色添加",notes = "角色添加")
     @ApiImplicitParam(name = "roleDto",value = "角色DTO对象",required = true,dataType = "roleDto")
     @ApiOperationSupport(includeParameters = {"roleDto.roleName","roleDto.dataState"})
-    public ResponseResult<RoleVo> createRole(@RequestBody RoleDto roleDto) {
+    public ResponseResult<RoleVo> createRole(@Validated @RequestBody RoleDto roleDto) {
         RoleVo roleVoResult = roleService.createRole(roleDto);
         return ResponseResult.success(roleVoResult);
     }
@@ -75,7 +79,7 @@ public class RoleController {
     @ApiOperation(value = "角色修改",notes = "角色修改")
     @ApiImplicitParam(name = "roleDto",value = "角色DTO对象",required = true,dataType = "roleDto")
     @ApiOperationSupport(includeParameters = {"roleDto.roleName","roleDto.dataState","roleDto.dataScope","roleDto.checkedResourceNos","roleDto.checkedDeptNos","roleDto.id"})
-    public ResponseResult<Boolean> updateRole(@RequestBody RoleDto roleDto) {
+    public ResponseResult<Boolean> updateRole(@Validated @RequestBody RoleDto roleDto) {
         Boolean flag = roleService.updateRole(roleDto);
         return ResponseResult.success(flag);
     }

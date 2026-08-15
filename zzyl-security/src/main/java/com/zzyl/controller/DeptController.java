@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class DeptController {
             "deptDto.remark",
             "deptDto.sortNo",
             "deptDto.parentDeptNo"})
-    public ResponseResult<DeptVo> createDept(@RequestBody DeptDto deptDto) {
+    public ResponseResult<DeptVo> createDept(@Validated @RequestBody DeptDto deptDto) {
         return ResponseResult.success(deptService.createDept(deptDto));
     }
 
@@ -56,7 +57,7 @@ public class DeptController {
     @PatchMapping
     @ApiOperation(value = "部门修改",notes = "部门修改")
     @ApiImplicitParam(name = "deptDto",value = "部门DTO对象",required = true,dataType = "DeptDto")
-    public ResponseResult<Boolean> updateDept(@RequestBody DeptDto deptDto) {
+    public ResponseResult<Boolean> updateDept(@Validated @RequestBody DeptDto deptDto) {
         return ResponseResult.success(deptService.updateDept(deptDto));
     }
 

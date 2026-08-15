@@ -7,6 +7,7 @@ import com.zzyl.vo.FloorVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class FloorController extends BaseController {
 
     @PostMapping("/add")
     @ApiOperation(value = "添加楼层", notes = "传入楼层信息，返回添加结果")
-    public ResponseResult addFloor(@RequestBody FloorDto floorDto) {
+    public ResponseResult addFloor(@Validated @RequestBody FloorDto floorDto) {
         floorService.addFloor(floorDto);
         return ResponseResult.success();
     }
@@ -35,7 +36,7 @@ public class FloorController extends BaseController {
 
     @PutMapping("/update")
     @ApiOperation(value = "更新楼层", notes = "传入更新的楼层信息，返回更新结果")
-    public ResponseResult updateFloor(@RequestBody FloorDto floorDto) {
+    public ResponseResult updateFloor(@Validated @RequestBody FloorDto floorDto) {
         floorService.updateFloor(floorDto);
         return ResponseResult.success();
     }

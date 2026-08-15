@@ -7,6 +7,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,12 +19,15 @@ public class ContractDto extends BaseDto {
      * 合同名称
      */
     @ApiModelProperty(value = "合同名称")
+    @NotBlank(message = "合同名称不能为空")
+    @Size(max = 100, message = "合同名称不能超过100个字符")
     private String name;
 
     /**
      * 丙方手机号
      */
     @ApiModelProperty(value = "丙方手机号")
+    @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式不正确")
     private String memberPhone;
 
     /**

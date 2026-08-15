@@ -12,10 +12,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/reservation")
 @Api(tags = "预约管理")
@@ -27,14 +31,14 @@ public class ReservationController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增预约")
-    public ResponseResult add(@RequestBody ReservationDto dto) {
+    public ResponseResult add(@Validated @RequestBody ReservationDto dto) {
         reservationService.add(dto);
         return success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新预约")
-    public ResponseResult update(@PathVariable Long id, @RequestBody ReservationDto dto) {
+    public ResponseResult update(@PathVariable Long id, @Validated @RequestBody ReservationDto dto) {
         reservationService.update(id, dto);
         return success();
     }
@@ -96,8 +100,8 @@ public class ReservationController extends BaseController {
             @ApiImplicitParam(name = "startTime", value = "开始时间", required = false, dataType = "long", paramType = "query"),
             @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, dataType = "long", paramType = "query")
     })
-    public ResponseResult<PageResponse<ReservationVo>> findByPage(@RequestParam(defaultValue = "1") int pageNum,
-                                                                  @RequestParam(defaultValue = "10") int pageSize,
+    public ResponseResult<PageResponse<ReservationVo>> findByPage(@Min(value = 1, message = "页码最小为1") @RequestParam(defaultValue = "1") int pageNum,
+                                                                  @Min(value = 1, message = "每页条数最小为1") @Max(value = 100, message = "每页条数最大为100") @RequestParam(defaultValue = "10") int pageSize,
                                                                   @RequestParam(required = false) String name,
                                                                   @RequestParam(required = false) String phone,
                                                                   @RequestParam(required = false) Integer status,

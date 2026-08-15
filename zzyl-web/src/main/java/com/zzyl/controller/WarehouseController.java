@@ -8,6 +8,7 @@ import com.zzyl.vo.WarehouseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,14 +26,14 @@ public class WarehouseController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增仓库")
-    public ResponseResult add(@RequestBody WarehouseDto dto) {
+    public ResponseResult add(@Validated @RequestBody WarehouseDto dto) {
         warehouseService.add(dto);
         return success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新仓库")
-    public ResponseResult update(@PathVariable Long id, @RequestBody WarehouseDto dto) {
+    public ResponseResult update(@PathVariable Long id, @Validated @RequestBody WarehouseDto dto) {
         warehouseService.update(id, dto);
         return success();
     }

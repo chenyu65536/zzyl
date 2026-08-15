@@ -12,6 +12,7 @@ import com.zzyl.vo.ElderRecordVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,14 +38,14 @@ public class ElderRecordController extends BaseController {
 
     @PostMapping("/health-info")
     @ApiOperation("保存健康信息")
-    public ResponseResult saveHealthInfo(@RequestBody ElderHealthInfoDto dto) {
+    public ResponseResult saveHealthInfo(@Validated @RequestBody ElderHealthInfoDto dto) {
         elderRecordService.saveHealthInfo(dto);
         return success();
     }
 
     @PostMapping("/life-info")
     @ApiOperation("保存生活档案")
-    public ResponseResult saveLifeInfo(@RequestBody ElderLifeInfoDto dto) {
+    public ResponseResult saveLifeInfo(@Validated @RequestBody ElderLifeInfoDto dto) {
         elderRecordService.saveLifeInfo(dto);
         return success();
     }
@@ -53,14 +54,14 @@ public class ElderRecordController extends BaseController {
 
     @PostMapping("/health-data")
     @ApiOperation("新增体检记录")
-    public ResponseResult addHealthData(@RequestBody ElderHealthDataDto dto) {
+    public ResponseResult addHealthData(@Validated @RequestBody ElderHealthDataDto dto) {
         elderRecordService.addHealthData(dto);
         return success();
     }
 
     @PutMapping("/health-data/{id}")
     @ApiOperation("更新体检记录")
-    public ResponseResult updateHealthData(@PathVariable Long id, @RequestBody ElderHealthDataDto dto) {
+    public ResponseResult updateHealthData(@PathVariable Long id, @Validated @RequestBody ElderHealthDataDto dto) {
         elderRecordService.updateHealthData(id, dto);
         return success();
     }
@@ -76,14 +77,14 @@ public class ElderRecordController extends BaseController {
 
     @PostMapping("/emergency-contact")
     @ApiOperation("新增紧急联系人")
-    public ResponseResult addEmergencyContact(@RequestBody EmergencyContactDto dto) {
+    public ResponseResult addEmergencyContact(@Validated @RequestBody EmergencyContactDto dto) {
         elderRecordService.addEmergencyContact(dto);
         return success();
     }
 
     @PutMapping("/emergency-contact/{id}")
     @ApiOperation("更新紧急联系人")
-    public ResponseResult updateEmergencyContact(@PathVariable Long id, @RequestBody EmergencyContactDto dto) {
+    public ResponseResult updateEmergencyContact(@PathVariable Long id, @Validated @RequestBody EmergencyContactDto dto) {
         elderRecordService.updateEmergencyContact(id, dto);
         return success();
     }
@@ -99,14 +100,14 @@ public class ElderRecordController extends BaseController {
 
     @PostMapping("/family-member")
     @ApiOperation("新增家属")
-    public ResponseResult addFamilyMember(@RequestBody FamilyMemberDto dto) {
+    public ResponseResult addFamilyMember(@Validated @RequestBody FamilyMemberDto dto) {
         elderRecordService.addFamilyMember(dto);
         return success();
     }
 
     @PutMapping("/family-member/{id}")
     @ApiOperation("更新家属")
-    public ResponseResult updateFamilyMember(@PathVariable Long id, @RequestBody FamilyMemberDto dto) {
+    public ResponseResult updateFamilyMember(@PathVariable Long id, @Validated @RequestBody FamilyMemberDto dto) {
         elderRecordService.updateFamilyMember(id, dto);
         return success();
     }

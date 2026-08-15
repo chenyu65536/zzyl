@@ -6,6 +6,9 @@ import com.zzyl.base.BaseDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 @Data
 public class DeviceDto extends BaseDto {
 
@@ -34,6 +37,8 @@ public class DeviceDto extends BaseDto {
     Long bindingLocation;
 
     @ApiModelProperty(value = "设备名称")
+    @NotBlank(message = "设备名称不能为空")
+    @Size(max = 100, message = "设备名称不能超过100个字符")
     String deviceName;
 
     @ApiModelProperty(value = "物理位置类型")

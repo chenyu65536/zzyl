@@ -6,6 +6,7 @@ import com.zzyl.service.RetreatBillService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +19,7 @@ public class RetreatBillController {
 
     @ApiOperation(value = "上传退款凭证", notes = "用于上传退款凭证文件")
     @PutMapping("/uploadRefundVoucher")
-    public ResponseResult uploadRefundVoucher(@RequestBody RefundVoucherDto refundVoucherDto) {
+    public ResponseResult uploadRefundVoucher(@Validated @RequestBody RefundVoucherDto refundVoucherDto) {
         return retreatBillService.uploadRefundVoucher(refundVoucherDto);
     }
 

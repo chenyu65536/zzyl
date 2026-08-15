@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -44,7 +45,7 @@ public class ContractController {
      */
     @PutMapping
     @ApiOperation(value = "更新合同信息")
-    public ResponseResult update(@RequestBody ContractDto contractDto) {
+    public ResponseResult update(@Validated @RequestBody ContractDto contractDto) {
         contractService.update(contractDto);
         return ResponseResult.success();
     }

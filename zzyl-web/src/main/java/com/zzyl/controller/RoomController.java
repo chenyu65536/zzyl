@@ -7,6 +7,7 @@ import com.zzyl.vo.RoomVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class RoomController extends BaseController {
 
     @PostMapping("/add")
     @ApiOperation("添加房间")
-    public ResponseResult addRoom(@RequestBody RoomDto roomDto) {
+    public ResponseResult addRoom(@Validated @RequestBody RoomDto roomDto) {
         return toAjax(roomService.addRoom(roomDto));
     }
 
@@ -32,7 +33,7 @@ public class RoomController extends BaseController {
 
     @PutMapping("/update")
     @ApiOperation("更新房间")
-    public ResponseResult updateRoom(@RequestBody RoomDto roomDto) {
+    public ResponseResult updateRoom(@Validated @RequestBody RoomDto roomDto) {
         return toAjax(roomService.updateRoom(roomDto));
     }
 

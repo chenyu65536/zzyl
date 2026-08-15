@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class BedController extends BaseController {
 
     @PostMapping("/create")
     @ApiOperation(value = "创建床位", notes = "传入床位对象，包括床位号和所属房间号")
-    public ResponseResult createBed(@ApiParam(value = "床位信息", required = true) @RequestBody BedDto bed) {
+    public ResponseResult createBed(@ApiParam(value = "床位信息", required = true) @Validated @RequestBody BedDto bed) {
         bedService.addBed(bed);
         return success("Bed created successfully");
     }
@@ -38,7 +39,7 @@ public class BedController extends BaseController {
     @PutMapping("/update")
     @ApiOperation(value = "更新床位", notes = "传入床位对象，包括床位id、床位号、所属房间号等信息")
     public ResponseResult updateBed(
-            @ApiParam(value = "床位信息", required = true) @RequestBody BedDto bed) {
+            @ApiParam(value = "床位信息", required = true) @Validated @RequestBody BedDto bed) {
         bedService.updateBed(bed);
         return success("Bed updated successfully");
     }

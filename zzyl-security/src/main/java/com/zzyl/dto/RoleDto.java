@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * 角色表
  */
@@ -14,6 +17,8 @@ import lombok.NoArgsConstructor;
 public class RoleDto extends BaseDto {
 
     @ApiModelProperty(value = "角色名称")
+    @NotBlank(message = "角色名称不能为空")
+    @Size(max = 50, message = "角色名称不能超过50个字符")
     private String roleName;
 
     @ApiModelProperty(value = "角色标识")

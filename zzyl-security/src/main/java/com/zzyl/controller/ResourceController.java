@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class ResourceController {
             , "resourceDto.resourceName"
             , "resourceDto.resourceType"
             , "resourceDto.sortNo"})
-    public ResponseResult<ResourceVo> createResource(@RequestBody ResourceDto resourceDto) {
+    public ResponseResult<ResourceVo> createResource(@Validated @RequestBody ResourceDto resourceDto) {
         return ResponseResult.success(resourceService.createResource(resourceDto));
     }
 
@@ -65,7 +66,7 @@ public class ResourceController {
             , "resourceDto.resourceName"
             , "resourceDto.resourceType"
             , "resourceDto.sortNo"})
-    public ResponseResult<Boolean> updateResource(@RequestBody ResourceDto resourceDto) {
+    public ResponseResult<Boolean> updateResource(@Validated @RequestBody ResourceDto resourceDto) {
         return ResponseResult.success(resourceService.updateResource(resourceDto));
     }
 

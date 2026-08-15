@@ -9,6 +9,7 @@ import com.zzyl.vo.FloorVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,14 +27,14 @@ public class BuildingController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增楼栋")
-    public ResponseResult add(@RequestBody BuildingDto dto) {
+    public ResponseResult add(@Validated @RequestBody BuildingDto dto) {
         buildingService.add(dto);
         return success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新楼栋")
-    public ResponseResult update(@PathVariable Long id, @RequestBody BuildingDto dto) {
+    public ResponseResult update(@PathVariable Long id, @Validated @RequestBody BuildingDto dto) {
         buildingService.update(id, dto);
         return success();
     }

@@ -25,11 +25,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
 
 @Api(tags = "客户订单")
+@Validated
 @RestController
 @RequestMapping("/customer/orders")
 @Slf4j
@@ -53,14 +57,14 @@ public class CustomOrderController {
 
     @ApiOperation("下单")
     @PostMapping
-    public ResponseResult<OrderVo> createOrder(@RequestBody OrderDto orderDto) {
+    public ResponseResult<OrderVo> createOrder(@Validated @RequestBody OrderDto orderDto) {
         OrderVo orderVo = orderService.createOrder(orderDto);
         return ResponseResult.success(orderVo);
     }
 
     @ApiOperation("下单参数检查")
     @PostMapping("check")
-    public ResponseResult<OrderVo> createOrderCheck(@RequestBody OrderDto orderDto) {
+    public ResponseResult<OrderVo> createOrderCheck(@Validated @RequestBody OrderDto orderDto) {
         OrderVo orderVo = orderService.createOrderCheck(orderDto);
         return ResponseResult.success(orderVo);
     }
@@ -103,8 +107,8 @@ public class CustomOrderController {
             @RequestParam(value = "creator", required = false) String creator,
             @RequestParam(required = false) Long startTime,
             @RequestParam(required = false) Long endTime,
-            @RequestParam("pageNum") Integer pageNum,
-            @RequestParam("pageSize") Integer pageSize) {
+            @Min(value = 1, message = "页码最小为1") @RequestParam("pageNum") Integer pageNum,
+            @Min(value = 1, message = "每页条数最小为1") @Max(value = 100, message = "每页条数最大为100") @RequestParam("pageSize") Integer pageSize) {
         PageResponse<OrderVo> listPageResponse = orderService.searchOrders(status, orderNo, elderlyName, creator, ObjectUtil.isEmpty(startTime)? null : LocalDateTimeUtil.of(startTime), ObjectUtil.isEmpty(endTime)? null : LocalDateTimeUtil.of(endTime), pageNum, pageSize);
         return ResponseResult.success(listPageResponse);
     }

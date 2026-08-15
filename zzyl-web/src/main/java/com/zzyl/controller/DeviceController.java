@@ -10,6 +10,7 @@ import com.zzyl.vo.DeviceVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -70,14 +71,14 @@ public class DeviceController extends BaseController {
 
     @PostMapping("/RegisterDevice")
     @ApiOperation(value = "单个注册设备", notes = "单个注册设备")
-    public ResponseResult registerDevice(@RequestBody DeviceDto deviceDto) throws Exception {
+    public ResponseResult registerDevice(@Validated @RequestBody DeviceDto deviceDto) throws Exception {
         deviceService.registerDevice(deviceDto);
         return ResponseResult.success();
     }
 
     @PostMapping("/UpdateDevice")
     @ApiOperation(value = "修改设备备注名称", notes = "批量修改设备备注名称")
-    public ResponseResult batchUpdateDevice(@RequestBody DeviceDto deviceDto) throws Exception {
+    public ResponseResult batchUpdateDevice(@Validated @RequestBody DeviceDto deviceDto) throws Exception {
         deviceService.updateDevice(deviceDto);
         return ResponseResult.success();
     }

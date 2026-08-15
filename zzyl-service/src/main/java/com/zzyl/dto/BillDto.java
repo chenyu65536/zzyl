@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -26,9 +27,11 @@ public class BillDto extends BaseDto {
     private Long elderId;
 
     @ApiModelProperty(value = "账单金额")
+    @DecimalMin(value = "0", message = "账单金额不能为负数")
     private BigDecimal billAmount;
 
     @ApiModelProperty(value = "应付金额")
+    @DecimalMin(value = "0", message = "应付金额不能为负数")
     private BigDecimal payableAmount;
 
     @ApiModelProperty(value = "缴费截止日期")

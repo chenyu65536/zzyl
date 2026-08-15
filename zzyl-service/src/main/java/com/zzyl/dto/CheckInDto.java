@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,6 +21,8 @@ public class CheckInDto extends BaseDto {
     private Integer save;
 
     @ApiModelProperty(value = "老人")
+    @Valid
+    @NotNull(message = "老人信息不能为空")
     private ElderDto elderDto;
 
     /**

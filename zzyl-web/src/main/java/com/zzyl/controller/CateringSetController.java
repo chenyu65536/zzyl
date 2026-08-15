@@ -8,6 +8,7 @@ import com.zzyl.vo.CateringSetVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,14 +24,14 @@ public class CateringSetController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增套餐")
-    public ResponseResult add(@RequestBody CateringSetDto dto) {
+    public ResponseResult add(@Validated @RequestBody CateringSetDto dto) {
         cateringSetService.add(dto);
         return success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新套餐")
-    public ResponseResult update(@PathVariable Long id, @RequestBody CateringSetDto dto) {
+    public ResponseResult update(@PathVariable Long id, @Validated @RequestBody CateringSetDto dto) {
         cateringSetService.update(id, dto);
         return success();
     }

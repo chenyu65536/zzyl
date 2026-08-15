@@ -6,6 +6,7 @@ import com.zzyl.dto.AlertRuleDto;
 import com.zzyl.service.AlertRuleService;
 import com.zzyl.vo.AlertRuleVo;
 import io.swagger.annotations.*;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ public class AlertRuleController {
 
     @PostMapping("/create")
     @ApiOperation(value = "创建告警规则", notes = "接收一个AlertRuleDto对象作为请求参数，返回void")
-    public ResponseResult createAlertRule(@RequestBody AlertRuleDto alertRuleDto) {
+    public ResponseResult createAlertRule(@Validated @RequestBody AlertRuleDto alertRuleDto) {
         alertRuleService.createAlertRule(alertRuleDto);
         return ResponseResult.success();
     }
@@ -33,7 +34,7 @@ public class AlertRuleController {
 
     @PutMapping("/update/{id}")
     @ApiOperation(value = "更新告警规则", notes = "接收一个id参数和一个AlertRuleDto对象作为请求参数，返回void")
-    public ResponseResult updateAlertRule(@PathVariable Long id, @RequestBody AlertRuleDto alertRuleDto) {
+    public ResponseResult updateAlertRule(@PathVariable Long id, @Validated @RequestBody AlertRuleDto alertRuleDto) {
         alertRuleService.updateAlertRule(id, alertRuleDto);
         return ResponseResult.success();
     }

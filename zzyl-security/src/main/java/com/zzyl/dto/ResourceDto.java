@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * 资源DTO
  */
@@ -22,9 +25,12 @@ public class ResourceDto extends BaseDto {
     private String parentResourceNo;
 
     @ApiModelProperty(value = "资源名称")
+    @NotBlank(message = "资源名称不能为空")
+    @Size(max = 50, message = "资源名称不能超过50个字符")
     private String resourceName;
 
     @ApiModelProperty(value = "资源类型：s平台 c目录 m菜单 r按钮")
+    @NotBlank(message = "资源类型不能为空")
     private String resourceType;
 
     @ApiModelProperty(value = "请求地址")

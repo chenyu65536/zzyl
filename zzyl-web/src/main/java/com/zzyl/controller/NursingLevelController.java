@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class NursingLevelController {
     @ApiOperation(value = "插入护理等级信息")
     public ResponseResult insert(
             @ApiParam(value = "护理等级数据", required = true)
-            @RequestBody NursingLevelDto nursingLevel) {
+            @Validated @RequestBody NursingLevelDto nursingLevel) {
         nursingLevelService.insert(nursingLevel);
         return ResponseResult.success();
     }
@@ -49,7 +50,7 @@ public class NursingLevelController {
     @ApiOperation(value = "更新护理等级信息")
     public ResponseResult update(
             @ApiParam(value = "护理等级数据", required = true)
-            @RequestBody NursingLevelDto nursingLevel) {
+            @Validated @RequestBody NursingLevelDto nursingLevel) {
         nursingLevelService.update(nursingLevel);
         return ResponseResult.success();
     }

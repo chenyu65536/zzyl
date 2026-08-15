@@ -16,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -36,7 +37,7 @@ public class BillController {
      */
     @ApiOperation("创建账单")
     @PostMapping
-    public ResponseResult create(@RequestBody BillDto bill) {
+    public ResponseResult create(@Validated @RequestBody BillDto bill) {
         billService.createMonthBill(bill);
         return ResponseResult.success();
     }
@@ -56,7 +57,7 @@ public class BillController {
      */
     @ApiOperation("取消账单")
     @PutMapping("cancel/{id}")
-    public ResponseResult cancelById(@RequestBody BillDto billDto, @PathVariable("id") Long id) {
+    public ResponseResult cancelById(@Validated @RequestBody BillDto billDto, @PathVariable("id") Long id) {
         billDto.setId(id);
         return ResponseResult.success(billService.cancelById(billDto));
     }

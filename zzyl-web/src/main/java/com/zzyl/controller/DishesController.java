@@ -10,6 +10,7 @@ import com.zzyl.vo.DishesVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,14 +30,14 @@ public class DishesController extends BaseController {
 
     @PostMapping("/type")
     @ApiOperation("新增菜品类别")
-    public ResponseResult addType(@RequestBody DishesTypeDto dto) {
+    public ResponseResult addType(@Validated @RequestBody DishesTypeDto dto) {
         dishesService.addType(dto);
         return success();
     }
 
     @PutMapping("/type/{id}")
     @ApiOperation("更新菜品类别")
-    public ResponseResult updateType(@PathVariable Long id, @RequestBody DishesTypeDto dto) {
+    public ResponseResult updateType(@PathVariable Long id, @Validated @RequestBody DishesTypeDto dto) {
         dishesService.updateType(id, dto);
         return success();
     }
@@ -64,14 +65,14 @@ public class DishesController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增菜品")
-    public ResponseResult add(@RequestBody DishesDto dto) {
+    public ResponseResult add(@Validated @RequestBody DishesDto dto) {
         dishesService.add(dto);
         return success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新菜品")
-    public ResponseResult update(@PathVariable Long id, @RequestBody DishesDto dto) {
+    public ResponseResult update(@PathVariable Long id, @Validated @RequestBody DishesDto dto) {
         dishesService.update(id, dto);
         return success();
     }

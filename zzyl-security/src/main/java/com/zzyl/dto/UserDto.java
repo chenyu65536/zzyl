@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
@@ -22,6 +26,7 @@ public class UserDto extends BaseDto {
     private String dataState;
 
     @ApiModelProperty(value = "用户邮箱")
+    @Email(message = "邮箱格式不正确")
     private String email;
 
     @ApiModelProperty(value = "用户昵称")
@@ -34,9 +39,13 @@ public class UserDto extends BaseDto {
     private String dept;
 
     @ApiModelProperty(value = "真实姓名")
+    @NotBlank(message = "真实姓名不能为空")
+    @Size(max = 50, message = "真实姓名不能超过50个字符")
     private String realName;
 
     @ApiModelProperty(value = "手机号码")
+    @NotBlank(message = "手机号不能为空")
+    @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式不正确")
     private String mobile;
 
     @ApiModelProperty(value = "用户性别（0男 1女 2未知）")

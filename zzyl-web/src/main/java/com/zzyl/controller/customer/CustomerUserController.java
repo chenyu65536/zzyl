@@ -18,6 +18,9 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +32,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Api(tags = "客户管理")
+@Validated
 @RestController
 @RequestMapping("/customer/user")
 public class CustomerUserController extends BaseController {
@@ -61,8 +65,8 @@ public class CustomerUserController extends BaseController {
     @GetMapping("/get-page")
     @ApiOperation(value = "获取设备数据分页结果", notes = "接收包含分页信息的请求参数，返回一个包含分页数据的Page<DeviceDataDto>对象")
     public ResponseResult<PageResponse<DeviceDataVo>> getDeviceDataPage(
-            @ApiParam(value = "页码", required = true) @RequestParam("pageNum") Integer pageNum,
-            @ApiParam(value = "每页大小", required = true) @RequestParam("pageSize") Integer pageSize,
+            @ApiParam(value = "页码", required = true) @Min(value = 1, message = "页码最小为1") @RequestParam("pageNum") Integer pageNum,
+            @ApiParam(value = "每页大小", required = true) @Min(value = 1, message = "每页条数最小为1") @Max(value = 100, message = "每页条数最大为100") @RequestParam("pageSize") Integer pageSize,
             @ApiParam(value = "设备名称") @RequestParam(value = "deviceName", required = false) String deviceName,
             @ApiParam(value = "接入位置") @RequestParam(value = "accessLocation", required = false) String accessLocation,
             @ApiParam(value = "位置类型") @RequestParam(value = "locationType", required = false) Integer locationType,
@@ -93,8 +97,8 @@ public class CustomerUserController extends BaseController {
     @GetMapping("/get-week-page")
     @ApiOperation(value = "按周获取设备数据分页结果", notes = "接收包含分页信息的请求参数，返回一个包含分页数据的Page<DeviceDataDto>对象")
     public ResponseResult<PageResponse<DeviceDataVo>> getDeviceWeekDataPage(
-            @ApiParam(value = "页码", required = true) @RequestParam("pageNum") Integer pageNum,
-            @ApiParam(value = "每页大小", required = true) @RequestParam("pageSize") Integer pageSize,
+            @ApiParam(value = "页码", required = true) @Min(value = 1, message = "页码最小为1") @RequestParam("pageNum") Integer pageNum,
+            @ApiParam(value = "每页大小", required = true) @Min(value = 1, message = "每页条数最小为1") @Max(value = 100, message = "每页条数最大为100") @RequestParam("pageSize") Integer pageSize,
             @ApiParam(value = "设备名称") @RequestParam(value = "deviceName", required = false) String deviceName,
             @ApiParam(value = "接入位置") @RequestParam(value = "accessLocation", required = false) String accessLocation,
             @ApiParam(value = "位置类型") @RequestParam(value = "locationType", required = false) Integer locationType,

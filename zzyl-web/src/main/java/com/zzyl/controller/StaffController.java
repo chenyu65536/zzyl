@@ -8,6 +8,7 @@ import com.zzyl.vo.StaffVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,14 +26,14 @@ public class StaffController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增员工")
-    public ResponseResult add(@RequestBody StaffDto dto) {
+    public ResponseResult add(@Validated @RequestBody StaffDto dto) {
         staffService.add(dto);
         return success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新员工")
-    public ResponseResult update(@PathVariable Long id, @RequestBody StaffDto dto) {
+    public ResponseResult update(@PathVariable Long id, @Validated @RequestBody StaffDto dto) {
         staffService.update(id, dto);
         return success();
     }

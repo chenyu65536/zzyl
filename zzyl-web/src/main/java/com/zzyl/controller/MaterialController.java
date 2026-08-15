@@ -10,6 +10,7 @@ import com.zzyl.vo.MaterialVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,14 +30,14 @@ public class MaterialController extends BaseController {
 
     @PostMapping("/type")
     @ApiOperation("新增物资类别")
-    public ResponseResult addType(@RequestBody MaterialTypeDto dto) {
+    public ResponseResult addType(@Validated @RequestBody MaterialTypeDto dto) {
         materialService.addType(dto);
         return success();
     }
 
     @PutMapping("/type/{id}")
     @ApiOperation("更新物资类别")
-    public ResponseResult updateType(@PathVariable Long id, @RequestBody MaterialTypeDto dto) {
+    public ResponseResult updateType(@PathVariable Long id, @Validated @RequestBody MaterialTypeDto dto) {
         materialService.updateType(id, dto);
         return success();
     }
@@ -64,14 +65,14 @@ public class MaterialController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增物资")
-    public ResponseResult add(@RequestBody MaterialDto dto) {
+    public ResponseResult add(@Validated @RequestBody MaterialDto dto) {
         materialService.add(dto);
         return success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新物资")
-    public ResponseResult update(@PathVariable Long id, @RequestBody MaterialDto dto) {
+    public ResponseResult update(@PathVariable Long id, @Validated @RequestBody MaterialDto dto) {
         materialService.update(id, dto);
         return success();
     }

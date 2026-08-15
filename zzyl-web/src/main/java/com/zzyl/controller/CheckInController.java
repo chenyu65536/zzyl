@@ -17,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -39,14 +40,14 @@ public class CheckInController {
     @PostMapping("/create")
     @ApiOperation(value = "申请入住", notes = "传入入住对象")
     public ResponseResult<CheckInVo> createCheckIn(
-            @RequestBody @ApiParam(value = "入住对象", required = true) CheckInDto checkInDto) {
+            @Validated @RequestBody @ApiParam(value = "入住对象", required = true) CheckInDto checkInDto) {
         return checkInService.createCheckIn(checkInDto);
     }
 
     @PostMapping("/review")
     @ApiOperation(value = "评估", notes = "传入入住对象")
     public ResponseResult<CheckInVo> review(
-            @RequestBody @ApiParam(value = "入住对象", required = true) CheckInDto checkInDto) {
+            @Validated @RequestBody @ApiParam(value = "入住对象", required = true) CheckInDto checkInDto) {
         return checkInService.review(checkInDto);
     }
 
@@ -148,7 +149,7 @@ public class CheckInController {
      */
     @PostMapping("/sign")
     @ApiOperation(value = "签约办理")
-    public ResponseResult sign(@RequestBody ContractDto contractDto) {
+    public ResponseResult sign(@Validated @RequestBody ContractDto contractDto) {
         contractService.sign(contractDto);
         return ResponseResult.success();
     }

@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * @author itheima
  */
@@ -15,12 +18,15 @@ import lombok.NoArgsConstructor;
 public class PostDto extends BaseDto {
 
     @ApiModelProperty(value = "部门编号")
+    @NotBlank(message = "部门不能为空")
     private String deptNo;
 
     @ApiModelProperty(value = "岗位编码：父部门编号+001【3位】")
     private String postNo;
 
     @ApiModelProperty(value = "岗位名称")
+    @NotBlank(message = "岗位名称不能为空")
+    @Size(max = 50, message = "岗位名称不能超过50个字符")
     private String postName;
 
     @ApiModelProperty(value = "显示顺序")

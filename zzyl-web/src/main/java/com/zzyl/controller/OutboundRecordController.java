@@ -11,6 +11,7 @@ import com.zzyl.vo.WarehouseMaterialVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,7 +27,7 @@ public class OutboundRecordController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增出库登记")
-    public ResponseResult add(@RequestBody OutboundRecordDto dto) {
+    public ResponseResult add(@Validated @RequestBody OutboundRecordDto dto) {
         outboundRecordService.add(dto);
         return success();
     }

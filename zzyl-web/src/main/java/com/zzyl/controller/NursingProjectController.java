@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class NursingProjectController {
     @ApiOperation("新增护理项目")
     public ResponseResult add(
             @ApiParam(value = "护理项目数据传输对象", required = true)
-            @RequestBody NursingProjectDto nursingProjectDTO) {
+            @Validated @RequestBody NursingProjectDto nursingProjectDTO) {
         nursingProjectService.add(nursingProjectDTO);
         return ResponseResult.success();
     }
@@ -88,7 +89,7 @@ public class NursingProjectController {
     @ApiOperation("更新护理项目信息")
     public ResponseResult update(
             @ApiParam(value = "护理项目数据传输对象", required = true)
-            @RequestBody NursingProjectDto nursingProjectDTO) {
+            @Validated @RequestBody NursingProjectDto nursingProjectDTO) {
         nursingProjectService.update(nursingProjectDTO);
         return ResponseResult.success();
     }

@@ -13,6 +13,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @Slf4j
 @Api(tags = "岗位管理")
+@Validated
 @RestController
 @RequestMapping("post")
 public class PostController {
@@ -46,8 +50,8 @@ public class PostController {
     @ApiOperationSupport(includeParameters = {"postDto.deptNo","postDto.dataState","postDto.postName"})
     public ResponseResult<PageResponse<PostVo>> findPostVoPageResponse(
                                     @RequestBody PostDto postDto,
-                                    @PathVariable("pageNum") int pageNum,
-                                    @PathVariable("pageSize") int pageSize) {
+                                    @Min(value = 1, message = "页码最小为1") @PathVariable("pageNum") int pageNum,
+                                    @Min(value = 1, message = "每页条数最小为1") @Max(value = 100, message = "每页条数最大为100") @PathVariable("pageSize") int pageSize) {
         PageResponse<PostVo> pageResponse = postService.findPostPage(postDto, pageNum, pageSize);
         return ResponseResult.success(pageResponse);
     }
@@ -61,7 +65,7 @@ public class PostController {
     @ApiOperation(value = "岗位添加",notes = "岗位添加")
     @ApiImplicitParam(name = "postDto",value = "岗位DTO对象",required = true,dataType = "PostDto")
     @ApiOperationSupport(includeParameters = {"postDto.deptNo","postDto.dataState","postDto.postName","postDto.remark"})
-    public ResponseResult<PostVo> createPost(@RequestBody PostDto postDto) {
+    public ResponseResult<PostVo> createPost(@Validated @RequestBody PostDto postDto) {
         PostVo postVoResult = postService.createPost(postDto);
         return ResponseResult.success(postVoResult);
     }
@@ -80,7 +84,7 @@ public class PostController {
             "postDto.postName",
             "postDto.remark",
             "postDto.id"})
-    public ResponseResult<Boolean> updatePost(@RequestBody PostDto postDto) {
+    public ResponseResult<Boolean> updatePost(@Validated @RequestBody PostDto postDto) {
         Boolean flag = postService.updatePost(postDto);
         return ResponseResult.success(flag);
     }

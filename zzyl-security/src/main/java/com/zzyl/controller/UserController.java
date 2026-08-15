@@ -15,6 +15,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +27,7 @@ import java.util.List;
  */
 @Slf4j
 @Api(tags = "用户管理")
+@Validated
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -48,8 +52,8 @@ public class UserController {
     @ApiOperationSupport(includeParameters = {"userDto.username","userDto.email","userDto.dataState","userDto.deptNo"})
     public ResponseResult<PageResponse<UserVo>> findUserVoPage(
                                     @RequestBody UserDto userDto,
-                                    @PathVariable("pageNum") int pageNum,
-                                    @PathVariable("pageSize") int pageSize) {
+                                    @Min(value = 1, message = "页码最小为1") @PathVariable("pageNum") int pageNum,
+                                    @Min(value = 1, message = "每页条数最小为1") @Max(value = 100, message = "每页条数最大为100") @PathVariable("pageSize") int pageSize) {
         PageResponse<UserVo> userVoPage = userService.findUserPage(userDto, pageNum, pageSize);
         return ResponseResult.success(userVoPage);
     }
@@ -63,7 +67,7 @@ public class UserController {
     @ApiOperation(value = "用户添加",notes = "用户添加")
     @ApiImplicitParam(name = "userDto",value = "用户DTO对象",required = true,dataType = "UserDto")
     @ApiOperationSupport(includeParameters = {"userDto.email","userDto.dataState","userDto.deptNo","userDto.deptPostUserVoSet","userDto.mobile","userDto.postNo","userDto.realName","userDto.roleVoIds"})
-    public ResponseResult<UserVo> createUser(@RequestBody UserDto userDto) {
+    public ResponseResult<UserVo> createUser(@Validated @RequestBody UserDto userDto) {
         UserVo userVoResult = userService.createUser(userDto);
         return ResponseResult.success(userVoResult);
     }
@@ -90,7 +94,7 @@ public class UserController {
     @ApiOperation(value = "用户修改",notes = "用户修改")
     @ApiImplicitParam(name = "userDto",value = "用户DTO对象",required = true,dataType = "UserDto")
     @ApiOperationSupport(includeParameters = {"userDto.email","userDto.dataState","userDto.deptNo","userDto.deptPostUserVoSet","userDto.mobile","userDto.postNo","userDto.realName","userDto.roleVoIds"})
-    public ResponseResult<Boolean> updateUser(@RequestBody UserDto userDto) {
+    public ResponseResult<Boolean> updateUser(@Validated @RequestBody UserDto userDto) {
         Boolean flag = userService.updateUser(userDto);
         return ResponseResult.success(flag);
     }

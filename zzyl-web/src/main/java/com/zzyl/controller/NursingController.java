@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class NursingController {
     @PostMapping("/plan")
     public ResponseResult addNursingPlan(
             @ApiParam(value = "护理计划数据", required = true)
-            @RequestBody NursingPlanDto nursingPlan) {
+            @Validated @RequestBody NursingPlanDto nursingPlan) {
         nursingPlanService.add(nursingPlan);
         return ResponseResult.success();
     }
@@ -36,7 +37,7 @@ public class NursingController {
             @ApiParam(value = "护理计划ID", required = true)
             @PathVariable Long id,
             @ApiParam(value = "护理计划数据", required = true)
-            @RequestBody NursingPlanDto nursingPlan) {
+            @Validated @RequestBody NursingPlanDto nursingPlan) {
         nursingPlanService.update(nursingPlan);
         return ResponseResult.success();
     }

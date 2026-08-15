@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -22,6 +24,8 @@ public class DeptDto extends BaseDto {
     private String deptNo;
 
     @ApiModelProperty(value = "部门名称")
+    @NotBlank(message = "部门名称不能为空")
+    @Size(max = 50, message = "部门名称不能超过50个字符")
     private String deptName;
 
     @ApiModelProperty(value = "排序")

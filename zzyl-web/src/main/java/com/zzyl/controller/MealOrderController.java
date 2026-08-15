@@ -9,6 +9,7 @@ import com.zzyl.vo.MealOrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ public class MealOrderController extends BaseController {
 
     @PostMapping
     @ApiOperation("新增订餐")
-    public ResponseResult add(@RequestBody MealOrderDto dto) {
+    public ResponseResult add(@Validated @RequestBody MealOrderDto dto) {
         mealOrderService.add(dto);
         return success();
     }
