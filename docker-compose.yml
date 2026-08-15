@@ -1,0 +1,54 @@
+# ============================================================
+# zzyl 后端（zzyl-web）编排 —— 仅后端
+#
+# PostgreSQL / Redis 已单独部署（宿主机上的 postgres-webdemo / zzyl-redis
+# 容器），本编排通过 host.docker.internal 访问宿主机端口，不再自建中间件。
+#
+# 启动前先打包：
+#   "D:/Program Files (x86)/IntelliJ IDEA 2026.1/plugins/maven/lib/maven3/bin/mvn.cmd" -o package -pl zzyl-web -am -DskipTests
+# 启动：docker compose up -d --build
+# 停止：docker compose down
+# ============================================================
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zzyl-backend
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: example
+      # 数据库连接（中间件在宿主机，走 host.docker.internal）
+      PG_HOST: ${PG_HOST:-host.docker.internal}
+      PG_PORT: "5432"
+      PG_DATABASE: ${PG_DATABASE:-zhyl-auth}
+      PG_USERNAME: ${PG_USERNAME:-postgres}
+      PG_PASSWORD: ${PG_PASSWORD:-chenyu123}
+      # Redis
+      REDIS_HOST: ${REDIS_HOST:-host.docker.internal}
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-123456}
+      # 安全密钥（生产务必修改）
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-zzyl-prod-secret-key-please-change-in-production-256bit}
+      DEFAULT_PASSWORD: ${DEFAULT_PASSWORD:-123456}
+      # 可选：对象存储/微信/IoT 密钥（按需注入）
+      JDCLOUD_OSS_AK: ${JDCLOUD_OSS_AK:-}
+      JDCLOUD_OSS_SK: ${JDCLOUD_OSS_SK:-}
+      WECHAT_APP_ID: ${WECHAT_APP_ID:-}
+      WECHAT_APP_SECRET: ${WECHAT_APP_SECRET:-}
+      ALIYUN_IOT_AK: ${ALIYUN_IOT_AK:-}
+      ALIYUN_IOT_SK: ${ALIYUN_IOT_SK:-}
+      ALIYUN_IOT_HOST: ${ALIYUN_IOT_HOST:-}
+      ALIYUN_IOT_INSTANCE_ID: ${ALIYUN_IOT_INSTANCE_ID:-}
+      # 定时任务（如需外部 XXL-Job 可配置）
+      XXL_JOB_ADMIN: ${XXL_JOB_ADMIN:-http://host.docker.internal:8889/xxl-job-admin}
+    ports:
+      - "8080:8080"
+    # temurin-jre 镜像没有 wget/curl，用 bash 的 /dev/tcp 探活
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s

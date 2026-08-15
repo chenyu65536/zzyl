@@ -1,0 +1,41 @@
+# ============================================================
+# zzyl 后端 Docker 构建忽略文件
+# ============================================================
+
+# 构建产物
+**/target/
+*/target/*
+*.jar
+!zzyl-web/target/zzyl-web.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# 版本控制
+.git/
+.gitignore
+.gitlab-ci.yml
+
+# 前端（后端镜像不需要）
+zzyl-ui/
+node_modules/
+dist/
+
+# 环境/密钥
+.env
+*.local
+
+# 日志
+**/logs/
+*.log
+
+# 临时文件
+.workbuddy/
+*.tmp
+
+# 系统文件
+.DS_Store
+Thumbs.db
